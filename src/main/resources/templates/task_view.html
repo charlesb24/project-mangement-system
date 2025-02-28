@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task View</title>
+</head>
+<body>
+<main>
+    <table>
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.getName()}">No Name</td>
+                <td th:text="${task.getDescription()}">No Description</td>
+                <td th:text="${task.getPriority()}">No Priority</td>
+                <td th:text="${task.getStatus()}">No Status</td>
+                <td th:text="${task.getLevel()}">No Status</td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
