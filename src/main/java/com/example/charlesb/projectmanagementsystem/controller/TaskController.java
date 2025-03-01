@@ -1,11 +1,14 @@
 package com.example.charlesb.projectmanagementsystem.controller;
 
+import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
 import com.example.charlesb.projectmanagementsystem.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -26,6 +29,38 @@ public class TaskController {
         model.addAttribute("tasks", tasks);
 
         return "task_view";
+    }
+
+    @GetMapping("/new")
+    public String newTask(Model model) {
+        model.addAttribute("task", new TaskDTO());
+
+        return "task_form";
+    }
+
+    @PostMapping("/new")
+    public String saveTask(@ModelAttribute("task") TaskDTO taskDTO) {
+        Task task;
+
+        Task savedTask = taskService.findById(taskDTO.id);
+
+        if (savedTask != null) {
+            task = savedTask;
+        } else {
+            task = new Task();
+
+            task.setParentTaskId(taskDTO.parentId);
+            task.setLevel(taskDTO.level);
+        }
+
+        task.setName(taskDTO.name);
+        task.setDescription(taskDTO.description);
+        task.setPriority(taskDTO.priority);
+        task.setStatus(taskDTO.status);
+
+        taskService.save(task);
+
+        return "redirect:/list";
     }
 
 }

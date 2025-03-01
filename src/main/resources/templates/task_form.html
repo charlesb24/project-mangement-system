@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- TODO: alter action and button text to support adding new tasks and updating existing tasks -->
+  <form method="POST" action="/new">
+
+    <input type="hidden" th:field="*{task.id}" />
+    <input type="hidden" th:field="*{task.parentId}" />
+    <input type="hidden" th:field="*{task.level}" />
+
+    <label>
+      Task Name
+      <input type="text" th:field="*{task.name}" placeholder="Name" />
+    </label>
+    <label>
+      Task Description
+      <input type="text" th:field="*{task.description}" placeholder="Description" />
+    </label>
+    <label>
+      Priority
+      <input type="text" th:field="*{task.priority}" placeholder="Priority" />
+    </label>
+    <label>
+      Status
+      <input type="text" th:field="*{task.status}" placeholder="Task status" />
+    </label>
+
+    <input type="submit" value="Create" />
+  </form>
+</body>
+</html>
