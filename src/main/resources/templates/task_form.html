@@ -6,27 +6,27 @@
 </head>
 <body>
 <!-- TODO: alter action and button text to support adding new tasks and updating existing tasks -->
-  <form method="POST" action="/new">
+  <form method="POST" th:action="@{/new}" th:object="${task}">
 
-    <input type="hidden" th:field="*{task.id}" />
-    <input type="hidden" th:field="*{task.parentId}" />
-    <input type="hidden" th:field="*{task.level}" />
+    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{parentId}" />
+    <input type="hidden" th:field="*{level}" />
 
     <label>
       Task Name
-      <input type="text" th:field="*{task.name}" placeholder="Name" />
+      <input type="text" th:field="*{name}" placeholder="Name" />
     </label>
     <label>
       Task Description
-      <input type="text" th:field="*{task.description}" placeholder="Description" />
+      <input type="text" th:field="*{description}" placeholder="Description" />
     </label>
     <label>
       Priority
-      <input type="text" th:field="*{task.priority}" placeholder="Priority" />
+      <input type="text" th:field="*{priority}" placeholder="Priority" />
     </label>
     <label>
       Status
-      <input type="text" th:field="*{task.status}" placeholder="Task status" />
+      <input type="text" th:field="*{status}" placeholder="Task status" />
     </label>
 
     <input type="submit" value="Create" />

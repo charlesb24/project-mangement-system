@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: project-management-system
+  datasource:
+    url: jdbc:postgresql://localhost:32768/postgres
+    username: postgres
+
+logging:
+  level:
+    root: debug
