@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Details</title>
+</head>
+<body>
+<main>
+    <div th:object="${task}">
+        <h2>Task Details</h2>
+        <h4 th:text="*{name}"></h4>
+        <p th:text="*{description}"></p>
+        <p th:text="'Status: ' + *{status}"></p>
+        <p th:text="'Priority: ' + *{priority}"></p>
+    </div>
+</main>
+</body>
+</html>

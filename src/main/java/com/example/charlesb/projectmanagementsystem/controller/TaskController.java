@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -29,6 +30,15 @@ public class TaskController {
         model.addAttribute("tasks", tasks);
 
         return "task_view";
+    }
+
+    @GetMapping("/details/{id}")
+    public String viewTaskDetails(@PathVariable Long id, Model model) {
+        Task task = taskService.findById(id);
+
+        model.addAttribute("task", task);
+
+        return "task_details";
     }
 
     @GetMapping("/new")
