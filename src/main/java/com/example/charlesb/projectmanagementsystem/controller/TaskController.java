@@ -35,8 +35,10 @@ public class TaskController {
     @GetMapping("/details/{id}")
     public String viewTaskDetails(@PathVariable Long id, Model model) {
         Task task = taskService.findById(id);
+        List<Task> childTasks = taskService.findChildTasks(task);
 
         model.addAttribute("task", task);
+        model.addAttribute("childTasks", childTasks);
 
         return "task_details";
     }

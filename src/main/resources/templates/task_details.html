@@ -13,6 +13,26 @@
         <p th:text="'Status: ' + *{status}"></p>
         <p th:text="'Priority: ' + *{priority}"></p>
     </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="childTask : *{childTasks}">
+                <td th:text="*{childTask.name}"></td>
+                <td th:text="*{childTask.description}"></td>
+                <td th:text="*{childTask.status}"></td>
+            </tr>
+            <tr>
+                <td colspan="3"><a th:href="@{/new}">Add New Child Task</a></td>
+            </tr>
+        </tbody>
+    </table>
 </main>
 </body>
 </html>

@@ -14,15 +14,20 @@
                 <th>Priority</th>
                 <th>Status</th>
                 <th>Level</th>
+                <th>View Details</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="task : ${tasks}">
-                <td th:text="${task.getName()}">No Name</td>
-                <td th:text="${task.getDescription()}">No Description</td>
-                <td th:text="${task.getPriority()}">No Priority</td>
-                <td th:text="${task.getStatus()}">No Status</td>
-                <td th:text="${task.getLevel()}">No Status</td>
+                <td th:text="${task.name}">No Name</td>
+                <td th:text="${task.description}">No Description</td>
+                <td th:text="${task.priority}">No Priority</td>
+                <td th:text="${task.status}">No Status</td>
+                <td th:text="${task.level}">No Status</td>
+                <td><a th:href="@{/details/{id}(id=${task.taskId})}">View Details</a></td>
+            </tr>
+            <tr>
+                <td colspan="6"><a th:href="@{/new}">Add New Task</a></td>
             </tr>
         </tbody>
     </table>
