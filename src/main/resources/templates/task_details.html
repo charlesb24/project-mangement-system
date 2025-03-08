@@ -33,6 +33,9 @@
             </tr>
         </tbody>
     </table>
+
+    <a th:href="@{/edit/{id}(id=${task.taskId})}">Edit</a>
+    <a th:href="@{/delete/{id}(id=${task.taskId})}">Delete</a>
 </main>
 </body>
 </html>

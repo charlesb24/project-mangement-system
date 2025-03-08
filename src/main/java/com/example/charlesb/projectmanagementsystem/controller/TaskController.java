@@ -6,10 +6,7 @@ import com.example.charlesb.projectmanagementsystem.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,6 +40,24 @@ public class TaskController {
         return "task_details";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editTask(@PathVariable Long id, Model model) {
+        Task task = taskService.findById(id);
+        TaskDTO taskDTO = new TaskDTO();
+
+        taskDTO.setId(task.getTaskId());
+        taskDTO.setParentId(task.getParentTaskId());
+        taskDTO.setLevel(task.getLevel());
+        taskDTO.setName(task.getName());
+        taskDTO.setDescription(task.getDescription());
+        taskDTO.setStatus(task.getStatus());
+        taskDTO.setPriority(task.getPriority());
+
+        model.addAttribute("task", taskDTO);
+
+        return "task_form";
+    }
+
     @GetMapping("/new")
     public String newTask(Model model) {
         model.addAttribute("task", new TaskDTO());
@@ -71,6 +86,13 @@ public class TaskController {
         task.setStatus(taskDTO.status);
 
         taskService.save(task);
+
+        return "redirect:/list";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteTask(@PathVariable Long id) {
+        taskService.deleteById(id);
 
         return "redirect:/list";
     }

@@ -10,8 +10,6 @@ public class TaskDTO {
     public int priority;
     public int status;
 
-
-
     public long getId() {
         return id;
     }
