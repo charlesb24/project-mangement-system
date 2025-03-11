@@ -1,6 +1,10 @@
 package com.example.charlesb.projectmanagementsystem.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "tasks")
@@ -30,7 +34,21 @@ public class Task {
     @Column(name = "status")
     private int status;
 
-    public Task(Long taskId, Long parentTaskId, int level, String name, String description, int priority, int status) {
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "assigned_to")
+    private String assignedTo;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Instant updatedAt;
+
+    public Task(Long taskId, Long parentTaskId, int level, String name, String description, int priority, int status, String createdBy, String assignedTo) {
         this.taskId = taskId;
         this.parentTaskId = parentTaskId;
         this.level = level;
@@ -38,29 +56,35 @@ public class Task {
         this.description = description;
         this.priority = priority;
         this.status = status;
+        this.createdBy = createdBy;
+        this.assignedTo = assignedTo;
     }
 
-    public Task(Long parentTaskId, int level, String name, String description, int priority, int status) {
+    public Task(Long parentTaskId, int level, String name, String description, int priority, int status, String createdBy, String assignedTo) {
         this.parentTaskId = parentTaskId;
         this.level = level;
         this.name = name;
         this.description = description;
         this.priority = priority;
         this.status = status;
+        this.createdBy = createdBy;
+        this.assignedTo = assignedTo;
     }
 
-    public Task(int level, String name, String description, int priority, int status) {
+    public Task(int level, String name, String description, int priority, int status, String createdBy) {
         this.level = level;
         this.name = name;
         this.description = description;
         this.priority = priority;
         this.status = status;
+        this.createdBy = createdBy;
     }
 
     public Task() {
         this.level = -1;
         this.name = "New Task";
         this.description = "No description.";
+        this.createdBy = "No User Found";
     }
 
     public Long getTaskId() {
@@ -119,4 +143,35 @@ public class Task {
         this.status = status;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(String assignedTo) {
+        this.assignedTo = assignedTo;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

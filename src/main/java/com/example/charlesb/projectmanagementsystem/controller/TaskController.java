@@ -84,6 +84,8 @@ public class TaskController {
         task.setDescription(taskDTO.description);
         task.setPriority(taskDTO.priority);
         task.setStatus(taskDTO.status);
+        task.setCreatedBy("taskController");
+        // replace with user details from spring security
 
         taskService.save(task);
 
