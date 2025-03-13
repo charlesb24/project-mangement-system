@@ -1,5 +1,6 @@
 package com.example.charlesb.projectmanagementsystem.entity;
 
+import com.example.charlesb.projectmanagementsystem.enums.Status;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,8 +32,9 @@ public class Task {
     @Column(name = "priority")
     private int priority;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
-    private int status;
+    private Status status;
 
     @Column(name = "created_by")
     private String createdBy;
@@ -48,7 +50,7 @@ public class Task {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-    public Task(Long taskId, Long parentTaskId, int level, String name, String description, int priority, int status, String createdBy, String assignedTo) {
+    public Task(Long taskId, Long parentTaskId, int level, String name, String description, int priority, Status status, String createdBy, String assignedTo) {
         this.taskId = taskId;
         this.parentTaskId = parentTaskId;
         this.level = level;
@@ -60,7 +62,7 @@ public class Task {
         this.assignedTo = assignedTo;
     }
 
-    public Task(Long parentTaskId, int level, String name, String description, int priority, int status, String createdBy, String assignedTo) {
+    public Task(Long parentTaskId, int level, String name, String description, int priority, Status status, String createdBy, String assignedTo) {
         this.parentTaskId = parentTaskId;
         this.level = level;
         this.name = name;
@@ -71,7 +73,7 @@ public class Task {
         this.assignedTo = assignedTo;
     }
 
-    public Task(int level, String name, String description, int priority, int status, String createdBy) {
+    public Task(int level, String name, String description, int priority, Status status, String createdBy) {
         this.level = level;
         this.name = name;
         this.description = description;
@@ -135,11 +137,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public int getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
