@@ -2,6 +2,7 @@ package com.example.charlesb.projectmanagementsystem.controller;
 
 import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
+import com.example.charlesb.projectmanagementsystem.helper.ConversionHelper;
 import com.example.charlesb.projectmanagementsystem.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,7 @@ public class TaskController {
         taskDTO.setLevel(task.getLevel());
         taskDTO.setName(task.getName());
         taskDTO.setDescription(task.getDescription());
-        taskDTO.setStatus(task.getStatus());
+        taskDTO.setStatus(ConversionHelper.statusToInt(task.getStatus()));
         taskDTO.setPriority(task.getPriority());
 
         model.addAttribute("task", taskDTO);
@@ -83,7 +84,7 @@ public class TaskController {
         task.setName(taskDTO.name);
         task.setDescription(taskDTO.description);
         task.setPriority(taskDTO.priority);
-        task.setStatus(taskDTO.status);
+        task.setStatus(ConversionHelper.intToStatus(taskDTO.status));
         task.setCreatedBy("taskController");
         // replace with user details from spring security
 

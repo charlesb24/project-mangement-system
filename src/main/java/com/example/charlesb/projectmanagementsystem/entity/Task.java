@@ -36,14 +36,14 @@ public class Task {
     @Column(name = "status")
     private Status status;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", nullable = false)
     private String createdBy;
 
     @Column(name = "assigned_to")
     private String assignedTo;
 
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private Instant createdAt;
 
     @UpdateTimestamp
