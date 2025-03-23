@@ -17,7 +17,8 @@ public class UserDTO {
     private Long id;
 
     @NotEmpty
-    private String username;
+    @Email
+    private String email;
 
     @NotEmpty
     @Size(min = 8, max = 63)
@@ -33,14 +34,9 @@ public class UserDTO {
     @Size(min = 2)
     private String lastName;
 
-    @Email
-    private String workEmail;
+    private String phone;
 
-    @Email
-    private String personalEmail;
-
-    private String workPhone;
-    private String mobilePhone;
+    private String contactMethod;
 
     private Long managerId;
 

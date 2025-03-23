@@ -29,8 +29,9 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "username", unique = true, nullable = false)
-    private String username;
+    @Email
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -57,19 +58,11 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Email
-    @Column(name = "work_email", unique = true)
-    private String workEmail;
+    @Column(name = "phone", unique = true)
+    private String phone;
 
-    @Email
-    @Column(name = "personal_email", unique = true)
-    private String personalEmail;
-
-    @Column(name = "work_phone", unique = true)
-    private String workPhone;
-
-    @Column(name = "mobile_phone", unique = true)
-    private String mobilePhone;
+    @Column(name = "contact_method")
+    private String contactMethod;
 
     @Column(name = "manager_id")
     private Long managerId;

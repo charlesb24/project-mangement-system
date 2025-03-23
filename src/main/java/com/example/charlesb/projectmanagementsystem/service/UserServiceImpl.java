@@ -29,18 +29,15 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserDTO userDTO) {
         User user = new User();
 
-        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         user.setFirstName(userDTO.getFirstName());
         user.setMiddleName(userDTO.getMiddleName());
         user.setLastName(userDTO.getLastName());
-
-        user.setWorkEmail(userDTO.getWorkEmail());
-        user.setWorkPhone(userDTO.getWorkPhone());
-
-        user.setPersonalEmail(userDTO.getPersonalEmail());
-        user.setMobilePhone(userDTO.getMobilePhone());
+        user.setPhone(userDTO.getPhone());
+        user.setContactMethod(userDTO.getContactMethod());
+        user.setManagerId(userDTO.getManagerId());
 
         Optional<User> manager = userRepository.findById(userDTO.getManagerId());
         manager.ifPresent(value -> user.setManagerId(value.getId()));
@@ -57,8 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -72,14 +69,13 @@ public class UserServiceImpl implements UserService {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setId(user.getId());
-        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setMiddleName(user.getMiddleName());
         userDTO.setLastName(user.getLastName());
-        userDTO.setWorkEmail(user.getWorkEmail());
-        userDTO.setWorkPhone(user.getWorkPhone());
-        userDTO.setPersonalEmail(user.getPersonalEmail());
-        userDTO.setMobilePhone(user.getMobilePhone());
+        userDTO.setPhone(user.getPhone());
+        userDTO.setContactMethod(user.getContactMethod());
+        userDTO.setManagerId(user.getManagerId());
 
         return userDTO;
     }
