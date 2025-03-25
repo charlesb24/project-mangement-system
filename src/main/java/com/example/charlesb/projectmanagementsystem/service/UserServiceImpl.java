@@ -39,8 +39,10 @@ public class UserServiceImpl implements UserService {
         user.setContactMethod(userDTO.getContactMethod());
         user.setManagerId(userDTO.getManagerId());
 
-        Optional<User> manager = userRepository.findById(userDTO.getManagerId());
-        manager.ifPresent(value -> user.setManagerId(value.getId()));
+        if (userDTO.getManagerId() != null) {
+            Optional<User> manager = userRepository.findById(userDTO.getManagerId());
+            manager.ifPresent(value -> user.setManagerId(value.getId()));
+        }
 
         Role defaultRole = roleRepository.findByName("ROLE_USER");
 

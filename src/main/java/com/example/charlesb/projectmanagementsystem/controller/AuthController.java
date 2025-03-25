@@ -4,6 +4,8 @@ import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.User;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +23,12 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
+    public String showLoginForm(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return "login";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/register")
