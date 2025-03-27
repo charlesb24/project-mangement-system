@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,12 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = true;
+
+    @Column(name = "locked", nullable = false)
+    private boolean locked = false;
 
     @ManyToMany(
             fetch = FetchType.EAGER,

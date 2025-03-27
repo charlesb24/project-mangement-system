@@ -24,6 +24,9 @@ public class UserDTO {
     @Size(min = 8, max = 63)
     private String password;
 
+    private boolean enabled;
+    private boolean locked;
+
     @NotEmpty
     @Size(min = 2)
     private String firstName;
