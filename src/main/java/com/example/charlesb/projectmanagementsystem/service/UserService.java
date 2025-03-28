@@ -9,6 +9,9 @@ public interface UserService {
 
     void saveUser(UserDTO userDTO);
 
+    void updateUser(User user);
+
+    User findUserById(Long id);
     User findUserByEmail(String email);
 
     List<UserDTO> findAllUsers();
