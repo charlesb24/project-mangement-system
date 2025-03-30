@@ -10,44 +10,36 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "requirements")
+public class Requirement {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "task_id")
-    private Long taskId;
+    @Column(name = "step_id")
+    private Long id;
 
     @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @JoinColumn(name = "task_id")
+    private Task task;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "priority")
-    private int priority;
-
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private Status status;
-
-    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER,
-            cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
-    private List<Requirement> requirements = new ArrayList<>();
 
     @Column(name = "created_by", nullable = false)
     private String createdBy;

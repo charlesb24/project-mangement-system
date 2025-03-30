@@ -18,18 +18,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "projects")
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "task_id")
-    private Long taskId;
-
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @Column(name = "project_id")
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -44,10 +39,10 @@ public class Task {
     @Column(name = "status")
     private Status status;
 
-    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    private List<Requirement> requirements = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
 
     @Column(name = "created_by", nullable = false)
     private String createdBy;
