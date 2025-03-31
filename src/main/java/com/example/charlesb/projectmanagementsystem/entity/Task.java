@@ -21,6 +21,8 @@ import java.util.List;
 @Table(name = "tasks")
 public class Task {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
@@ -49,11 +51,15 @@ public class Task {
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Requirement> requirements = new ArrayList<>();
 
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
+    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinColumn(name = "created_by_id", nullable = false)
+    private User createdBy;
 
-    @Column(name = "assigned_to")
-    private String assignedTo;
+    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinColumn(name = "assigned_to_id")
+    private User assignedTo;
 
     @CreationTimestamp
     @Column(name = "created_at")

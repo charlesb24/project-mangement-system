@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +72,36 @@ public class User {
 
     @Column(name = "manager_id")
     private Long managerId;
+
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER,
+            cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Project> createdProjects = new ArrayList<>();
+
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER,
+            cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Task> createdTasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER,
+            cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Requirement> createdRequirements = new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.EAGER,
+            cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Project> assignedProjects = new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.EAGER,
+            cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Task> assignedTasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.EAGER,
+            cascade={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Requirement> assignedRequirements = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "date_created")
