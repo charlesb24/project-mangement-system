@@ -24,30 +24,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findAllByProjectId(Long projectId) {
+        return taskRepository.findAllByProjectId(projectId);
+    }
+
+    @Override
     public Task findById(Long taskId) {
         return taskRepository.findById(taskId).orElse(null);
-    }
-
-    @Override
-    public List<Task> findChildTasks(Long taskId) {
-        return taskRepository.findAllByParentTaskId(taskId);
-    }
-
-    @Override
-    public List<Task> findChildTasks(Task parentTask) {
-        return findChildTasks(parentTask.getParentTaskId());
-    }
-
-    @Override
-    public Task findParentTask(Long childTaskId) {
-        Optional<Task> childTask = taskRepository.findById(childTaskId);
-
-        return childTask.flatMap(task -> taskRepository.findById(task.getParentTaskId())).orElse(null);
-    }
-
-    @Override
-    public Task findParentTask(Task childTask) {
-        return findParentTask(childTask.getTaskId());
     }
 
     @Override
@@ -57,7 +40,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteById(Long taskId) {
-        taskRepository.findAllByParentTaskId(taskId).forEach(task -> deleteById(task.getTaskId()));
         taskRepository.deleteById(taskId);
     }
+
 }
