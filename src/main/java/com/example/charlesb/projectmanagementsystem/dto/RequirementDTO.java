@@ -9,13 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskDTO {
+public class RequirementDTO {
 
     public long id;
-    public long projectId;
-    public String name;
+    public long taskId;
+    public String title;
     public String description;
-    public int priority;
     public int status;
     public long assignedToUserId;
 

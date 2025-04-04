@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskDTO {
+public class ProjectDTO {
 
     public long id;
-    public long projectId;
     public String name;
     public String description;
     public int priority;
