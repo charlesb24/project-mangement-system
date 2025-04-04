@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Project</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Created By</th>
+        <th>Assigned To</th>
+        <th>View Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.name}">No Name</td>
+        <td th:text="${project.description}">No Description</td>
+        <td th:text="${project.priority}">No Priority</td>
+        <td th:text="${project.status}">No Status</td>
+        <td th:text="${project.createdBy}">No Creator</td>
+        <td th:text="${project.assignedTo}">Unassigned</td>
+        <td><a th:href="@{/details/{id}(id=${project.id})}">View Details</a></td>
+    </tr>
+    <tr>
+        <td colspan="7"><a th:href="@{/projects/new}">New Project</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
