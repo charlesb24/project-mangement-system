@@ -36,6 +36,45 @@ public class ProjectController {
         return "project_list";
     }
 
+    @GetMapping("/projects/{projectId}")
+    public String viewProjectDetails(@PathVariable Long projectId, Model model) {
+        Project project = projectService.findById(projectId);
+
+        model.addAttribute("project", project);
+
+        return "project_details";
+    }
+
+    @GetMapping("/projects/new")
+    public String newProject(Model model) {
+        model.addAttribute("project", new Project());
+
+        return "project_form";
+    }
+
+    @GetMapping("/projects/{projectId}/edit")
+    public String editProject(@PathVariable Long projectId, Model model) {
+        // TODO: check for existence of project with id, if non-existent, send user back to project list with an error message
+
+        model.addAttribute("project", projectService.findById(projectId));
+
+        return "project_form";
+    }
+
+    @PostMapping("/projects/save")
+    public String saveProject(@ModelAttribute("project") Project project) {
+        // TODO: add save functionality for projects
+
+        return "redirect:/projects";
+    }
+
+    @DeleteMapping("/projects/{projectId}/delete/")
+    public String deleteProject(@PathVariable Long projectId) {
+        projectService.deleteById(projectId);
+
+        return "redirect:/projects";
+    }
+
     @GetMapping("/projects/{projectId}/task/{taskId}")
     public String viewTaskDetails(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
         Task task = taskService.findById(taskId);
@@ -46,23 +85,6 @@ public class ProjectController {
         return "task_details";
     }
 
-    @GetMapping("/projects/{projectId}/task/{taskId}/edit")
-    public String editTask(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
-        Task task = taskService.findById(taskId);
-        TaskDTO taskDTO = new TaskDTO();
-
-        taskDTO.setId(task.getTaskId());
-        taskDTO.setName(task.getName());
-        taskDTO.setDescription(task.getDescription());
-        taskDTO.setStatus(ConversionHelper.statusToInt(task.getStatus()));
-        taskDTO.setPriority(task.getPriority());
-
-        model.addAttribute("projectId", projectId);
-        model.addAttribute("task", taskDTO);
-
-        return "task_form";
-    }
-
     @GetMapping("/projects/{projectId}/task/new")
     public String newTask(@PathVariable Long projectId, Model model) {
         model.addAttribute("projectId", projectId);
@@ -71,11 +93,36 @@ public class ProjectController {
         return "task_form";
     }
 
-    @PostMapping("/projects/{projectId}/task/new")
+    @GetMapping("/projects/{projectId}/task/edit/{taskId}")
+    public String editTask(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
+        Task task = taskService.findById(taskId);
+        TaskDTO taskDTO = new TaskDTO();
+
+        if (task != null) {
+            taskDTO.setId(task.getTaskId());
+            taskDTO.setName(task.getName());
+            taskDTO.setDescription(task.getDescription());
+            taskDTO.setStatus(ConversionHelper.statusToInt(task.getStatus()));
+            taskDTO.setPriority(task.getPriority());
+        }
+
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("task", taskDTO);
+
+        return "task_form";
+    }
+
+    @PostMapping("/projects/{projectId}/task/save")
     public String saveTask(@PathVariable Long projectId, @ModelAttribute("task") TaskDTO taskDTO, @AuthenticationPrincipal User user) {
         Task task;
 
         Task savedTask = taskService.findById(taskDTO.id);
+        Project savedProject = projectService.findById(projectId);
+
+        if (savedProject == null) {
+            // TODO: add error message stating the project couldn't be found
+            return "redirect:/projects";
+        }
 
         if (savedTask != null) {
             task = savedTask;
@@ -83,6 +130,7 @@ public class ProjectController {
             task = new Task();
         }
 
+        task.setProject(savedProject);
         task.setName(taskDTO.name);
         task.setDescription(taskDTO.description);
         task.setPriority(taskDTO.priority);
