@@ -5,12 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<!-- TODO: alter action and button text to support adding new tasks and updating existing tasks -->
-  <form method="POST" th:action="@{/new}" th:object="${task}">
+  <form method="POST" th:action="@{/projects/{projectId}/task/save(projectId=${projectId})}" th:object="${task}">
 
     <input type="hidden" th:field="*{id}" />
-    <input type="hidden" th:field="*{parentId}" />
-    <input type="hidden" th:field="*{level}" />
 
     <label>
       Task Name
@@ -29,7 +26,8 @@
       <input type="text" th:field="*{status}" placeholder="Task status" />
     </label>
 
-    <input type="submit" value="Create" />
+    <input th:if="${task.id == null}" type="submit" value="Create" />
+    <input th:if="${task.id != null}" type="submit" value="Edit" />
   </form>
 </body>
 </html>
