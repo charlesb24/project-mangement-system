@@ -1,5 +1,6 @@
 package com.example.charlesb.projectmanagementsystem.controller;
 
+import com.example.charlesb.projectmanagementsystem.dto.ProjectDTO;
 import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
@@ -7,8 +8,10 @@ import com.example.charlesb.projectmanagementsystem.entity.User;
 import com.example.charlesb.projectmanagementsystem.helper.ConversionHelper;
 import com.example.charlesb.projectmanagementsystem.service.ProjectService;
 import com.example.charlesb.projectmanagementsystem.service.TaskService;
+import com.example.charlesb.projectmanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +23,13 @@ public class ProjectController {
 
     private final TaskService taskService;
     private final ProjectService projectService;
+    private final UserService userService;
 
     @Autowired
-    public ProjectController(TaskService taskService, ProjectService projectService) {
+    public ProjectController(TaskService taskService, ProjectService projectService, UserService userService) {
         this.taskService = taskService;
         this.projectService = projectService;
+        this.userService = userService;
     }
 
     @GetMapping("/projects")
@@ -47,23 +52,53 @@ public class ProjectController {
 
     @GetMapping("/projects/new")
     public String newProject(Model model) {
-        model.addAttribute("project", new Project());
+        model.addAttribute("project", new ProjectDTO());
 
         return "project_form";
     }
 
     @GetMapping("/projects/{projectId}/edit")
     public String editProject(@PathVariable Long projectId, Model model) {
-        // TODO: check for existence of project with id, if non-existent, send user back to project list with an error message
+        Project foundProject = projectService.findById(projectId);
+        ProjectDTO projectDTO = new ProjectDTO();
 
-        model.addAttribute("project", projectService.findById(projectId));
+        if (foundProject == null) {
+            return "redirect:/projects/new";
+        }
+
+        projectDTO.setId(foundProject.getId());
+        projectDTO.setName(foundProject.getName());
+        projectDTO.setDescription(foundProject.getDescription());
+        projectDTO.setStatus(ConversionHelper.statusToInt(foundProject.getStatus()));
+        projectDTO.setPriority(foundProject.getPriority());
+
+        model.addAttribute("project", projectDTO);
 
         return "project_form";
     }
 
     @PostMapping("/projects/save")
-    public String saveProject(@ModelAttribute("project") Project project) {
-        // TODO: add save functionality for projects
+    public String saveProject(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("project") ProjectDTO projectDTO) {
+        // find existing project or create new project
+        Project foundProject = projectService.findById(projectDTO.id);
+        User assignedTo = userService.findUserById(projectDTO.assignedToUserId);
+
+        if (foundProject == null) {
+            foundProject = new Project();
+            User editor = userService.findUserByEmail(userDetails.getUsername());
+            foundProject.setCreatedBy(editor);
+        }
+
+        foundProject.setName(projectDTO.name);
+        foundProject.setDescription(projectDTO.description);
+        foundProject.setStatus(ConversionHelper.intToStatus(projectDTO.status));
+        foundProject.setPriority(projectDTO.priority);
+
+        if (assignedTo != null) {
+            foundProject.setAssignedTo(assignedTo);
+        }
+
+        projectService.save(foundProject);
 
         return "redirect:/projects";
     }
