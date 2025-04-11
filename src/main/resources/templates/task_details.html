@@ -12,6 +12,7 @@
         <p th:text="*{description}"></p>
         <p th:text="'Status: ' + *{status}"></p>
         <p th:text="'Priority: ' + *{priority}"></p>
+        <p th:text="'Assigned To: ' + *{assignedTo.email}"></p>
     </div>
 
     <table>
@@ -23,13 +24,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="childTask : *{childTasks}">
-                <td th:text="*{childTask.name}"></td>
-                <td th:text="*{childTask.description}"></td>
-                <td th:text="*{childTask.status}"></td>
+            <tr th:each="requirement : ${requirements}">
+                <td th:text="*{requirement.title}"></td>
+                <td th:text="*{requirement.description}"></td>
+                <td th:text="*{requirement.status}"></td>
             </tr>
             <tr>
-                <td colspan="3"><a th:href="@{/new}">Add New Child Task</a></td>
+                <td colspan="3"><a th:href="@{/projects/{projectId}/task/{taskId}/new(projectId=${projectId},taskId=${task.taskId})}">Add New Requirement</a></td>
             </tr>
         </tbody>
     </table>
