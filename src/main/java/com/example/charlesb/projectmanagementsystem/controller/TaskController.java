@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/projects/{projectId}")
+@RequestMapping("/projects/{projectId}/task")
 public class TaskController {
 
     private final ProjectService projectService;
@@ -34,7 +34,7 @@ public class TaskController {
         this.userService = userService;
     }
 
-    @GetMapping("/task/{taskId}")
+    @GetMapping("/{taskId}")
     public String viewTaskDetails(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
         Task task = taskService.findById(taskId);
 
@@ -45,7 +45,7 @@ public class TaskController {
         return "task_details";
     }
 
-    @GetMapping("/task/new")
+    @GetMapping("/new")
     public String newTask(@PathVariable Long projectId, Model model) {
         model.addAttribute("projectId", projectId);
         model.addAttribute("task", new TaskDTO());
@@ -53,7 +53,7 @@ public class TaskController {
         return "task_form";
     }
 
-    @GetMapping("/task/edit/{taskId}")
+    @GetMapping("/edit/{taskId}")
     public String editTask(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
         Task task = taskService.findById(taskId);
         TaskDTO taskDTO = new TaskDTO();
@@ -72,7 +72,7 @@ public class TaskController {
         return "task_form";
     }
 
-    @PostMapping("/task/save")
+    @PostMapping("/save")
     public String saveTask(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @ModelAttribute("task") TaskDTO taskDTO) {
         Task task;
 
@@ -104,14 +104,40 @@ public class TaskController {
         return "redirect:/list";
     }
 
-    @DeleteMapping("/task/delete/{taskId}")
+    @DeleteMapping("/delete/{taskId}")
     public String deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
         taskService.deleteById(taskId);
 
         return "redirect:/projects/{projectId}";
     }
 
-    @PostMapping("/task/{taskId}/save_requirement")
+    @GetMapping("/{taskId}/new_requirement")
+    public String newRequirement(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
+        model.addAttribute("requirement", new RequirementDTO());
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("taskId", taskId);
+
+        return "requirement_form";
+    }
+
+    @GetMapping("/{taskId}/edit_requirement/{requirementId}")
+    public String editRequirement(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId, Model model) {
+        Requirement requirement = taskService.findRequirementById(requirementId);
+
+        if (requirement == null) {
+            return "redirect:/projects/{projectId}/task/{taskId}/new_requirement";
+        }
+
+        RequirementDTO requirementDTO = mapToDTO(requirement);
+
+        model.addAttribute("requirement", requirementDTO);
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("taskId", taskId);
+
+        return "requirement_form";
+    }
+
+    @PostMapping("/{taskId}/save_requirement")
     public void saveRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, @ModelAttribute("requirement") RequirementDTO requirementDTO) {
         Task task = taskService.findById(taskId);
         Requirement requirement = taskService.findRequirementById(requirementDTO.id);
@@ -138,9 +164,21 @@ public class TaskController {
         taskService.saveRequirement(requirement);
     }
 
-    @DeleteMapping("/task/{taskId}/{requirementId}")
+    @DeleteMapping("/{taskId}/{requirementId}")
     public void deleteRequirement(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId) {
         taskService.deleteRequirementById(requirementId);
+    }
+
+    private RequirementDTO mapToDTO(Requirement requirement) {
+        RequirementDTO requirementDTO = new RequirementDTO();
+
+        requirementDTO.setId(requirement.getId());
+        requirementDTO.setTitle(requirement.getTitle());
+        requirementDTO.setDescription(requirement.getDescription());
+        requirementDTO.setStatus(ConversionHelper.statusToInt(requirement.getStatus()));
+        requirementDTO.setAssignedToUserId(requirement.getAssignedTo().getId());
+
+        return requirementDTO;
     }
 
 }
