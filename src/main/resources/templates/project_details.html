@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<main>
+    <div th:object="${project}">
+        <h2>Task Details</h2>
+        <h4 th:text="*{name}"></h4>
+        <p th:text="*{description}"></p>
+        <p th:text="'Status: ' + *{status}"></p>
+        <p th:text="'Priority: ' + *{priority}"></p>
+        <p th:text="'Assigned To: ' + *{assignedTo.email}"></p>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${project.tasks}">
+            <td th:text="*{task.name}"></td>
+            <td th:text="*{task.description}"></td>
+            <td th:text="*{task.status}"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><a th:href="@{/projects/{projectId}/task/new(projectId=${project.id})}">Add New Task</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/projects/{id}/edit(id=${project.id})}">Edit</a>
+    <a th:href="@{/projects/{id}/delete(id=${project.id})}">Delete</a>
+</main>
+</body>
+</html>
