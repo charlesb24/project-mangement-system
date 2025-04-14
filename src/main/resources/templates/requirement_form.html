@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST" th:action="@{/projects/{projectId}/task/{taskId}/requirement/save(projectId=${projectId},taskId=${taskId})}" th:object="${requirement}">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <label>
+        Task Name
+        <input type="text" th:field="*{title}" placeholder="Name" />
+    </label>
+    <label>
+        Task Description
+        <input type="text" th:field="*{description}" placeholder="Description" />
+    </label>
+    <label>
+        Status
+        <input type="text" th:field="*{status}" placeholder="Task status" />
+    </label>
+
+    <input th:if="${requirement.id == null}" type="submit" value="Create" />
+    <input th:if="${requirement.id != null}" type="submit" value="Edit" />
+</form>
+</body>
+</html>
