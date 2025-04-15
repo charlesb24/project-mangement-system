@@ -2,6 +2,7 @@ package com.example.charlesb.projectmanagementsystem.controller;
 
 import com.example.charlesb.projectmanagementsystem.dto.RequirementDTO;
 import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
+import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
 import com.example.charlesb.projectmanagementsystem.entity.Requirement;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
@@ -111,33 +112,42 @@ public class TaskController {
         return "redirect:/projects/{projectId}";
     }
 
-    @GetMapping("/{taskId}/new_requirement")
-    public String newRequirement(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
+    @GetMapping("/{taskId}/requirement/new")
+    public String newRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, Model model) {
+        List<UserDTO> users = userService.findSubordinates(userDetails.getUsername());
+
         model.addAttribute("requirement", new RequirementDTO());
         model.addAttribute("projectId", projectId);
         model.addAttribute("taskId", taskId);
+        model.addAttribute("users", users);
+        model.addAttribute("assignedUser", null);
 
         return "requirement_form";
     }
 
-    @GetMapping("/{taskId}/edit_requirement/{requirementId}")
-    public String editRequirement(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId, Model model) {
+    @GetMapping("/{taskId}/requirement/{requirementId}/edit")
+    public String editRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId, Model model) {
         Requirement requirement = taskService.findRequirementById(requirementId);
+        List<UserDTO> users = userService.findSubordinates(userDetails.getUsername());
 
         if (requirement == null) {
-            return "redirect:/projects/{projectId}/task/{taskId}/new_requirement";
+            return "redirect:/projects/{projectId}/task/{taskId}/requirement/new";
         }
+
+        User assignedUser = requirement.getAssignedTo();
 
         RequirementDTO requirementDTO = mapToDTO(requirement);
 
         model.addAttribute("requirement", requirementDTO);
         model.addAttribute("projectId", projectId);
         model.addAttribute("taskId", taskId);
+        model.addAttribute("users", users);
+        model.addAttribute("assignedUser", assignedUser);
 
         return "requirement_form";
     }
 
-    @PostMapping("/{taskId}/save_requirement")
+    @PostMapping("/{taskId}/requirement/save")
     public void saveRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, @ModelAttribute("requirement") RequirementDTO requirementDTO) {
         Task task = taskService.findById(taskId);
         Requirement requirement = taskService.findRequirementById(requirementDTO.id);
@@ -164,7 +174,7 @@ public class TaskController {
         taskService.saveRequirement(requirement);
     }
 
-    @DeleteMapping("/{taskId}/{requirementId}")
+    @DeleteMapping("/{taskId}/requirement/{requirementId}")
     public void deleteRequirement(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId) {
         taskService.deleteRequirementById(requirementId);
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,7 +11,7 @@
 
     <label>
         Task Name
-        <input type="text" th:field="*{title}" placeholder="Name" />
+        <input type="text" th:field="*{title}" placeholder="Title" />
     </label>
     <label>
         Task Description
@@ -19,8 +19,16 @@
     </label>
     <label>
         Status
-        <input type="text" th:field="*{status}" placeholder="Task status" />
+        <input type="text" th:field="*{status}" placeholder="Status" />
     </label>
+
+    <label for="assignedTo">Assigned To</label>
+    <select id="assignedTo" th:field="*{assignedToUserId}">
+        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.lastName}, ${user.firstName}"></option>
+        <option th:value="${currentUser.id}" th:text="${}" ></option>
+        <option th:if="*{assignedToUserId == null}" th:value="${null}" selected>Unassigned</option>
+        <option th:if="${assignedUser != null}" th:value="assignedUser.id" th:text="${assignedUser.lastName}, ${assignedUser.firstName}" selected></option>
+    </select>
 
     <input th:if="${requirement.id == null}" type="submit" value="Create" />
     <input th:if="${requirement.id != null}" type="submit" value="Edit" />
