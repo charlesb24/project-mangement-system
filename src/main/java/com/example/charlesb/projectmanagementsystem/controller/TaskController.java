@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -128,20 +129,19 @@ public class TaskController {
     @GetMapping("/{taskId}/requirement/{requirementId}/edit")
     public String editRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId, Model model) {
         Requirement requirement = taskService.findRequirementById(requirementId);
-        List<UserDTO> users = userService.findSubordinates(userDetails.getUsername());
+        List<UserDTO> assignableUsers = findAssignableUsers(userDetails);
 
         if (requirement == null) {
             return "redirect:/projects/{projectId}/task/{taskId}/requirement/new";
         }
 
-        User assignedUser = requirement.getAssignedTo();
-
+        UserDTO assignedUser = mapToDTO(requirement.getAssignedTo());
         RequirementDTO requirementDTO = mapToDTO(requirement);
 
         model.addAttribute("requirement", requirementDTO);
         model.addAttribute("projectId", projectId);
         model.addAttribute("taskId", taskId);
-        model.addAttribute("users", users);
+        model.addAttribute("users", assignableUsers);
         model.addAttribute("assignedUser", assignedUser);
 
         return "requirement_form";
@@ -189,6 +189,24 @@ public class TaskController {
         requirementDTO.setAssignedToUserId(requirement.getAssignedTo().getId());
 
         return requirementDTO;
+    }
+
+    private UserDTO mapToDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setId(user.getId());
+
+
+        return userDTO;
+    }
+
+    private List<UserDTO> findAssignableUsers(UserDetails userDetails) {
+        List<UserDTO> assignableUsers = userService.findSubordinates(userDetails.getUsername());
+        UserDTO currentUser = mapToDTO(userService.findUserByEmail(userDetails.getUsername()));
+
+        assignableUsers.add(currentUser);
+
+        return assignableUsers;
     }
 
 }
