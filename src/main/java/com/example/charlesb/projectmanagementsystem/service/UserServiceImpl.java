@@ -5,6 +5,7 @@ import com.example.charlesb.projectmanagementsystem.dao.UserRepository;
 import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Role;
 import com.example.charlesb.projectmanagementsystem.entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDTO userDTO) {
-        User user = new User();
-
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-
-        user.setFirstName(userDTO.getFirstName());
-        user.setMiddleName(userDTO.getMiddleName());
-        user.setLastName(userDTO.getLastName());
-        user.setPhone(userDTO.getPhone());
-        user.setContactMethod(userDTO.getContactMethod());
-        user.setManagerId(userDTO.getManagerId());
+        User user = mapToUser(userDTO);
 
         if (userDTO.getManagerId() != null) {
             Optional<User> manager = userRepository.findById(userDTO.getManagerId());
@@ -74,10 +65,21 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> findAllUsers() {
         List<User> users = userRepository.findAll();
 
-        return users.stream().map(user -> mapToUserDTO(user)).collect(Collectors.toList());
+        return users.stream().map(user -> mapToDTO(user)).collect(Collectors.toList());
     }
 
-    private UserDTO mapToUserDTO(User user) {
+    @Override
+    public List<UserDTO> findAssignableUsers(UserDetails userDetails) {
+        User assigningUser = userRepository.findByEmail(userDetails.getUsername());
+        List<User> assignableUsers = userRepository.findAllByManagerId(assigningUser.getId());
+
+        assignableUsers.add(assigningUser);
+
+        return assignableUsers.stream().map(user -> mapToDTO(user)).toList();
+    }
+
+    @Override
+    public UserDTO mapToDTO(User user) {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setId(user.getId());
@@ -90,6 +92,23 @@ public class UserServiceImpl implements UserService {
         userDTO.setManagerId(user.getManagerId());
 
         return userDTO;
+    }
+
+    @Override
+    public User mapToUser(UserDTO userDTO) {
+        User user = userRepository.findById(userDTO.getId()).orElse(new User());
+
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setMiddleName(userDTO.getMiddleName());
+        user.setLastName(userDTO.getLastName());
+        user.setPhone(userDTO.getPhone());
+        user.setContactMethod(userDTO.getContactMethod());
+        user.setManagerId(userDTO.getManagerId());
+
+        return user;
     }
 
     private Role generateDefaultRole() {
