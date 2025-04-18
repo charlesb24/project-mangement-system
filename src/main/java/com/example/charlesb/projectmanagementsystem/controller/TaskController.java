@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,28 +47,29 @@ public class TaskController {
     }
 
     @GetMapping("/new")
-    public String newTask(@PathVariable Long projectId, Model model) {
+    public String newTask(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, Model model) {
         model.addAttribute("projectId", projectId);
         model.addAttribute("task", new TaskDTO());
+        model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
+        model.addAttribute("assignedUser", null);
 
         return "task_form";
     }
 
     @GetMapping("/edit/{taskId}")
-    public String editTask(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
+    public String editTask(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, Model model) {
         Task task = taskService.findById(taskId);
-        TaskDTO taskDTO = new TaskDTO();
 
-        if (task != null) {
-            taskDTO.setId(task.getTaskId());
-            taskDTO.setName(task.getName());
-            taskDTO.setDescription(task.getDescription());
-            taskDTO.setStatus(ConversionHelper.statusToInt(task.getStatus()));
-            taskDTO.setPriority(task.getPriority());
+        if (task == null) {
+            return "redirect:/projects/{projectId}/task/new";
         }
+
+        TaskDTO taskDTO = taskService.mapToDTO(task);
 
         model.addAttribute("projectId", projectId);
         model.addAttribute("task", taskDTO);
+        model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
+        model.addAttribute("assignedUser", userService.mapToDTO(task.getAssignedTo()));
 
         return "task_form";
     }
@@ -115,12 +115,10 @@ public class TaskController {
 
     @GetMapping("/{taskId}/requirement/new")
     public String newRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, Model model) {
-        List<UserDTO> users = userService.findSubordinates(userDetails.getUsername());
-
         model.addAttribute("requirement", new RequirementDTO());
         model.addAttribute("projectId", projectId);
         model.addAttribute("taskId", taskId);
-        model.addAttribute("users", users);
+        model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
         model.addAttribute("assignedUser", null);
 
         return "requirement_form";
@@ -129,20 +127,18 @@ public class TaskController {
     @GetMapping("/{taskId}/requirement/{requirementId}/edit")
     public String editRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId, Model model) {
         Requirement requirement = taskService.findRequirementById(requirementId);
-        List<UserDTO> assignableUsers = findAssignableUsers(userDetails);
 
         if (requirement == null) {
             return "redirect:/projects/{projectId}/task/{taskId}/requirement/new";
         }
 
-        UserDTO assignedUser = mapToDTO(requirement.getAssignedTo());
         RequirementDTO requirementDTO = mapToDTO(requirement);
 
         model.addAttribute("requirement", requirementDTO);
         model.addAttribute("projectId", projectId);
         model.addAttribute("taskId", taskId);
-        model.addAttribute("users", assignableUsers);
-        model.addAttribute("assignedUser", assignedUser);
+        model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
+        model.addAttribute("assignedUser", userService.mapToDTO(requirement.getAssignedTo()));
 
         return "requirement_form";
     }
@@ -189,24 +185,6 @@ public class TaskController {
         requirementDTO.setAssignedToUserId(requirement.getAssignedTo().getId());
 
         return requirementDTO;
-    }
-
-    private UserDTO mapToDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-
-        userDTO.setId(user.getId());
-
-
-        return userDTO;
-    }
-
-    private List<UserDTO> findAssignableUsers(UserDetails userDetails) {
-        List<UserDTO> assignableUsers = userService.findSubordinates(userDetails.getUsername());
-        UserDTO currentUser = mapToDTO(userService.findUserByEmail(userDetails.getUsername()));
-
-        assignableUsers.add(currentUser);
-
-        return assignableUsers;
     }
 
 }

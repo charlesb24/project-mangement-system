@@ -2,6 +2,7 @@ package com.example.charlesb.projectmanagementsystem.controller;
 
 import com.example.charlesb.projectmanagementsystem.dto.ProjectDTO;
 import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
+import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
 import com.example.charlesb.projectmanagementsystem.entity.User;
@@ -21,13 +22,11 @@ import java.util.List;
 @Controller
 public class ProjectController {
 
-    private final TaskService taskService;
     private final ProjectService projectService;
     private final UserService userService;
 
     @Autowired
-    public ProjectController(TaskService taskService, ProjectService projectService, UserService userService) {
-        this.taskService = taskService;
+    public ProjectController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
         this.userService = userService;
     }
@@ -51,16 +50,18 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/new")
-    public String newProject(Model model) {
+    public String newProject(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("project", new ProjectDTO());
+        model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
 
         return "project_form";
     }
 
     @GetMapping("/projects/{projectId}/edit")
-    public String editProject(@PathVariable Long projectId, Model model) {
+    public String editProject(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, Model model) {
         Project foundProject = projectService.findById(projectId);
         ProjectDTO projectDTO = new ProjectDTO();
+
 
         if (foundProject == null) {
             return "redirect:/projects/new";
@@ -73,6 +74,8 @@ public class ProjectController {
         projectDTO.setPriority(foundProject.getPriority());
 
         model.addAttribute("project", projectDTO);
+        model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
+        model.addAttribute("assignedUser", userService.mapToDTO(foundProject.getAssignedTo()));
 
         return "project_form";
     }
