@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<header th:fragment="unauthenticated">
+    <nav>
+        <ul>
+            <li><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/projects}">Projects</a></li>
+        </ul>
+    </nav>
+    <a th:href="@{/logout}">Login</a>
+    <a th:href="@{/register}">Register</a>
+</header>
+
+<header th:fragment="authenticated">
+    <nav>
+        <ul>
+            <li><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/projects}">Projects</a></li>
+        </ul>
+    </nav>
+    <a th:href="@{/logout}">Logout</a>
+</header>
+
+<header th:fragment="authenticated-admin">
+    <nav>
+        <ul>
+            <li><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/projects}">Projects</a></li>
+            <li><a th:href="@{/admin/users/list}">Admin</a></li>
+        </ul>
+    </nav>
+    <a th:href="@{/logout}">Logout</a>
+</header>
+
+</body>
+</html>
