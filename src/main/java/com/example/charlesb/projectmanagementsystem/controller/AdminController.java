@@ -6,6 +6,7 @@ import com.example.charlesb.projectmanagementsystem.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,7 +30,7 @@ public class AdminController {
         return "user_list";
     }
 
-    @PostMapping("/users/")
+    @PostMapping("/users/toggle")
     public void toggleUserEnabled(@RequestParam Long userId) {
         User user = userService.findUserById(userId);
 
@@ -38,12 +39,33 @@ public class AdminController {
         userService.updateUser(user);
     }
 
-    @GetMapping("/users/edit")
-    public String editUser(Model model) {
-        // TODO: allow editing of existing users
-        model.addAttribute("user", new UserDTO());
+    @GetMapping("/users/{userId}/edit")
+    public String editUser(@PathVariable Long userId, Model model) {
+        model.addAttribute("user", userService.mapToDTO(userService.findUserById(userId)));
 
         return "user_form";
+    }
+
+    @PostMapping("/users/save")
+    public String saveUser(@RequestParam UserDTO userDTO) {
+        User user;
+        User foundUser = userService.findUserById(userDTO.getId());
+
+        if (foundUser == null) {
+            user = new User();
+        } else {
+            user = foundUser;
+        }
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setMiddleName(userDTO.getMiddleName());
+        user.setLastName(userDTO.getLastName());
+
+        user.setEmail(userDTO.getEmail());
+        user.setPhone(userDTO.getPhone());
+        user.setLocked(userDTO.isLocked());
+
+        return "redirect:/users/list";
     }
 
 }

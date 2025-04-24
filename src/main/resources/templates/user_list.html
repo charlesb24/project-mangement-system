@@ -13,6 +13,7 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,15 @@
             <td th:text = "${user.lastName}"></td>
             <td th:text = "${user.email}"></td>
             <td th:text = "${user.phone}"></td>
+            <td>
+                <form method="post">
+                    <input type="hidden" name="userId" th:value="${user.id}" />
+                    <input th:if="${user.isEnabled()}" type="submit" value="Disable" />
+                    <input th:if="${!user.isEnabled()}" type="submit" value="Enable" />
+                </form>
+                <a th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
+                <a th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
+            </td>
         </tr>
     </tbody>
 </table>
