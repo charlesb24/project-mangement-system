@@ -5,6 +5,10 @@
     <title>Task Details</title>
 </head>
 <body>
+
+<header th:replace="~{../fragments/headers :: authenticated}">
+</header>
+
 <main>
     <div th:object="${task}">
         <h2>Task Details</h2>

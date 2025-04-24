@@ -4,6 +4,11 @@
   <title>Home Page</title>
 </head>
 <body>
-  <h1>Welcome!</h1>
+
+<header th:replace="~{../fragments/headers :: authenticated}">
+</header>
+
+<h1>Welcome!</h1>
+
 </body>
 </html>

@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+
+<header th:replace="~{../fragments/headers :: authenticated}">
+</header>
+
   <form method="POST" th:action="@{/projects/{projectId}/task/save(projectId=${projectId})}" th:object="${task}">
 
     <input type="hidden" th:field="*{id}" />
