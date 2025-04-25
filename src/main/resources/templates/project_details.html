@@ -42,5 +42,9 @@
     <a th:href="@{/projects/{id}/edit(id=${project.id})}">Edit</a>
     <a th:href="@{/projects/{id}/delete(id=${project.id})}">Delete</a>
 </main>
+
+<footer th:replace="~{../fragments/footers :: footer}">
+</footer>
+
 </body>
 </html>

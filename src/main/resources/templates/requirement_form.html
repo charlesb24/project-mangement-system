@@ -37,5 +37,9 @@
     <input th:if="${requirement.id == null}" type="submit" value="Create" />
     <input th:if="${requirement.id != null}" type="submit" value="Edit" />
 </form>
+
+<footer th:replace="~{../fragments/footers :: footer}">
+</footer>
+
 </body>
 </html>

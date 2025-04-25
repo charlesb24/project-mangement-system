@@ -40,5 +40,9 @@
     <input th:if="${task.id == null}" type="submit" value="Create" />
     <input th:if="${task.id != null}" type="submit" value="Edit" />
   </form>
+
+<footer th:replace="~{../fragments/footers :: footer}">
+</footer>
+
 </body>
 </html>
