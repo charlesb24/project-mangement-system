@@ -1,5 +1,6 @@
 package com.example.charlesb.projectmanagementsystem.service;
 
+import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Requirement;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
 
@@ -21,5 +22,8 @@ public interface TaskService {
     void deleteById(Long taskId);
 
     void deleteRequirementById(Long requirementId);
+
+    Task mapToTask(TaskDTO taskDTO);
+    TaskDTO mapToDTO(Task task);
 
 }

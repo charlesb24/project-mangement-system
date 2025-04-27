@@ -93,9 +93,9 @@ public class TaskController {
 
             task = new Task();
             task.setCreatedBy(creator);
+            task.setProject(savedProject);
         }
 
-        task.setProject(savedProject);
         task.setName(taskDTO.name);
         task.setDescription(taskDTO.description);
         task.setPriority(taskDTO.priority);
@@ -156,9 +156,9 @@ public class TaskController {
 
             requirement = new Requirement();
             requirement.setCreatedBy(creator);
+            requirement.setTask(task);
         }
 
-        requirement.setTask(task);
         requirement.setTitle(requirementDTO.title);
         requirement.setDescription(requirementDTO.description);
         requirement.setStatus(ConversionHelper.intToStatus(requirementDTO.status));
