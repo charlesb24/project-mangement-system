@@ -30,12 +30,15 @@
             <input type="text" th:field="*{status}" placeholder="Task status" />
         </label>
 
-        <label for="assignedTo">Assigned To</label>
-        <select id="assignedTo" th:field="*{assignedToUserId}">
-            <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user.lastName + ', ' + user.firstName}"></option>
-            <option th:if="*{assignedToUserId == 0}" th:value="${0}" selected>Unassigned</option>
-            <option th:if="*{assignedToUserId != 0}" th:value="${assignedUser?.id}" th:text="${assignedUser?.lastName + ', ' + assignedUser?.firstName}" selected></option>
-        </select>
+        <div th:replace="~{../fragments/selectUserToAssign :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
+        </div>
+
+<!--        <label for="assignedTo">Assigned To</label>-->
+<!--        <select id="assignedTo" th:field="*{assignedToUserId}">-->
+<!--            <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user.lastName + ', ' + user.firstName}"></option>-->
+<!--            <option th:if="*{assignedToUserId == 0}" th:value="${0}" selected>Unassigned</option>-->
+<!--            <option th:if="*{assignedToUserId != 0}" th:value="${assignedUser?.id}" th:text="${assignedUser?.lastName + ', ' + assignedUser?.firstName}" selected></option>-->
+<!--        </select>-->
 
         <input th:if="${project.id == null}" type="submit" value="Create" />
         <input th:if="${project.id != null}" type="submit" value="Edit" />
