@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="input (id, field, placeholder, label, type, value)">
+    <label th:for="${id}" th:text="${label}"></label>
+    <input th:type="${type}" th:id="${id}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
+</div>
+
+</body>
+</html>

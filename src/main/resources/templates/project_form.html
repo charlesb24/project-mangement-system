@@ -13,35 +13,22 @@
 
         <input type="hidden" th:field="*{id}" />
 
-        <label>
-            Task Name
-            <input type="text" th:field="*{name}" placeholder="Name" />
-        </label>
-        <label>
-            Task Description
-            <input type="text" th:field="*{description}" placeholder="Description" />
-        </label>
-        <label>
-            Priority
-            <input type="text" th:field="*{priority}" placeholder="Priority" />
-        </label>
-        <label>
-            Status
-            <input type="text" th:field="*{status}" placeholder="Task status" />
-        </label>
+        <div th:replace="~{../fragments/form_fields :: input (id='name', field='name', placeholder='Name', label='Project Name', type='text', value='*{name}')}">
+        </div>
+
+        <div th:replace="~{../fragments/form_fields :: input (id='description', field='description', placeholder='Description', label='Project Description', type='text', value='*{description}')}">
+        </div>
+
+        <div th:replace="~{../fragments/form_fields :: input (id='priority', field='priority', placeholder='0', label='Priority', type='number', value='*{priority}')}">
+        </div>
+
+        <div th:replace="~{../fragments/form_fields :: input (id='status', field='status', placeholder='Status', label='Status', type='number', value='*{status}')}">
+        </div>
 
         <div th:replace="~{../fragments/selectUserToAssign :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
         </div>
 
-<!--        <label for="assignedTo">Assigned To</label>-->
-<!--        <select id="assignedTo" th:field="*{assignedToUserId}">-->
-<!--            <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user.lastName + ', ' + user.firstName}"></option>-->
-<!--            <option th:if="*{assignedToUserId == 0}" th:value="${0}" selected>Unassigned</option>-->
-<!--            <option th:if="*{assignedToUserId != 0}" th:value="${assignedUser?.id}" th:text="${assignedUser?.lastName + ', ' + assignedUser?.firstName}" selected></option>-->
-<!--        </select>-->
-
-        <input th:if="${project.id == null}" type="submit" value="Create" />
-        <input th:if="${project.id != null}" type="submit" value="Edit" />
+        <input type="submit" th:value="${project.id == 0} ? 'Create' : 'Edit'" />
     </form>
 
 <footer th:replace="~{../fragments/footers :: footer}">
