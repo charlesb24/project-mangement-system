@@ -11,5 +11,14 @@
     <input th:type="${type}" th:id="${id}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
 </div>
 
+<div th:fragment="userAssignment (assignedToUserId, assignableUsers, assignedUser)">
+    <label for="assignedTo">Assigned To</label>
+    <select id="assignedTo" th:field="*{assignedToUserId}">
+        <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user?.lastName + ', ' + user?.firstName}"></option>
+        <option th:if="*{assignedToUserId == 0}" th:value="${0}" selected>Unassigned</option>
+        <option th:if="*{assignedToUserId != 0}" th:value="${assignedUser?.id}" th:text="${assignedUser?.lastName + ', ' + assignedUser?.firstName}" selected></option>
+    </select>
+</div>
+
 </body>
 </html>

@@ -25,7 +25,7 @@
         <div th:replace="~{../fragments/form_fields :: input (id='status', field='status', placeholder='Status', label='Status', type='number', value='*{status}')}">
         </div>
 
-        <div th:replace="~{../fragments/selectUserToAssign :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
+        <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
         </div>
 
         <input type="submit" th:value="${project.id == 0} ? 'Create' : 'Edit'" />
