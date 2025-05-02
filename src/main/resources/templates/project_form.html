@@ -28,7 +28,9 @@
         <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
         </div>
 
-        <input type="submit" th:value="${project.id == 0} ? 'Create' : 'Edit'" />
+        <div th:replace="~{../fragments/form_fields :: submit (label=${(project.id == 0) ? 'Create' : 'Edit'})}">
+        </div>
+
     </form>
 
 <footer th:replace="~{../fragments/footers :: footer}">

@@ -8,7 +8,11 @@
 
 <div th:fragment="input (id, field, placeholder, label, type, value)">
     <label th:for="${id}" th:text="${label}"></label>
-    <input th:type="${type}" th:id="${id}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
+    <input th:id="${id}" th:type="${type}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
+</div>
+
+<div th:fragment="submit (label)">
+    <input id="submit" type="submit" th:value="${label}" />
 </div>
 
 <div th:fragment="userAssignment (assignedToUserId, assignableUsers, assignedUser)">
