@@ -1,0 +1,29 @@
+body {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+footer {
+    z-index: 1;
+    position: relative;
+    text-align: center;
+}
+
+footer ul li {
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+footer ul li a {
+    color: gainsboro;
+    text-decoration: none;
+}
+
+footer ul {
+    margin: 0.5rem;
+}
