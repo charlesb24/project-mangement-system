@@ -41,7 +41,12 @@ public class AdminController {
 
     @GetMapping("/users/{userId}/edit")
     public String editUser(@PathVariable Long userId, Model model) {
-        model.addAttribute("user", userService.mapToDTO(userService.findUserById(userId)));
+        User foundUser = userService.findUserById(userId);
+        User manager = userService.findUserById(foundUser.getManagerId());
+
+        model.addAttribute("user", userService.mapToDTO(foundUser));
+        model.addAttribute("managers", userService.findManagers());
+        model.addAttribute("assignedUser", userService.mapToDTO(manager));
 
         return "user_form";
     }

@@ -11,6 +11,39 @@
 <header th:replace="~{../fragments/headers :: authenticated}">
 </header>
 
+<form method="POST" th:action="@{/users/save}" th:object="${user}">
+
+  <input type="hidden" th:field="*{id}" />
+
+  <div th:replace="~{../fragments/form_fields :: input (id='firstName', field='firstName', placeholder='First Name', label='First Name', type='text', value='*{firstName}')}">
+  </div>
+
+  <div th:replace="~{../fragments/form_fields :: input (id='middleName', field='middleName', placeholder='Middle Name', label='Middle Name', type='text', value='*{middleName}')}">
+  </div>
+
+  <div th:replace="~{../fragments/form_fields :: input (id='lastName', field='lastName', placeholder='Last Name', label='Last Name', type='text', value='*{lastName}')}">
+  </div>
+
+  <div th:replace="~{../fragments/form_fields :: input (id='email', field='email', placeholder='example@gmail.com', label='Email', type='email', value='*{email}')}">
+  </div>
+
+  <div th:replace="~{../fragments/form_fields :: input (id='phone', field='phone', placeholder='(000) 000-0000', label='Phone Number', type='text', value='*{phone}')}">
+  </div>
+
+  <div>
+    <span>Preferred Contact Method: </span>
+    <input id="contactMethodEmail" type="radio" th:field="*{contactMethod}" value="email" />
+    <label for="contactMethodEmail">Email</label>
+    <input id="contactMethodPhone" type="radio" th:field="*{contactMethod}" value="phone" />
+    <label for="contactMethodPhone">Phone</label>
+  </div>
+
+  <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{managerId}, assignableUsers=${managers}, assignedUser=${assignedUser})}">
+  </div>
+
+  <input type="submit" value="Edit" />
+</form>
+
 <footer th:replace="~{../fragments/footers :: footer}">
 </footer>
 
