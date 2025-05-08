@@ -46,7 +46,7 @@ public class Task {
     @Column(name = "status")
     private Status status;
 
-    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Requirement> requirements = new ArrayList<>();

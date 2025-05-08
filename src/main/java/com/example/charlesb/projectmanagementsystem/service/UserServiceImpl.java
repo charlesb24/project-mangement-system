@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
             defaultRole = generateDefaultRole();
         }
 
-        user.setRoles(List.of(defaultRole));
+        user.setRoles(Set.of(defaultRole));
 
         userRepository.save(user);
     }
@@ -66,6 +67,13 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAll();
 
         return users.stream().map(user -> mapToDTO(user)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> findManagers() {
+        List<User> managers = userRepository.findAllWithRole("ROLE_MANAGER");
+
+        return managers.stream().map(manager -> mapToDTO(manager)).toList();
     }
 
     @Override

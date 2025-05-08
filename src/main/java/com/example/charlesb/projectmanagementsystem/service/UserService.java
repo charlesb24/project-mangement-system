@@ -16,6 +16,7 @@ public interface UserService {
     User findUserByEmail(String email);
 
     List<UserDTO> findAllUsers();
+    List<UserDTO> findManagers();
     List<UserDTO> findAssignableUsers(UserDetails userDetails);
 
     User mapToUser(UserDTO userDTO);

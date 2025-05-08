@@ -3,22 +3,22 @@ package com.example.charlesb.projectmanagementsystem.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "users")
 public class User {
 
@@ -51,7 +51,7 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "role_id")}
     )
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
 
     @Size(min = 2)
     @Column(name = "first_name", nullable = false)
@@ -73,32 +73,32 @@ public class User {
     @Column(name = "manager_id")
     private Long managerId;
 
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Project> createdProjects = new ArrayList<>();
 
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Task> createdTasks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Requirement> createdRequirements = new ArrayList<>();
 
-    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Project> assignedProjects = new ArrayList<>();
 
-    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Task> assignedTasks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Requirement> assignedRequirements = new ArrayList<>();
