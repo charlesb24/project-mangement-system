@@ -18,7 +18,7 @@
         <p th:text="*{description}"></p>
         <p th:text="'Status: ' + *{status}"></p>
         <p th:text="'Priority: ' + *{priority}"></p>
-        <p th:text="'Assigned To: ' + *{assignedTo.email}"></p>
+        <p th:text="'Assigned To: ' + *{assignedTo?.email}"></p>
     </div>
 
     <table>

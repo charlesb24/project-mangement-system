@@ -29,9 +29,9 @@
         <td th:text="${project.description}">No Description</td>
         <td th:text="${project.priority}">No Priority</td>
         <td th:text="${project.status}">No Status</td>
-        <td th:text="${project.createdBy}">No Creator</td>
-        <td th:text="${project.assignedTo}">Unassigned</td>
-        <td><a th:href="@{/details/{id}(id=${project.id})}">View Details</a></td>
+        <td th:text="${project.createdBy.lastName + ', ' + project.createdBy.firstName}">No Creator</td>
+        <td th:text="${project.assignedTo} ? ${project.assignedTo?.lastName + ', ' + project.assignedTo?.firstName} : 'Unassigned'">Unassigned</td>
+        <td><a th:href="@{/projects/{id}(id=${project.id})}">View Details</a></td>
     </tr>
     <tr>
         <td colspan="7"><a th:href="@{/projects/new}">New Project</a></td>
