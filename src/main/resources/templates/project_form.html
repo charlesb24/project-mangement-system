@@ -15,16 +15,16 @@
 
         <input type="hidden" th:field="*{id}" />
 
-        <div th:replace="~{../fragments/form_fields :: input (id='name', field='name', placeholder='Name', label='Project Name', type='text', value='*{name}')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='name', field='name', placeholder='Name', label='Project Name', type='text', value='*{name}')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: input (id='description', field='description', placeholder='Description', label='Project Description', type='text', value='*{description}')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Project Description', type='text', value='*{description}')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: input (id='priority', field='priority', placeholder='0', label='Priority', type='number', value='*{priority}')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='priority', field='priority', placeholder='0', label='Priority', type='number', value='*{priority}')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: input (id='status', field='status', placeholder='Status', label='Status', type='number', value='*{status}')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='status', field='status', placeholder='Status', label='Status', type='number', value='*{status}')}">
         </div>
 
         <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">

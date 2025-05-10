@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<div th:fragment="input (id, field, placeholder, label, type, value)">
+<div th:fragment="labelledInput (id, field, placeholder, label, type, value)">
     <label th:for="${id}" th:text="${label}"></label>
     <input th:id="${id}" th:type="${type}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
     <p th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}">
