@@ -96,6 +96,9 @@
             </p>
         </div>
 
+        <div th:replace="~{../fragments/form_fields :: contactMethod (field='contactMethod')}">
+        </div>
+
         <div>
             <button type="submit">Register</button>
             <p>Already registered? <a href="/" th:href="@{/login}">Login here</a></p>

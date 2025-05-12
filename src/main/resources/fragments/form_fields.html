@@ -26,5 +26,13 @@
     </select>
 </div>
 
+<div th:fragment="contactMethod (field)">
+    <span>Preferred Contact Method: </span>
+    <input id="contactMethodEmail" type="radio" th:field="*{__${field}__}" value="email" th:selected="true" />
+    <label for="contactMethodEmail">Email</label>
+    <input id="contactMethodPhone" type="radio" th:field="*{__${field}__}" value="phone" />
+    <label for="contactMethodPhone">Phone</label>
+</div>
+
 </body>
 </html>
