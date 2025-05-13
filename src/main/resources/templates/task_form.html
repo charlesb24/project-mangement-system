@@ -15,32 +15,26 @@
 
     <input type="hidden" th:field="*{id}" />
 
-    <label>
-      Task Name
-      <input type="text" th:field="*{name}" placeholder="Name" />
-    </label>
-    <label>
-      Task Description
-      <input type="text" th:field="*{description}" placeholder="Description" />
-    </label>
-    <label>
-      Priority
-      <input type="text" th:field="*{priority}" placeholder="Priority" />
-    </label>
-    <label>
-      Status
-      <input type="text" th:field="*{status}" placeholder="Task status" />
-    </label>
+    <div th:replace="">
+    </div>
 
-    <label for="assignedTo">Assigned To</label>
-    <select id="assignedTo" th:field="*{assignedToUserId}">
-      <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user.lastName}, ${user.firstName}"></option>
-      <option th:if="*{assignedToUserId == null}" th:value="${null}" selected>Unassigned</option>
-      <option th:if="${assignedUser != null}" th:value="assignedUser.id" th:text="${assignedUser.lastName}, ${assignedUser.firstName}" selected></option>
-    </select>
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='name', field='name', placeholder='Name', label='Task Name', type='text', value='*{name}')}">
+    </div>
 
-    <input th:if="${task.id == null}" type="submit" value="Create" />
-    <input th:if="${task.id != null}" type="submit" value="Edit" />
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Task Description', type='text', value='*{description}')}">
+    </div>
+
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='priority', field='priority', placeholder='0', label='Priority', type='number', value='*{priority}')}">
+    </div>
+
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='status', field='status', placeholder='Status', label='Status', type='number', value='*{status}')}">
+    </div>
+
+    <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
+    </div>
+
+    <div th:replace="~{../fragments/form_fields :: submit (label=${(task.id == 0) ? 'Create' : 'Edit'})}">
+    </div>
   </form>
 
 <footer th:replace="~{../fragments/footers :: footer}">
