@@ -36,13 +36,15 @@ public class UserServiceImpl implements UserService {
             manager.ifPresent(value -> user.setManagerId(value.getId()));
         }
 
-        Role defaultRole = roleRepository.findByName("ROLE_USER");
-
-        if (defaultRole == null) {
-            defaultRole = generateDefaultRole();
+        if (user.getRoles().isEmpty()) {
+            Role defaultRole = generateOrFindRole("ROLE_USER");
+            user.setRoles(Set.of(defaultRole));
         }
 
-        user.setRoles(Set.of(defaultRole));
+        if (userRepository.findAll().isEmpty()) {
+            Role ownerRole = generateOrFindRole("ROLE_OWNER");
+            user.getRoles().add(ownerRole);
+        }
 
         userRepository.save(user);
     }
@@ -119,10 +121,16 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private Role generateDefaultRole() {
-        Role role = new Role();
-        role.setName("ROLE_USER");
-        return roleRepository.save(role);
+    private Role generateOrFindRole(String roleName) {
+        Role role = roleRepository.findByName(roleName);
+
+        if (role == null) {
+            role = new Role();
+            role.setName(roleName);
+            return roleRepository.save(role);
+        }
+
+        return role;
     }
 
 }
