@@ -13,7 +13,7 @@
 </div>
 <div>
 
-    <header th:replace="~{../fragments/headers :: unauthenticated}">
+    <header th:replace="~{../fragments/headers :: ${(#authentication.isAuthenticated())} ? (${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')} ? 'authenticated-admin' : 'authenticated') : 'unauthenticated'}">
     </header>
 
     <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">

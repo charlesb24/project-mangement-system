@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<header th:replace="~{../fragments/headers :: authenticated}">
+<header th:replace="~{../fragments/headers :: ${(#authentication.isAuthenticated())} ? (${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')} ? 'authenticated-admin' : 'authenticated') : 'unauthenticated'}">
 </header>
 
 <h1>Welcome!</h1>

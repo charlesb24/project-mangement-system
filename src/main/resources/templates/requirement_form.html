@@ -8,8 +8,7 @@
 </head>
 <body>
 
-<header th:replace="../fragments/headers :: authenticated">
-
+<header th:replace="~{../fragments/headers :: ${(#authentication.isAuthenticated())} ? (${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')} ? 'authenticated-admin' : 'authenticated') : 'unauthenticated'}">
 </header>
 
 <form method="POST" th:action="@{/projects/{projectId}/task/{taskId}/requirement/save(projectId=${projectId},taskId=${taskId})}" th:object="${requirement}">
