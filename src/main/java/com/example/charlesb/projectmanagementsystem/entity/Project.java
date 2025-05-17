@@ -1,5 +1,6 @@
 package com.example.charlesb.projectmanagementsystem.entity;
 
+import com.example.charlesb.projectmanagementsystem.enums.Priority;
 import com.example.charlesb.projectmanagementsystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.List;
 @Table(name = "projects")
 public class Project {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +35,9 @@ public class Project {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "priority")
-    private int priority;
+    private Priority priority;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")

@@ -1,5 +1,6 @@
 package com.example.charlesb.projectmanagementsystem.helper;
 
+import com.example.charlesb.projectmanagementsystem.enums.Priority;
 import com.example.charlesb.projectmanagementsystem.enums.Status;
 
 public class ConversionHelper {
@@ -20,6 +21,24 @@ public class ConversionHelper {
             case ON_HOLD -> 2;
             case CANCELLED -> 3;
             case COMPLETE -> 4;
+            default -> 0;
+        };
+    }
+
+    public static Priority intToPriority(int value) {
+        return switch (value) {
+            case 1 -> Priority.MEDIUM;
+            case 2 -> Priority.HIGH;
+            case 3 -> Priority.URGENT;
+            default -> Priority.LOW;
+        };
+    }
+
+    public static int priorityToInt(Priority priority) {
+        return switch (priority) {
+            case MEDIUM -> 1;
+            case HIGH -> 2;
+            case URGENT -> 3;
             default -> 0;
         };
     }
