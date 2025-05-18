@@ -25,10 +25,10 @@
         <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Project Description', type='text', value='*{description}', classes='')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: labelledInput (id='priority', field='priority', placeholder='0', label='Priority', type='number', value='*{priority}', classes='col-sm-6')}">
+        <div th:replace="~{../fragments/form_fields :: priorityAssignment (field='priority', currentPriority='*{priority}', classes='col-sm-6')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: labelledInput (id='status', field='status', placeholder='Status', label='Status', type='number', value='*{status}', classes='col-sm-6')}">
+        <div th:replace="~{../fragments/form_fields :: statusAssignment (field='status', currentStatus='*{status}', classes='col-sm-6')}">
         </div>
 
         <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">

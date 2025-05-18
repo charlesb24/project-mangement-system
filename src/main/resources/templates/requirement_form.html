@@ -11,26 +11,32 @@
 <header th:replace="~{../fragments/headers :: ${(#authentication.isAuthenticated())} ? (${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')} ? 'authenticated-admin' : 'authenticated') : 'unauthenticated'}">
 </header>
 
-<form method="POST" th:action="@{/projects/{projectId}/task/{taskId}/requirement/save(projectId=${projectId},taskId=${taskId})}" th:object="${requirement}">
+<main class="col-md-6 m-auto p-5">
 
-    <input type="hidden" th:field="*{id}" />
-    <input type="hidden" th:field="*{taskId}" />
+    <h1 class="h3 mb-3 fw-normal">[[${requirement.id == 0} ? 'Create a new' : 'Edit']] Requirement</h1>
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='title', field='title', placeholder='Title', label='Requirement Title', type='text', value='*{title}')}">
-    </div>
+    <form class="row g-3" method="POST" th:action="@{/projects/{projectId}/task/{taskId}/requirement/save(projectId=${projectId},taskId=${taskId})}" th:object="${requirement}">
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Requirement Description', type='text', value='*{description}')}">
-    </div>
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{taskId}" />
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='status', field='status', placeholder='Status', label='Status', type='number', value='*{status}')}">
-    </div>
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='title', field='title', placeholder='Title', label='Requirement Title', type='text', value='*{title}', classes='')}">
+        </div>
 
-    <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
-    </div>
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Requirement Description', type='text', value='*{description}', classes='')}">
+        </div>
 
-    <div th:replace="~{../fragments/form_fields :: submit (label=${(requirement.id == 0) ? 'Create' : 'Edit'})}">
-    </div>
-</form>
+        <div th:replace="~{../fragments/form_fields :: statusAssignment (field='status', currentStatus='*{status}', classes='')}">
+        </div>
+
+        <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
+        </div>
+
+        <div th:replace="~{../fragments/form_fields :: submit (label=${(requirement.id == 0) ? 'Create' : 'Edit'})}">
+        </div>
+    </form>
+
+</main>
 
 <footer th:replace="~{../fragments/footers :: footer}">
 </footer>
