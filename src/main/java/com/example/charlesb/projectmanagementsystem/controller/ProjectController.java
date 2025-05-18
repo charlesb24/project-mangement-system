@@ -71,7 +71,7 @@ public class ProjectController {
         projectDTO.setName(foundProject.getName());
         projectDTO.setDescription(foundProject.getDescription());
         projectDTO.setStatus(ConversionHelper.statusToInt(foundProject.getStatus()));
-        projectDTO.setPriority(foundProject.getPriority());
+        projectDTO.setPriority(ConversionHelper.priorityToInt(foundProject.getPriority()));
 
         model.addAttribute("project", projectDTO);
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
@@ -95,7 +95,7 @@ public class ProjectController {
         foundProject.setName(projectDTO.name);
         foundProject.setDescription(projectDTO.description);
         foundProject.setStatus(ConversionHelper.intToStatus(projectDTO.status));
-        foundProject.setPriority(projectDTO.priority);
+        foundProject.setPriority(ConversionHelper.intToPriority(projectDTO.priority));
 
         if (assignedTo != null) {
             foundProject.setAssignedTo(assignedTo);

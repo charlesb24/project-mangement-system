@@ -98,7 +98,7 @@ public class TaskController {
 
         task.setName(taskDTO.name);
         task.setDescription(taskDTO.description);
-        task.setPriority(taskDTO.priority);
+        task.setPriority(ConversionHelper.intToPriority(taskDTO.priority));
         task.setStatus(ConversionHelper.intToStatus(taskDTO.status));
 
         taskService.save(task);

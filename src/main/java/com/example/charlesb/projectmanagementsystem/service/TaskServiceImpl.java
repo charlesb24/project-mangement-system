@@ -85,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
 
         task.setName(taskDTO.getName());
         task.setDescription(taskDTO.getDescription());
-        task.setPriority(taskDTO.getPriority());
+        task.setPriority(ConversionHelper.intToPriority(taskDTO.getPriority()));
         task.setStatus(ConversionHelper.intToStatus(taskDTO.getStatus()));
 
         return task;
@@ -98,11 +98,12 @@ public class TaskServiceImpl implements TaskService {
         taskDTO.setId(task.getTaskId());
         taskDTO.setName(task.getName());
         taskDTO.setDescription(task.getDescription());
-        taskDTO.setPriority(task.getPriority());
+        taskDTO.setPriority(ConversionHelper.priorityToInt(task.getPriority()));
         taskDTO.setStatus(ConversionHelper.statusToInt(task.getStatus()));
         taskDTO.setAssignedToUserId(task.getAssignedTo().getId());
         taskDTO.setProjectId(task.getProject().getId());
 
         return taskDTO;
     }
+
 }
