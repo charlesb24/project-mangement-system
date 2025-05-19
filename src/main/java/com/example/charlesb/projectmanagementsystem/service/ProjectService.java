@@ -9,6 +9,7 @@ public interface ProjectService {
     List<Project> findAll();
     List<Project> findAllAssignedToUser(long userId);
     List<Project> findAllCreatedByUser(long userId);
+    List<Project> findInProgressByUser(long userId);
 
     Project findById(long projectId);
 
