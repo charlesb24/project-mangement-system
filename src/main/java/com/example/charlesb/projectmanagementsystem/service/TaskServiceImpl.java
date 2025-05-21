@@ -7,10 +7,12 @@ import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Requirement;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
 import com.example.charlesb.projectmanagementsystem.entity.User;
+import com.example.charlesb.projectmanagementsystem.enums.Status;
 import com.example.charlesb.projectmanagementsystem.helper.ConversionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +38,26 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> findAllByProjectId(Long projectId) {
         return taskRepository.findAllByProjectId(projectId);
+    }
+
+    @Override
+    public List<Task> findAllInProgressByUser(Long userId) {
+        Optional<User> foundUser = userRepository.findById(userId);
+
+        if (foundUser.isEmpty()) {
+            return null;
+        }
+
+        List<Task> tasks = taskRepository.findAllByAssignedToAndStatus(foundUser.get(), Status.IN_PROGRESS);
+
+        tasks.sort(new Comparator<Task>() {
+            @Override
+            public int compare(Task o1, Task o2) {
+                return ConversionHelper.priorityToInt(o1.getPriority()) - ConversionHelper.priorityToInt(o2.getPriority());
+            }
+        });
+
+        return tasks;
     }
 
     @Override

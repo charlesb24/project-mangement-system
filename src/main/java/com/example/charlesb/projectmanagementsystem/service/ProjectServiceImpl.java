@@ -53,7 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> findInProgressByUser(long userId) {
+    public List<Project> findAllInProgressByUser(long userId) {
         Optional<User> foundUser = userRepository.findById(userId);
 
         if (foundUser.isEmpty()) {

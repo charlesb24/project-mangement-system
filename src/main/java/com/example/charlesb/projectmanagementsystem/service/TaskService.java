@@ -10,6 +10,7 @@ public interface TaskService {
 
     List<Task> findAll();
     List<Task> findAllByProjectId(Long projectId);
+    List<Task> findAllInProgressByUser(Long userId);
 
     Task findById(Long taskId);
 
