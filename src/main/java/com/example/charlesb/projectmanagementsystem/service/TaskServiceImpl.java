@@ -41,14 +41,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllInProgressByUser(Long userId) {
-        Optional<User> foundUser = userRepository.findById(userId);
-
-        if (foundUser.isEmpty()) {
-            return null;
-        }
-
-        List<Task> tasks = taskRepository.findAllByAssignedToAndStatus(foundUser.get(), Status.IN_PROGRESS);
+    public List<Task> findAllInProgressByUser(User user) {
+        List<Task> tasks = taskRepository.findAllByAssignedToAndStatus(user, Status.IN_PROGRESS);
 
         tasks.sort(new Comparator<Task>() {
             @Override
@@ -58,6 +52,11 @@ public class TaskServiceImpl implements TaskService {
         });
 
         return tasks;
+    }
+
+    @Override
+    public List<Requirement> findAllRequirementsInProgressByUser(User user) {
+        return requirementRepository.findAllByAssignedToAndStatus(user, Status.IN_PROGRESS);
     }
 
     @Override

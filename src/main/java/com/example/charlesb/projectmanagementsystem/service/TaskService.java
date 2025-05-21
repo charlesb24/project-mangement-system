@@ -3,6 +3,7 @@ package com.example.charlesb.projectmanagementsystem.service;
 import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Requirement;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
+import com.example.charlesb.projectmanagementsystem.entity.User;
 
 import java.util.List;
 
@@ -10,7 +11,9 @@ public interface TaskService {
 
     List<Task> findAll();
     List<Task> findAllByProjectId(Long projectId);
-    List<Task> findAllInProgressByUser(Long userId);
+    List<Task> findAllInProgressByUser(User user);
+
+    List<Requirement> findAllRequirementsInProgressByUser(User user);
 
     Task findById(Long taskId);
 

@@ -50,6 +50,23 @@
             </tr>
         </tbody>
     </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Requirement</th>
+                <th>Description</th>
+                <th>View Task Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="requirement : ${inProgressRequirements}">
+                <td th:text="${requirement.title}">No Title</td>
+                <td th:text="${requirement.description}">No Description</td>
+                <td><a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${requirement.task.project.id}, taskId=${requirement.task.taskId})}">View Task</a></td>
+            </tr>
+        </tbody>
+    </table>
 </main>
 
 <footer th:replace="~{../fragments/footers :: footer}">

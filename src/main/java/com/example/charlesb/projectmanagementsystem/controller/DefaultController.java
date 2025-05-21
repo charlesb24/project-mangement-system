@@ -34,8 +34,9 @@ public class DefaultController {
     public String dashboard(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         User currentUser = userService.findUserByEmail(userDetails.getUsername());
 
-        model.addAttribute("inProgressProjects", projectService.findAllInProgressByUser(currentUser.getId()));
-        model.addAttribute("inProgressTasks", taskService.findAllInProgressByUser(currentUser.getId()));
+        model.addAttribute("inProgressProjects", projectService.findAllInProgressByUser(currentUser));
+        model.addAttribute("inProgressTasks", taskService.findAllInProgressByUser(currentUser));
+        model.addAttribute("inProgressRequirements", taskService.findAllRequirementsInProgressByUser(currentUser));
 
         return "dashboard";
     }
