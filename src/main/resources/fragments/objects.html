@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="row" th:fragment="project-dash (project)">
+    <h3>[[${project.name}]]</h3>
+    <p>[[${project.description}]]</p>
+    <p>[[${project.priority}]]</p>
+    <a th:href="@{/projects/{id}(id=${project.id})}">View Details</a>
+</div>
+
+<div class="row" th:fragment="task-dash (task, projectName, projectId)">
+    <h5>[[${projectName}]]</h5>
+    <h3>[[${task.name}]]</h3>
+    <p>[[${task.description}]]</p>
+    <p>[[${task.priority}]]</p>
+    <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}">View Details</a>
+</div>
+
+<div class="row" th:fragment="requirement-dash (requirement, projectName, projectId, taskName, taskId)">
+    <h5>[[${projectName} - ${taskName}]]</h5>
+    <h3>[[${requirement.title}]]</h3>
+    <p>[[${requirement.description}]]</p>
+    <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}">View Task Details</a>
+</div>
+
+</body>
+</html>
