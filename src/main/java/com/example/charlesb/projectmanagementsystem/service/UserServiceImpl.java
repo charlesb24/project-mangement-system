@@ -92,6 +92,10 @@ public class UserServiceImpl implements UserService {
     public UserDTO mapToDTO(User user) {
         UserDTO userDTO = new UserDTO();
 
+        if (user == null) {
+            return userDTO;
+        }
+
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
         userDTO.setFirstName(user.getFirstName());
