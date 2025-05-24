@@ -110,7 +110,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User mapToUser(UserDTO userDTO) {
-        User user = userRepository.findById(userDTO.getId()).orElse(new User());
+        User user;
+
+        if (userDTO.getId() != null) {
+            user = userRepository.findById(userDTO.getId()).orElse(new User());
+        } else {
+            user = new User();
+        }
 
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
