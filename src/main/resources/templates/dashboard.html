@@ -15,7 +15,7 @@
 
     <div class="d-flex flex-md-row flex-column p-4 gap-4 py-md-5 align-items-center justify-content-center m-auto">
 
-        <div class="list-group d-grid gap-2 border-0">
+        <div class="list-group d-grid gap-2 border-0 col-md-3">
             <h2>Assigned Projects</h2>
             <div th:if="${inProgressProjects.isEmpty()}">No Assigned Projects</div>
             <div th:unless="${inProgressProjects.isEmpty()}">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="list-group d-grid gap-2 border-0">
+        <div class="list-group d-grid gap-2 border-0 col-md-3">
             <h2>Assigned Tasks</h2>
             <div th:if="${inProgressTasks.isEmpty()}">No Assigned Tasks</div>
             <div th:unless="${inProgressTasks.isEmpty()}">
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="list-group d-grid gap-2 border-0">
+        <div class="list-group d-grid gap-2 border-0 col-md-3">
             <h2>Assigned Requirements</h2>
             <div th:if="${inProgressRequirements.isEmpty()}">No Assigned Requirements</div>
             <div th:unless="${inProgressRequirements.isEmpty()}">
