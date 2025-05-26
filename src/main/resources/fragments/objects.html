@@ -28,15 +28,21 @@
     <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}">View Task Details</a>
 </div>
 
-<div class="list-group-item rounded-3 py-3" th:fragment="user-list (user)">
+<div class="list-group-item rounded-3 py-3" th:fragment="user-list (user, manager)">
     <h4>[[${user.firstName + ' ' + user.lastName}]]</h4>
     <p>[[${user.email}]]</p>
     <p th:if="${user.phone}">[[${user.phone}]]</p>
     <p th:if="${user.contactMethod}">Preferred Contact Method: [[${user.contactMethod}]]</p>
     <p>[[${user.roles}]]</p>
+    <p th:if="${user.managerId != null}">
+        Manager: [[${manager.firstName + ' ' + manager.lastName}]]
+    </p>
+    <div>
+        <th:block th:unless="${user.roles.contains('ROLE_ADMIN')}" th:replace="~{form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/users/promote}, label='Promote to Admin')}" />
+        <th:block th:replace="~{form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/users/toggle}, label=${user.enabled} ? 'Disable' : 'Enable')}" />
+        <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a>
+    </div>
 </div>
-
-<!-- TODO: add manager info to user fragment -->
 
 </body>
 </html>

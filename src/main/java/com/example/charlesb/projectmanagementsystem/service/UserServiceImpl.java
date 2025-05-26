@@ -105,6 +105,10 @@ public class UserServiceImpl implements UserService {
         userDTO.setContactMethod(user.getContactMethod());
         userDTO.setManagerId(user.getManagerId());
 
+        Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
+
+        userDTO.setRoles(roleNames);
+
         return userDTO;
     }
 

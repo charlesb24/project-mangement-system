@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,6 +26,8 @@ public class UserDTO {
     @NotEmpty
     @Size(min = 8, max = 63)
     private String password;
+
+    private Set<String> roles = new HashSet<>();
 
     private boolean enabled;
     private boolean locked;
