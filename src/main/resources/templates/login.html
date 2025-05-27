@@ -16,17 +16,24 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<form th:action="@{/login}" method="post">
-    <div>
-        <label>Email: <input type="email" name="username"/></label>
+<form id="sign-in" th:action="@{/login}" method="post">
+
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
     </div>
 
-    <div>
-        <label>Password: <input type="password" name="password"/></label>
+    <div class="form-floating">
+        <input class="form-control" id="email" type="email" name="username" placeholder="Email Address" />
+        <label for="email">Email Address</label>
     </div>
 
-    <div>
-        <input type="submit" value="Sign In"/>
+    <div class="form-floating">
+        <input class="form-control" id="password" type="password" name="password" placeholder="Password" />
+        <label for="password">Password</label>
+    </div>
+
+    <div class="pt-4">
+        <input class="btn btn-primary w-100 py-2 mb-3" type="submit" value="Sign In"/>
         <p>Don't have an account? <a th:href="@{/register}">Sign Up</a></p>
     </div>
 </form>
