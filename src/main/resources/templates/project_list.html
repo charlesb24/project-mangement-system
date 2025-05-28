@@ -11,33 +11,18 @@
 <header th:replace="~{../fragments/headers :: ${(#authentication.isAuthenticated())} ? (${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')} ? 'authenticated-admin' : 'authenticated') : 'unauthenticated'}">
 </header>
 
-<table>
-    <thead>
-    <tr>
-        <th>Project</th>
-        <th>Description</th>
-        <th>Priority</th>
-        <th>Status</th>
-        <th>Created By</th>
-        <th>Assigned To</th>
-        <th>View Details</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="project : ${projects}">
-        <td th:text="${project.name}">No Name</td>
-        <td th:text="${project.description}">No Description</td>
-        <td th:text="${project.priority}">No Priority</td>
-        <td th:text="${project.status}">No Status</td>
-        <td th:text="${project.createdBy.lastName + ', ' + project.createdBy.firstName}">No Creator</td>
-        <td th:text="${project.assignedTo} ? ${project.assignedTo?.lastName + ', ' + project.assignedTo?.firstName} : 'Unassigned'">Unassigned</td>
-        <td><a th:href="@{/projects/{id}(id=${project.id})}">View Details</a></td>
-    </tr>
-    <tr>
-        <td colspan="7"><a th:href="@{/projects/new}">New Project</a></td>
-    </tr>
-    </tbody>
-</table>
+<main>
+
+    <div class="list-group d-grid gap-2 border-0 col-md-6">
+        <h2>Projects</h2>
+        <div th:unless="${projects.isEmpty()}">
+            <th:block th:each="project : ${projects}" th:insert="~{../fragments/objects :: project-list (project=${project})}" />
+        </div>
+    </div>
+
+    <a th:href="@{/projects/new}">New Project</a>
+
+</main>
 
 <footer th:replace="~{../fragments/footers :: footer}">
 </footer>

@@ -21,28 +21,17 @@
         <p th:text="'Assigned To: ' + *{assignedTo?.email}"></p>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="task : ${project.tasks}">
-            <td th:text="${task.name}"></td>
-            <td th:text="${task.description}"></td>
-            <td th:text="${task.status}"></td>
-        </tr>
-        <tr>
-            <td colspan="3"><a th:href="@{/projects/{projectId}/task/new(projectId=${project.id})}">Add New Task</a></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="list-group d-grid gap-2 border-0 col-md-6">
+        <h2>Tasks</h2>
+        <div th:unless="${project.tasks.isEmpty()}">
+            <th:block th:each="task : ${project.tasks}" th:insert="~{../fragments/objects :: task-list (task=${task}, projectId=${project.id})}" />
+        </div>
+    </div>
 
-    <a th:href="@{/projects/{id}/edit(id=${project.id})}">Edit</a>
-    <a th:href="@{/projects/{id}/delete(id=${project.id})}">Delete</a>
+    <a th:href="@{/projects/{projectId}/task/new(projectId=${project.id})}">Add New Task</a>
+
+    <a th:href="@{/projects/{id}/edit(id=${project.id})}">Edit Project</a>
+    <a th:href="@{/projects/{id}/delete(id=${project.id})}">Delete Project</a>
 </main>
 
 <footer th:replace="~{../fragments/footers :: footer}">

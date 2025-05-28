@@ -44,5 +44,27 @@
     </div>
 </div>
 
+<div class="list-group-item rounded-3 py-3" th:fragment="project-list (project)">
+    <h3>[[${project.name}]]</h3>
+    <p>[[${project.description}]]</p>
+    <p>[[${project.priority.displayValue}]]</p>
+    <p>[[${project.status.displayValue}]]</p>
+    <p>Created By: [[${project.createdBy.lastName + ', ' + project.createdBy.firstName}]]</p>
+    <p th:if="${project.assignedTo}">Assigned To: [[${project.assignedTo?.lastName + ', ' + project.assignedTo?.firstName]]</p>
+    <p th:unless="${project.assignedTo}">Assigned To: Unassigned</p>
+    <a th:href="@{/projects/{id}(id=${project.id})}">View Details</a>
+</div>
+
+<div class="list-group-item rounded-3 py-3" th:fragment="task-list (task, projectId)">
+    <h3>[[${task.name}]]</h3>
+    <p>[[${task.description}]]</p>
+    <p>[[${task.priority.displayValue}]]</p>
+    <p>[[${task.status.displayValue}]]</p>
+    <p>Created By: [[${task.createdBy.lastName + ', ' + task.createdBy.firstName}]]</p>
+    <p th:if="${task.assignedTo}">Assigned To: [[${task.assignedTo?.lastName + ', ' + task.assignedTo?.firstName}]]</p>
+    <p th:unless="${task.assignedTo}">Assigned To: Unassigned</p>
+    <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}">View Details</a>
+</div>
+
 </body>
 </html>
