@@ -13,12 +13,12 @@
 
 <main>
     <div th:object="${project}">
-        <h2>Task Details</h2>
+        <h2>Project Details</h2>
         <h4 th:text="*{name}"></h4>
         <p th:text="*{description}"></p>
-        <p th:text="'Status: ' + *{status}"></p>
-        <p th:text="'Priority: ' + *{priority}"></p>
-        <p th:text="'Assigned To: ' + *{assignedTo?.email}"></p>
+        <p th:text="'Status: ' + *{status.displayValue}"></p>
+        <p th:text="'Priority: ' + *{priority.displayValue}"></p>
+        <p th:text="'Assigned To: ' + ${project.assignedTo ? project.assignedTo.lastName + ', ' + project.assignedTo.firstName : 'Unassigned'}"></p>
     </div>
 
     <div class="list-group d-grid gap-2 border-0 col-md-6">

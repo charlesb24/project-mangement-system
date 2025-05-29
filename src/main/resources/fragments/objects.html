@@ -66,5 +66,15 @@
     <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}">View Details</a>
 </div>
 
+<div class="list-group-item rounded-3 py-3" th:fragment="requirement-list (requirement, projectId, taskId)">
+    <h3>[[${requirement.title}]]</h3>
+    <p>[[${requirement.description}]]</p>
+    <p>[[${requirement.status.displayValue}]]</p>
+    <p>Created By: [[${requirement.createdBy.lastName + ', ' + requirement.createdBy.firstName}]]</p>
+    <p th:if="${requirement.assignedTo}">Assigned To: [[${requirement.assignedTo?.lastName + ', ' + requirement.assignedTo?.firstName}]]</p>
+    <p th:unless="${requirement.assignedTo}">Assigned To: Unassigned</p>
+    <a th:href="@{/projects/{projectId}/task/{taskId}/requirement/{requirementId}/edit(projectId=${projectId}, taskId=${task.taskId}, requirementId=${requirement.id})}">View Details</a>
+</div>
+
 </body>
 </html>

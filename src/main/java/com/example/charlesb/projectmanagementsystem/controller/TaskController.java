@@ -106,7 +106,7 @@ public class TaskController {
         return "redirect:/list";
     }
 
-    @DeleteMapping("/delete/{taskId}")
+    @DeleteMapping("/{taskId}/delete")
     public String deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
         taskService.deleteById(taskId);
 

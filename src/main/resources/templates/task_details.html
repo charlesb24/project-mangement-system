@@ -16,33 +16,22 @@
         <h2>Task Details</h2>
         <h4 th:text="*{name}"></h4>
         <p th:text="*{description}"></p>
-        <p th:text="'Status: ' + *{status}"></p>
-        <p th:text="'Priority: ' + *{priority}"></p>
-        <p th:text="'Assigned To: ' + *{assignedTo.email}"></p>
+        <p th:text="'Status: ' + *{status.displayValue}"></p>
+        <p th:text="'Priority: ' + *{priority.displayValue}"></p>
+        <p th:text="'Assigned To: ' + ${task.assignedTo ? task.assignedTo.lastName + ', ' + task.assignedTo.firstName : 'Unassigned'}"></p>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="requirement : ${requirements}">
-                <td th:text="*{requirement.title}"></td>
-                <td th:text="*{requirement.description}"></td>
-                <td th:text="*{requirement.status}"></td>
-            </tr>
-            <tr>
-                <td colspan="3"><a th:href="@{/projects/{projectId}/task/{taskId}/new(projectId=${projectId},taskId=${task.taskId})}">Add New Requirement</a></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="list-group d-grid gap-2 border-0 col-md-6">
+        <h2>Requirements</h2>
+        <div th:unless="${task.requirements.isEmpty()}">
+            <th:block th:each="requirement : ${task.requirements}" th:insert="~{../fragments/objects :: requirement-list (requirement=${requirement}, projectId=${task.project.id}, taskId=${task.taskId})}" />
+        </div>
+    </div>
 
-    <a th:href="@{/edit/{id}(id=${task.taskId})}">Edit</a>
-    <a th:href="@{/delete/{id}(id=${task.taskId})}">Delete</a>
+    <a th:href="@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}">Add New Task</a>
+
+    <a th:href="@{/projects/{proejctId}/task/{taskId}/edit(projectId=${task.project.id}, taskId=${task.taskId})}">Edit Project</a>
+    <a th:href="@{/projects/{projectId}/task/{taskId}/delete(projectId=${task.project.id}, taskId=${task.taskId})}">Delete Project</a>
 </main>
 
 <footer th:replace="~{../fragments/footers :: footer}">
