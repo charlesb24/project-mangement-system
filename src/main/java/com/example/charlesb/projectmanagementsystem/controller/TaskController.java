@@ -2,7 +2,6 @@ package com.example.charlesb.projectmanagementsystem.controller;
 
 import com.example.charlesb.projectmanagementsystem.dto.RequirementDTO;
 import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
-import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
 import com.example.charlesb.projectmanagementsystem.entity.Requirement;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
@@ -17,8 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/projects/{projectId}/task")
