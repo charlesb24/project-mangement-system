@@ -1,6 +1,8 @@
 package com.example.charlesb.projectmanagementsystem.controller;
 
+import com.example.charlesb.projectmanagementsystem.dao.RoleRepository;
 import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
+import com.example.charlesb.projectmanagementsystem.entity.Role;
 import com.example.charlesb.projectmanagementsystem.entity.User;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,11 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleRepository roleRepository;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping("/users/list")
@@ -47,6 +51,31 @@ public class AdminController {
         model.addAttribute("assignedUser", userService.mapToDTO(manager));
 
         return "user_form";
+    }
+
+    // TODO: ensure ONLY the user with the OWNER role can promote users to ADMIN or OWNER,
+    // TODO: and that there is only ever one OWNER by demoting the current OWNER at the same time
+
+    @PostMapping("/users/promote")
+    public String promoteUser(@RequestParam Long userId, @RequestParam String role) {
+        User userToBePromoted = userService.findUserById(userId);
+
+        Role roleToAdd = roleRepository.findByName("ROLE_" + role);
+
+        userToBePromoted.addRole(roleToAdd);
+
+        return "redirect:/admin/users/list";
+    }
+
+    @PostMapping("/users/demote")
+    public String demoteUser(@RequestParam Long userId, @RequestParam String role) {
+        User userToBeDemoted = userService.findUserById(userId);
+
+        Role roleToRemove = roleRepository.findByName("ROLE_" + role);
+
+        userToBeDemoted.removeRole(roleToRemove);
+
+        return "redirect:/admin/users/list";
     }
 
     @PostMapping("/users/save")

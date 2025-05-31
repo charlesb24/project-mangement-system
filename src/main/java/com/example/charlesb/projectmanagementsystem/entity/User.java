@@ -111,4 +111,16 @@ public class User {
     @Column(name = "date_updated")
     private Instant dateUpdated;
 
+    public boolean hasRole(String roleName) {
+        return this.roles.stream().anyMatch(r -> r.getName().equals(roleName));
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+    }
+
 }
