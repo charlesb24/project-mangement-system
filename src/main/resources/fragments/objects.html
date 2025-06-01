@@ -38,7 +38,16 @@
         Manager: [[${manager.firstName + ' ' + manager.lastName}]]
     </p>
     <div>
-        <th:block th:unless="${#lists.contains(user.roles, 'ROLE_ADMIN')}" th:insert="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/users/promote}, label='Promote to Admin')}" />
+        <th:block th:unless="${#lists.contains(user.roles, 'ROLE_ADMIN')}"
+                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_ADMIN' }} }, method='post', action=@{/users/promote}, label='Promote to Admin')}" />
+        <th:block th:unless="${#lists.contains(user.roles, 'ROLE_MANAGER')}"
+                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_MANAGER' }} }, method='post', action=@{/users/promote}, label='Promote to Manager')}" />
+
+        <th:block th:if="${#lists.contains(user.roles, 'ROLE_ADMIN')}"
+                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_ADMIN' }} }, method='post', action=@{/users/demote}, label='Demote from Admin')}" />
+        <th:block th:if="${#lists.contains(user.roles, 'ROLE_MANAGER')}"
+                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_MANAGER' }} }, method='post', action=@{/users/demote}, label='Demote from Manager')}" />
+
         <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/users/toggle}, label=${user.enabled} ? 'Disable' : 'Enable')}" />
         <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a>
     </div>

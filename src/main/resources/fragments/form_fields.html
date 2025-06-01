@@ -55,5 +55,10 @@
     <input type="submit" th:value="${label}" />
 </form>
 
+<form th:fragment="formButtonArray (fieldValuePairs, method, action, label)" th:method="${method}" th:action="${action}">
+    <input th:each="pair : ${fieldValuePairs}" type="hidden" th:name="${pair[0]}" th:value="${pair[1]}" />
+    <input type="submit" th:value="${label}" />
+</form>
+
 </body>
 </html>
