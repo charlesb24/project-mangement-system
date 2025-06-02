@@ -44,11 +44,14 @@ public class AdminController {
     @GetMapping("/users/{userId}/edit")
     public String editUser(@PathVariable Long userId, Model model) {
         User foundUser = userService.findUserById(userId);
-        User manager = userService.findUserById(foundUser.getManagerId());
+
+        if (foundUser.getManagerId() != null) {
+            User manager = userService.findUserById(foundUser.getManagerId());
+            model.addAttribute("assignedUser", userService.mapToDTO(manager));
+        }
 
         model.addAttribute("user", userService.mapToDTO(foundUser));
         model.addAttribute("managers", userService.findManagers());
-        model.addAttribute("assignedUser", userService.mapToDTO(manager));
 
         return "user_form";
     }
@@ -64,6 +67,8 @@ public class AdminController {
 
         userToBePromoted.addRole(roleToAdd);
 
+        userService.updateUser(userToBePromoted);
+
         return "redirect:/admin/users/list";
     }
 
@@ -74,6 +79,8 @@ public class AdminController {
         Role roleToRemove = roleRepository.findByName("ROLE_" + role);
 
         userToBeDemoted.removeRole(roleToRemove);
+
+        userService.updateUser(userToBeDemoted);
 
         return "redirect:/admin/users/list";
     }
@@ -96,6 +103,8 @@ public class AdminController {
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setLocked(userDTO.isLocked());
+
+        userService.updateUser(user);
 
         return "redirect:/users/list";
     }

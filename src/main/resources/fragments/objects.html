@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -38,18 +39,24 @@
         Manager: [[${manager.firstName + ' ' + manager.lastName}]]
     </p>
     <div>
-        <th:block th:unless="${#lists.contains(user.roles, 'ROLE_ADMIN')}"
-                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_ADMIN' }} }, method='post', action=@{/users/promote}, label='Promote to Admin')}" />
-        <th:block th:unless="${#lists.contains(user.roles, 'ROLE_MANAGER')}"
-                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_MANAGER' }} }, method='post', action=@{/users/promote}, label='Promote to Manager')}" />
 
-        <th:block th:if="${#lists.contains(user.roles, 'ROLE_ADMIN')}"
-                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_ADMIN' }} }, method='post', action=@{/users/demote}, label='Demote from Admin')}" />
-        <th:block th:if="${#lists.contains(user.roles, 'ROLE_MANAGER')}"
-                  th:insert="~{../fragments/form_fields :: formButtonArray (fieldValuePairs=${ {{ 'userId', ${user.id} }, { 'role', 'ROLE_MANAGER' }} }, method='post', action=@{/users/demote}, label='Demote from Manager')}" />
+        <form sec:authorize="hasRole('ROLE_OWNER')"
+              th:action="@{/admin/users/${#lists.contains(user.roles, 'ROLE_ADMIN') ? 'demote' : 'promote'}}" method="post">
+            <input type="hidden" name="userId" th:value="${user.id}" />
+            <input type="hidden" name="role" value="ADMIN" />
+            <input type="submit" th:value="${#lists.contains(user.roles, 'ROLE_ADMIN')} ? 'Demote from Admin' : 'Promote to Admin'" />
+        </form>
 
-        <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/users/toggle}, label=${user.enabled} ? 'Disable' : 'Enable')}" />
-        <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a>
+        <form th:action="@{/admin/users/${#lists.contains(user.roles, 'ROLE_MANAGER') ? 'demote' : 'promote'}}" method="post">
+            <input type="hidden" name="userId" th:value="${user.id}" />
+            <input type="hidden" name="role" value="MANAGER" />
+            <input type="submit" th:value="${#lists.contains(user.roles, 'ROLE_MANAGER')} ? 'Demote from Manager' : 'Promote to Manager'" />
+        </form>
+
+        <div th:unless="${#lists.contains(user.roles, 'ROLE_ADMIN')}">WOW IT WORKED</div>
+
+        <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/toggle}, label=${user.enabled} ? 'Disable' : 'Enable')}" />
+        <a th:href="@{/admin/users/{id}/edit(id=${user.id})}">Edit</a>
     </div>
 </div>
 

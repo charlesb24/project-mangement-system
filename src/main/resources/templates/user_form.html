@@ -31,13 +31,19 @@
     <div th:replace="~{../fragments/form_fields :: labelledInput (id='email', field='email', placeholder='example@gmail.com', label='Email', type='email', value='*{email}', classes='')}">
     </div>
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='phone', field='phone', placeholder='(000) 000-0000', label='Phone Number', type='text', value='*{phone}, classes=''')}">
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='phone', field='phone', placeholder='(000) 000-0000', label='Phone Number', type='text', value='*{phone}', classes='')}">
     </div>
 
     <div th:replace="~{../fragments/form_fields :: contactMethod (field='contactMethod')}">
     </div>
 
-    <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{managerId}, assignableUsers=${managers}, assignedUser=${assignedUser})}">
+    <div>
+      <label class="form-label" for="assignedTo">Assigned To</label>
+      <select class="form-select" id="assignedTo" th:field="*{managerId}">
+        <option th:each="user : ${managers}" th:value="${user.id}" th:text="${user?.lastName + ', ' + user?.firstName}"></option>
+        <option th:if="*{managerId == 0}" th:value="${0}" selected>Unassigned</option>
+        <option th:if="*{managerId != 0}" th:value="${assignedUser?.id}" th:text="${assignedUser?.lastName + ', ' + assignedUser?.firstName}" selected></option>
+      </select>
     </div>
 
     <div th:replace="~{../fragments/form_fields :: submit (label='Edit')}">
