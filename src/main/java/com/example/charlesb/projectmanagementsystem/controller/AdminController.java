@@ -33,12 +33,14 @@ public class AdminController {
     }
 
     @PostMapping("/users/toggle")
-    public void toggleUserEnabled(@RequestParam Long userId) {
+    public String toggleUserEnabled(@RequestParam Long userId) {
         User user = userService.findUserById(userId);
 
         user.setEnabled(!user.isEnabled());
 
         userService.updateUser(user);
+
+        return "redirect:/admin/users/list";
     }
 
     @GetMapping("/users/{userId}/edit")
@@ -86,7 +88,7 @@ public class AdminController {
     }
 
     @PostMapping("/users/save")
-    public String saveUser(@RequestParam UserDTO userDTO) {
+    public String saveUser(@ModelAttribute("user") UserDTO userDTO) {
         User user;
         User foundUser = userService.findUserById(userDTO.getId());
 
@@ -104,9 +106,15 @@ public class AdminController {
         user.setPhone(userDTO.getPhone());
         user.setLocked(userDTO.isLocked());
 
+        if (userDTO.getManagerId() != null) {
+            if (userService.findUserById(userDTO.getManagerId()) != null) {
+                user.setManagerId(userDTO.getManagerId());
+            }
+        }
+
         userService.updateUser(user);
 
-        return "redirect:/users/list";
+        return "redirect:/admin/users/list";
     }
 
 }

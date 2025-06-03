@@ -16,7 +16,9 @@
     <div class="list-group d-grid gap-2 border-0 col-md-6 m-auto">
         <h2>List of Registered Users</h2>
         <div th:unless="${users.isEmpty()}">
-            <th:block th:each="user : ${users}" th:insert="~{../fragments/objects :: user-list (user=${user}, manager=${users.^[id==managerId]})}" />
+            <th:block th:each="user : ${users}">
+                <th:block th:insert="~{../fragments/objects :: user-list (user=${user}, manager=${users.^[id==__${user.managerId}__]})}" />
+            </th:block>
         </div>
     </div>
 

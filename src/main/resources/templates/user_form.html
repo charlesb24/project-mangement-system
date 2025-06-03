@@ -15,7 +15,7 @@
 
   <h1 class="h3 mb-3 fw-normal">Edit User</h1>
 
-  <form class="row g-3" method="POST" th:action="@{/users/save}" th:object="${user}">
+  <form class="row g-3" method="POST" th:action="@{/admin/users/save}" th:object="${user}">
 
     <input type="hidden" th:field="*{id}" />
 

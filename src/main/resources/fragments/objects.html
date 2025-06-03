@@ -40,22 +40,27 @@
     </p>
     <div>
 
+        <form sec:authorize="hasRole('ROLE_OWNER')" th:if="${#lists.contains(user.roles, 'ROLE_ADMIN') and not #lists.contains(user.roles, 'ROLE_OWNER')}"
+              th:action="@{/admin/users/promote}" method="post">
+            <input type="hidden" name="userId" th:value="${user.id}" />
+            <input type="hidden" name="role" value="OWNER" />
+            <input type="submit" value="Promote to Owner" />
+        </form>
+
         <form sec:authorize="hasRole('ROLE_OWNER')"
-              th:action="@{/admin/users/${#lists.contains(user.roles, 'ROLE_ADMIN') ? 'demote' : 'promote'}}" method="post">
+              th:action="@{/admin/users/{action}(action=${#lists.contains(user.roles, 'ROLE_ADMIN') ? 'demote' : 'promote'})}" method="post">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <input type="hidden" name="role" value="ADMIN" />
             <input type="submit" th:value="${#lists.contains(user.roles, 'ROLE_ADMIN')} ? 'Demote from Admin' : 'Promote to Admin'" />
         </form>
 
-        <form th:action="@{/admin/users/${#lists.contains(user.roles, 'ROLE_MANAGER') ? 'demote' : 'promote'}}" method="post">
+        <form th:action="@{/admin/users/{action}(action=${#lists.contains(user.roles, 'ROLE_MANAGER') ? 'demote' : 'promote'})}" method="post">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <input type="hidden" name="role" value="MANAGER" />
             <input type="submit" th:value="${#lists.contains(user.roles, 'ROLE_MANAGER')} ? 'Demote from Manager' : 'Promote to Manager'" />
         </form>
 
-        <div th:unless="${#lists.contains(user.roles, 'ROLE_ADMIN')}">WOW IT WORKED</div>
-
-        <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/toggle}, label=${user.enabled} ? 'Disable' : 'Enable')}" />
+        <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/toggle}, label=${user.enabled ? 'Enable' : 'Disable'})}" />
         <a th:href="@{/admin/users/{id}/edit(id=${user.id})}">Edit</a>
     </div>
 </div>
