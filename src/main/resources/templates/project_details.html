@@ -18,7 +18,7 @@
         <p th:text="*{description}"></p>
         <p th:text="'Status: ' + *{status.displayValue}"></p>
         <p th:text="'Priority: ' + *{priority.displayValue}"></p>
-        <p th:text="'Assigned To: ' + ${project.assignedTo ? project.assignedTo.lastName + ', ' + project.assignedTo.firstName : 'Unassigned'}"></p>
+        <p>Assigned To: [[${project.assignedTo != null ? project.assignedTo.lastName + ', ' + project.assignedTo.firstName : 'Unassigned'}]]</p>
     </div>
 
     <div class="list-group d-grid gap-2 border-0 col-md-6">

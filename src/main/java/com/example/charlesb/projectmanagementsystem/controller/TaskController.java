@@ -100,7 +100,7 @@ public class TaskController {
 
         taskService.save(task);
 
-        return "redirect:/list";
+        return "redirect:/projects/" + projectId;
     }
 
     @DeleteMapping("/{taskId}/delete")
@@ -141,13 +141,13 @@ public class TaskController {
     }
 
     @PostMapping("/{taskId}/requirement/save")
-    public void saveRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, @ModelAttribute("requirement") RequirementDTO requirementDTO) {
+    public String saveRequirement(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, @ModelAttribute("requirement") RequirementDTO requirementDTO) {
         Task task = taskService.findById(taskId);
         Requirement requirement = taskService.findRequirementById(requirementDTO.id);
         User assignedTo = userService.findUserById(requirementDTO.assignedToUserId);
 
         if (task == null) {
-            return;
+            return "redirect:/projects/{projectId}/task/{taskId}/requirement/new";
         } else if (requirement == null) {
             User creator = userService.findUserByEmail(userDetails.getUsername());
 
@@ -165,11 +165,15 @@ public class TaskController {
         }
 
         taskService.saveRequirement(requirement);
+
+        return "redirect:/projects/" + projectId + "/task/" + taskId;
     }
 
-    @DeleteMapping("/{taskId}/requirement/{requirementId}")
-    public void deleteRequirement(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long requirementId) {
+    @PostMapping("/{taskId}/requirement/delete")
+    public String deleteRequirement(@PathVariable Long projectId, @PathVariable Long taskId, @RequestParam Long requirementId) {
         taskService.deleteRequirementById(requirementId);
+
+        return "redirect:/projects/" + projectId + "/task/" + taskId;
     }
 
     private RequirementDTO mapToDTO(Requirement requirement) {

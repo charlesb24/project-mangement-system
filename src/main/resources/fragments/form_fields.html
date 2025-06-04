@@ -20,16 +20,16 @@
 <div th:class="${classes}" th:fragment="priorityAssignment (field, currentPriority, classes)">
     <label class="form-label" for="priority">Priority</label>
     <select class="form-select" id="priority" th:field="*{__${field}__}">
-        <option th:each="priorityOption : ${T(com.example.charlesb.projectmanagementsystem.enums.Priority).values()}"
-                th:value="${priorityOption}" th:text="${priorityOption.displayValue}" th:selected="${currentPriority == priorityOption}"></option>
+        <option th:each="priorityOption, i : ${T(com.example.charlesb.projectmanagementsystem.enums.Priority).values()}"
+                th:value="${i.index}" th:text="${priorityOption.displayValue}" th:selected="${currentPriority == priorityOption}"></option>
     </select>
 </div>
 
 <div th:class="${classes}" th:fragment="statusAssignment (field, currentStatus, classes)">
     <label class="form-label" for="status">Status</label>
     <select class="form-select" id="status" th:field="*{__${field}__}">
-        <option th:each="statusOption : ${T(com.example.charlesb.projectmanagementsystem.enums.Status).values()}"
-                th:value="${statusOption}" th:text="${statusOption.displayValue}" th:selected="${currentStatus == statusOption}"></option>
+        <option th:each="statusOption, i : ${T(com.example.charlesb.projectmanagementsystem.enums.Status).values()}"
+                th:value="${i.index}" th:text="${statusOption.displayValue}" th:selected="${currentStatus == statusOption}"></option>
     </select>
 </div>
 
