@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a class="btn btn-danger" th:fragment="action-button (link, label)" th:href="${link}" th:text="${label}"></a>
+
+<div th:fragment="breadcrumbs (links)">
+    <ul>
+        <li th:each="entry : ${links}">
+            <a th:href="${entry.url}" th:text="${entry.name}"></a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
