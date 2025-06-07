@@ -8,14 +8,13 @@ import java.util.List;
 
 public class HistoryHelper {
 
-    @Value("${baseURL:'http://localhost:8080'}")
-    private static String baseURL;
+    private static final String baseURL = "http://localhost:8080";
 
-    public static List<Link> getHistoryForRequirement(Long requirementId, Long taskId, Long projectId) {
+    public static List<Link> getHistoryForRequirement(Long taskId, Long projectId, boolean isNew) {
         List<Link> history = getHistoryForTask(taskId, projectId);
 
         history.getLast().setCurrent(false);
-        Link requirement = new Link(baseURL + "/requirement/" + requirementId, "Requirement Details", true);
+        Link requirement = new Link(history.getLast().getUrl() + "/requirement/", isNew ? "New Requirement" : "Requirement Details", true);
 
         history.add(requirement);
 
@@ -26,7 +25,7 @@ public class HistoryHelper {
         List<Link> history = getHistoryForProject(projectId);
 
         history.getLast().setCurrent(false);
-        Link task = new Link(baseURL + "/task/" + taskId, "Task Details", true);
+        Link task = new Link(history.getLast().getUrl() + "/task/" + taskId, "Task Details", true);
 
         history.add(task);
 

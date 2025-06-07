@@ -7,6 +7,7 @@ import com.example.charlesb.projectmanagementsystem.entity.Requirement;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
 import com.example.charlesb.projectmanagementsystem.entity.User;
 import com.example.charlesb.projectmanagementsystem.helper.ConversionHelper;
+import com.example.charlesb.projectmanagementsystem.helper.HistoryHelper;
 import com.example.charlesb.projectmanagementsystem.service.ProjectService;
 import com.example.charlesb.projectmanagementsystem.service.TaskService;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
@@ -117,6 +118,7 @@ public class TaskController {
         model.addAttribute("taskId", taskId);
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
         model.addAttribute("assignedUser", null);
+        model.addAttribute("links", HistoryHelper.getHistoryForRequirement(taskId, projectId, true));
 
         return "requirement_form";
     }
@@ -136,6 +138,7 @@ public class TaskController {
         model.addAttribute("taskId", taskId);
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
         model.addAttribute("assignedUser", userService.mapToDTO(requirement.getAssignedTo()));
+        model.addAttribute("links", HistoryHelper.getHistoryForRequirement(taskId, projectId, false));
 
         return "requirement_form";
     }

@@ -11,7 +11,8 @@
 <div th:fragment="breadcrumbs (links)">
     <ul>
         <li th:each="entry : ${links}">
-            <a th:href="${entry.url}" th:text="${entry.name}"></a>
+            <a th:unless="${entry.isCurrent}" th:href="${entry.url}" th:text="${entry.title}"></a>
+            <span th:if="${entry.isCurrent}" th:text="${entry.title}"></span>
         </li>
     </ul>
 </div>

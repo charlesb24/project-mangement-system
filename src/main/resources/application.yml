@@ -8,5 +8,3 @@ spring:
 #logging:
 #  level:
 #    root: debug
-
-baseURL: http://localhost:8080
