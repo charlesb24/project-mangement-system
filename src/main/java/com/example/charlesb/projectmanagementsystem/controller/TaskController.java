@@ -41,6 +41,7 @@ public class TaskController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("task", task);
         model.addAttribute("requirements", task.getRequirements());
+        model.addAttribute("links", HistoryHelper.getHistoryForTask(taskId, projectId, LinkType.VIEW));
 
         return "task_details";
     }
@@ -51,6 +52,7 @@ public class TaskController {
         model.addAttribute("task", new TaskDTO());
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
         model.addAttribute("assignedUser", null);
+        model.addAttribute("links", HistoryHelper.getHistoryForTask(0L, projectId, LinkType.NEW));
 
         return "task_form";
     }
@@ -69,6 +71,7 @@ public class TaskController {
         model.addAttribute("task", taskDTO);
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
         model.addAttribute("assignedUser", userService.mapToDTO(task.getAssignedTo()));
+        model.addAttribute("links", HistoryHelper.getHistoryForTask(taskId, projectId, LinkType.EDIT));
 
         return "task_form";
     }

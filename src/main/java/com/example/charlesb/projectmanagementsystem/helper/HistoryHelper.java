@@ -51,7 +51,7 @@ public class HistoryHelper {
     }
 
     public static List<Link> getHistoryForProject(Long projectId, LinkType linkType) {
-        List<Link> history = new ArrayList<>();
+        List<Link> history = getHistoryForProjectList();
 
         String pageTitle;
 
@@ -62,11 +62,54 @@ public class HistoryHelper {
             case null, default -> pageTitle = "Project";
         }
 
-        Link home = new Link(baseURL + "/home", "Home", false);
         Link project = new Link(baseURL + "/project/" + projectId, pageTitle, true);
 
-        history.add(home);
+        history.getLast().setCurrent(false);
         history.add(project);
+
+        return history;
+    }
+
+    public static List<Link> getHistoryForProjectList() {
+        List<Link> history = new ArrayList<>();
+
+        Link home = new Link(baseURL + "/home", "Home", false);
+        Link projectList = new Link(baseURL + "/projects", "Projects", true);
+
+        history.add(home);
+        history.add(projectList);
+
+        return history;
+    }
+
+    public static List<Link> getHistoryForAdminUserEdit(Long userId, LinkType linkType) {
+        List<Link> history = getHistoryForAdminUserList();
+
+        String pageTitle;
+
+        switch (linkType) {
+            case NEW -> pageTitle = "New User";
+            case EDIT -> pageTitle = "Edit User";
+            case VIEW -> pageTitle = "User Details";
+            case null, default -> pageTitle = "User";
+        }
+
+        Link user = new Link(baseURL + "/admin/users/" + userId, pageTitle, true);
+
+        history.getLast().setCurrent(false);
+        history.add(user);
+
+        return history;
+    }
+
+    public static List<Link> getHistoryForAdminUserList() {
+        List<Link> history = new ArrayList<>();
+
+        Link home = new Link(baseURL + "/home", "Home", false);
+        Link userList = new Link(baseURL + "/admin/users/list", "Users", true);
+
+        history.add(home);
+        history.add(userList);
 
         return history;
     }

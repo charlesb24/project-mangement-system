@@ -4,6 +4,8 @@ import com.example.charlesb.projectmanagementsystem.dao.RoleRepository;
 import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Role;
 import com.example.charlesb.projectmanagementsystem.entity.User;
+import com.example.charlesb.projectmanagementsystem.enums.LinkType;
+import com.example.charlesb.projectmanagementsystem.helper.HistoryHelper;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ public class AdminController {
         List<UserDTO> users = userService.findAllUsers();
 
         model.addAttribute("users", users);
+        model.addAttribute("links", HistoryHelper.getHistoryForAdminUserList());
 
         return "user_list";
     }
@@ -54,6 +57,7 @@ public class AdminController {
 
         model.addAttribute("user", userService.mapToDTO(foundUser));
         model.addAttribute("managers", userService.findManagers());
+        model.addAttribute("links", HistoryHelper.getHistoryForAdminUserEdit(userId, LinkType.EDIT));
 
         return "user_form";
     }

@@ -6,7 +6,9 @@ import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
 import com.example.charlesb.projectmanagementsystem.entity.User;
+import com.example.charlesb.projectmanagementsystem.enums.LinkType;
 import com.example.charlesb.projectmanagementsystem.helper.ConversionHelper;
+import com.example.charlesb.projectmanagementsystem.helper.HistoryHelper;
 import com.example.charlesb.projectmanagementsystem.service.ProjectService;
 import com.example.charlesb.projectmanagementsystem.service.TaskService;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
@@ -45,6 +47,7 @@ public class ProjectController {
         Project project = projectService.findById(projectId);
 
         model.addAttribute("project", project);
+        model.addAttribute("links", HistoryHelper.getHistoryForProject(projectId, LinkType.VIEW));
 
         return "project_details";
     }
@@ -53,6 +56,7 @@ public class ProjectController {
     public String newProject(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("project", new ProjectDTO());
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
+        model.addAttribute("links", HistoryHelper.getHistoryForProject(0L, LinkType.NEW));
 
         return "project_form";
     }
@@ -76,6 +80,7 @@ public class ProjectController {
         model.addAttribute("project", projectDTO);
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
         model.addAttribute("assignedUser", userService.mapToDTO(foundProject.getAssignedTo()));
+        model.addAttribute("links", HistoryHelper.getHistoryForProject(projectId, LinkType.EDIT));
 
         return "project_form";
     }
