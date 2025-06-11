@@ -7,6 +7,8 @@ import com.example.charlesb.projectmanagementsystem.entity.User;
 import com.example.charlesb.projectmanagementsystem.enums.LinkType;
 import com.example.charlesb.projectmanagementsystem.helper.HistoryHelper;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,10 +68,19 @@ public class AdminController {
     // TODO: and that there is only ever one OWNER by demoting the current OWNER at the same time
 
     @PostMapping("/users/promote")
-    public String promoteUser(@RequestParam Long userId, @RequestParam String role) {
-        User userToBePromoted = userService.findUserById(userId);
-
+    public String promoteUser(@AuthenticationPrincipal UserDetails userDetails, @RequestParam Long userId, @RequestParam String role) {
+        User promotingUser = userService.findUserByEmail(userDetails.getUsername());
         Role roleToAdd = roleRepository.findByName("ROLE_" + role);
+
+        if (role.equalsIgnoreCase("owner") && promotingUser.hasRole("ROLE_OWNER")) {
+            promotingUser.removeRole(roleToAdd);
+
+            userService.updateUser(promotingUser);
+        } else if (!promotingUser.hasRole("ROLE_OWNER") && (role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("owner"))) {
+            return "redirect:/admin/users/list?error=auth";
+        }
+
+        User userToBePromoted = userService.findUserById(userId);
 
         userToBePromoted.addRole(roleToAdd);
 
@@ -79,8 +90,13 @@ public class AdminController {
     }
 
     @PostMapping("/users/demote")
-    public String demoteUser(@RequestParam Long userId, @RequestParam String role) {
+    public String demoteUser(@AuthenticationPrincipal UserDetails userDetails, @RequestParam Long userId, @RequestParam String role) {
+        User demotingUser = userService.findUserByEmail(userDetails.getUsername());
         User userToBeDemoted = userService.findUserById(userId);
+
+        if (!demotingUser.hasRole("ROLE_OWNER") && !role.equalsIgnoreCase("manager")) {
+            return "redirect:/admin/users/list?error=auth";
+        }
 
         Role roleToRemove = roleRepository.findByName("ROLE_" + role);
 
