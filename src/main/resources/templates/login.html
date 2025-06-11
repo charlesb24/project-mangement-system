@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<header th:replace="~{../fragments/headers :: unauthenticated}">
+<header th:replace="${links != null} ? ~{../fragments/headers :: breadcrumb-header (links=${links})} : ~{../fragments/headers :: no-breadcrumb-header}">
 </header>
 
 <div th:if="${param.error}">

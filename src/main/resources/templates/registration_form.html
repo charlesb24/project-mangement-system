@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+
+<header th:replace="${links != null} ? ~{../fragments/headers :: breadcrumb-header (links=${links})} : ~{../fragments/headers :: no-breadcrumb-header}">
+</header>
+
 <div th:if="${param.success}">
     <div>You've successfully registered to our app!</div>
 </div>
@@ -12,9 +16,6 @@
     <h2>Registration</h2>
 </div>
 <div>
-
-    <header th:replace="~{../fragments/headers :: ${(#authentication.isAuthenticated())} ? (${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')} ? 'authenticated-admin' : 'authenticated') : 'unauthenticated'}">
-    </header>
 
     <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
 

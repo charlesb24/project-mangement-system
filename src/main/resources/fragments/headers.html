@@ -6,21 +6,33 @@
 </head>
 <body>
 
-<header th:fragment="unauthenticated">
+<header th:fragment="breadcrumb-header (links)">
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark pe-3 ps-2">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" th:href="@{/dashboard}">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/projects}">Projects</a></li>
+            <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link" th:href="@{/admin/users/list}">Admin</a></li>
         </ul>
 
-        <div class="d-flex">
+        <div th:unless="${#authentication.isAuthenticated()}" class="d-flex">
             <a class="btn btn-outline-light me-3" th:href="@{/login}">Login</a>
             <a class="btn btn-outline-light" th:href="@{/register}">Register</a>
         </div>
+
+        <div th:if="${#authentication.isAuthenticated()}" class="d-flex">
+            <a class="btn btn-outline-light" th:href="@{/logout}">Logout</a>
+        </div>
     </nav>
+
+    <th:block th:if="${links != null}">
+        <nav th:replace="~{../fragments/navigation :: breadcrumbs (links=${links})}"></nav>
+    </th:block>
+
 </header>
 
-<header th:fragment="authenticated">
+<header th:fragment="no-breadcrumb-header">
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark pe-3 ps-2">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" th:href="@{/dashboard}">Dashboard</a></li>
@@ -31,19 +43,7 @@
             <a class="btn btn-outline-light" th:href="@{/logout}">Logout</a>
         </div>
     </nav>
-</header>
 
-<header th:fragment="authenticated-admin">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark pe-3 ps-2">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" th:href="@{/dashboard}">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/projects}">Projects</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/admin/users/list}">Admin</a></li>
-        </ul>
-        <div class="d-flex">
-            <a class="btn btn-outline-light" th:href="@{/logout}">Logout</a>
-        </div>
-    </nav>
 </header>
 
 </body>

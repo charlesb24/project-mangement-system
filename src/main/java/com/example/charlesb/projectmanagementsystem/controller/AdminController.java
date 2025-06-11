@@ -64,9 +64,6 @@ public class AdminController {
         return "user_form";
     }
 
-    // TODO: ensure ONLY the user with the OWNER role can promote users to ADMIN or OWNER,
-    // TODO: and that there is only ever one OWNER by demoting the current OWNER at the same time
-
     @PostMapping("/users/promote")
     public String promoteUser(@AuthenticationPrincipal UserDetails userDetails, @RequestParam Long userId, @RequestParam String role) {
         User promotingUser = userService.findUserByEmail(userDetails.getUsername());
