@@ -57,7 +57,7 @@ public class TaskController {
         return "task_form";
     }
 
-    @GetMapping("/edit/{taskId}")
+    @GetMapping("/{taskId}/edit")
     public String editTask(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @PathVariable Long taskId, Model model) {
         Task task = taskService.findById(taskId);
 
@@ -102,6 +102,12 @@ public class TaskController {
         task.setDescription(taskDTO.description);
         task.setPriority(ConversionHelper.intToPriority(taskDTO.priority));
         task.setStatus(ConversionHelper.intToStatus(taskDTO.status));
+
+        User assignedTo = userService.findUserById(taskDTO.assignedToUserId);
+
+        if (assignedTo != null) {
+            task.setAssignedTo(assignedTo);
+        }
 
         taskService.save(task);
 

@@ -15,7 +15,9 @@
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="task-dash (task, projectName, projectId)">
-    <h5>[[${projectName}]]</h5>
+    <h5>
+        <a th:href="@{/projects/{projectId}(projectId=${projectId})}">[[${projectName}]]</a>
+    </h5>
     <h3>[[${task.name}]]</h3>
     <p>[[${task.description}]]</p>
     <p>[[${task.priority.displayValue}]]</p>
@@ -23,7 +25,11 @@
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="requirement-dash (requirement, projectName, projectId, taskName, taskId)">
-    <h5>[[${projectName} - ${taskName}]]</h5>
+    <h5>
+        <a th:href="@{/projects/{projectId}(projectId=${projectId})}">[[${projectName}]]</a>
+         -
+        <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}">[[${taskName}]]</a>
+    </h5>
     <h3>[[${requirement.title}]]</h3>
     <p>[[${requirement.description}]]</p>
     <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}">View Task Details</a>
