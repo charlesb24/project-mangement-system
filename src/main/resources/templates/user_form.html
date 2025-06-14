@@ -46,6 +46,8 @@
       </select>
     </div>
 
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/admin/users/list}, label='Cancel', type='danger')}"></a>
+
     <div th:replace="~{../fragments/form_fields :: submit (label='Edit')}">
     </div>
 

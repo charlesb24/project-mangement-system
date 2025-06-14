@@ -11,7 +11,7 @@
     <h3>[[${project.name}]]</h3>
     <p>[[${project.description}]]</p>
     <p>[[${project.priority.displayValue}]]</p>
-    <a th:href="@{/projects/{id}(id=${project.id})}">View Details</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{id}(id=${project.id})}, label='View Details', type='primary')}"></a>
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="task-dash (task, projectName, projectId)">
@@ -21,7 +21,7 @@
     <h3>[[${task.name}]]</h3>
     <p>[[${task.description}]]</p>
     <p>[[${task.priority.displayValue}]]</p>
-    <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}">View Details</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}, label='View Details', type='primary')}"></a>
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="requirement-dash (requirement, projectName, projectId, taskName, taskId)">
@@ -32,7 +32,7 @@
     </h5>
     <h3>[[${requirement.title}]]</h3>
     <p>[[${requirement.description}]]</p>
-    <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}">View Task Details</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}, label='View Task Details', type='primary')}"></a>
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="user-list (user, manager)">
@@ -67,7 +67,8 @@
         </form>
 
         <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/toggle}, label=${user.enabled ? 'Enable' : 'Disable'})}" />
-        <a th:href="@{/admin/users/{id}/edit(id=${user.id})}">Edit</a>
+        <a th:replace="~{../fragments/navigation :: action-button (link=@{/admin/users/{id}/edit(id=${user.id})}, label='Edit', type='primary')}"></a>
+
     </div>
 </div>
 
@@ -78,7 +79,7 @@
     <p>[[${project.status.displayValue}]]</p>
     <p>Created By: [[${project.createdBy.lastName + ', ' + project.createdBy.firstName}]]</p>
     <p th:text="'Assigned To: ' + ${project.assignedTo != null ? project.assignedTo.lastName + ', ' + project.assignedTo.firstName : 'Unassigned'}"></p>
-    <a th:href="@{/projects/{id}(id=${project.id})}">View Details</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{id}(id=${project.id})}, label='View Details', type='primary')}"></a>
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="task-list (task, projectId)">
@@ -89,7 +90,7 @@
     <p>Created By: [[${task.createdBy.lastName + ', ' + task.createdBy.firstName}]]</p>
     <p th:if="${task.assignedTo}">Assigned To: [[${task.assignedTo?.lastName + ', ' + task.assignedTo?.firstName}]]</p>
     <p th:unless="${task.assignedTo}">Assigned To: Unassigned</p>
-    <a th:href="@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}">View Details</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}, label='View Details', type='primary')}"></a>
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="requirement-list (requirement, projectId, taskId)">
@@ -99,7 +100,7 @@
     <p>Created By: [[${requirement.createdBy.lastName + ', ' + requirement.createdBy.firstName}]]</p>
     <p th:if="${requirement.assignedTo}">Assigned To: [[${requirement.assignedTo?.lastName + ', ' + requirement.assignedTo?.firstName}]]</p>
     <p th:unless="${requirement.assignedTo}">Assigned To: Unassigned</p>
-    <a th:href="@{/projects/{projectId}/task/{taskId}/requirement/{requirementId}/edit(projectId=${projectId}, taskId=${task.taskId}, requirementId=${requirement.id})}">View Details</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/{requirementId}/edit(projectId=${projectId}, taskId=${task.taskId}, requirementId=${requirement.id})}, label='Edit', type='primary')}"></a>
     <th:block th:replace="~{../fragments/form_fields :: formButton (field='requirementId', value=${requirement.id}, method='post', action=@{/projects/__${projectId}__/task/__${task.taskId}__/requirement/delete}, label='Delete')}" />
 </div>
 

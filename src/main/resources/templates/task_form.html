@@ -34,6 +34,8 @@
     <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
     </div>
 
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}(projectId=${projectId})}, label='Cancel', type='danger')}"></a>
+
     <div th:replace="~{../fragments/form_fields :: submit (label=${(task.id == 0) ? 'Create' : 'Edit'})}">
     </div>
   </form>

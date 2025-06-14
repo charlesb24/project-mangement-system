@@ -28,10 +28,10 @@
         </div>
     </div>
 
-    <a th:href="@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}">Add New Requirement</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}, label='Add New Requirement', type='primary')}"></a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/edit(projectId=${task.project.id}, taskId=${task.taskId})}, label='Edit Task', type='primary')}"></a>
 
-    <a th:href="@{/projects/{projectId}/task/{taskId}/edit(projectId=${task.project.id}, taskId=${task.taskId})}">Edit Task</a>
-    <a th:href="@{/projects/{projectId}/task/{taskId}/delete(projectId=${task.project.id}, taskId=${task.taskId})}">Delete Task</a>
+    <th:block th:replace="~{../fragments/form_fields :: formButton (field='taskId', value=${taskId}, method='post', action=@{/projects/__${project.id}__/task/__${taskId}__/delete}, label='Delete Task')}" />
 </main>
 
 <footer th:replace="~{../fragments/footers :: footer}">

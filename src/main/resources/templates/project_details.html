@@ -28,10 +28,11 @@
         </div>
     </div>
 
-    <a th:href="@{/projects/{projectId}/task/new(projectId=${project.id})}">Add New Task</a>
 
-    <a th:href="@{/projects/{id}/edit(id=${project.id})}">Edit Project</a>
-    <a th:href="@{/projects/{id}/delete(id=${project.id})}">Delete Project</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/new(projectId=${project.id})}, label='Add New Task', type='primary')}"></a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{id}/edit(id=${project.id})}, label='Edit Project', type='primary')}"></a>
+
+    <th:block th:replace="~{../fragments/form_fields :: formButton (field='projectId', value=${project.id}, method='post', action=@{/projects/__${project.id}__/delete}, label='Delete Project')}" />
 </main>
 
 <footer th:replace="~{../fragments/footers :: footer}">

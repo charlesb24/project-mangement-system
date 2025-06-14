@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
-<a class="btn btn-danger" th:fragment="action-button (link, label)" th:href="${link}" th:text="${label}"></a>
+<a class="btn btn-" th:fragment="action-button (link, label, type)" th:href="${link}" th:text="${label}" th:classappend="${type}"></a>
 
 <nav th:fragment="breadcrumbs (links)">
     <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
