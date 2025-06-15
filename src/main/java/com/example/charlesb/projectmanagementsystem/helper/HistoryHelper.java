@@ -62,7 +62,7 @@ public class HistoryHelper {
             case null, default -> pageTitle = "Project";
         }
 
-        Link project = new Link(baseURL + "/project/" + projectId, pageTitle, true);
+        Link project = new Link(baseURL + "/projects/" + projectId, pageTitle, true);
 
         history.getLast().setCurrent(false);
         history.add(project);

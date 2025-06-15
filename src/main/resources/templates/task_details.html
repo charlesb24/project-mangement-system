@@ -31,7 +31,7 @@
     <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}, label='Add New Requirement', type='primary')}"></a>
     <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/edit(projectId=${task.project.id}, taskId=${task.taskId})}, label='Edit Task', type='primary')}"></a>
 
-    <th:block th:replace="~{../fragments/form_fields :: formButton (field='taskId', value=${taskId}, method='post', action=@{/projects/__${project.id}__/task/__${taskId}__/delete}, label='Delete Task')}" />
+    <th:block th:replace="~{../fragments/form_fields :: formButton (field='taskId', value=${taskId}, method='post', action=@{/projects/__${task.project.id}__/task/__${taskId}__/delete}, label='Delete Task', type='danger')}" />
 </main>
 
 <footer th:replace="~{../fragments/footers :: footer}">

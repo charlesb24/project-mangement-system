@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <a th:href="@{/projects/new}">New Project</a>
+    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/new}, label='New Project', type='primary')}"></a>
 
 </main>
 

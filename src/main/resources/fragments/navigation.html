@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<a class="btn btn-" th:fragment="action-button (link, label, type)" th:href="${link}" th:text="${label}" th:classappend="${type}"></a>
+<a th:class="'btn btn-' + ${type}" th:fragment="action-button (link, label, type)" th:href="${link}" th:text="${label}"></a>
 
 <nav th:fragment="breadcrumbs (links)">
     <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">

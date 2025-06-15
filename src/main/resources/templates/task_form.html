@@ -34,9 +34,18 @@
     <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
     </div>
 
-    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}(projectId=${projectId})}, label='Cancel', type='danger')}"></a>
+    <div th:if="${task.id == 0}">
+      <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}(projectId=${projectId})}, label='Cancel', type='danger')}"></a>
 
-    <div th:replace="~{../fragments/form_fields :: submit (label=${(task.id == 0) ? 'Create' : 'Edit'})}">
+      <div th:replace="~{../fragments/form_fields :: submit (label='Create')}">
+      </div>
+    </div>
+
+    <div th:unless="${task.id == 0}">
+      <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.id})}, label='Cancel', type='danger')}"></a>
+
+      <div th:replace="~{../fragments/form_fields :: submit (label='Edit')}">
+      </div>
     </div>
   </form>
 
