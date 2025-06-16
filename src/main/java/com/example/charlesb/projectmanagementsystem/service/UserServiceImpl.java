@@ -5,6 +5,8 @@ import com.example.charlesb.projectmanagementsystem.dao.UserRepository;
 import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Role;
 import com.example.charlesb.projectmanagementsystem.entity.User;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SessionRegistry sessionRegistry;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, SessionRegistry sessionRegistry) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.sessionRegistry = sessionRegistry;
     }
 
     @Override
@@ -47,11 +51,14 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(user);
+
+        reloadUserByEmail(userDTO.getEmail());
     }
 
     @Override
     public void updateUser(User user) {
         userRepository.save(user);
+        reloadUserByEmail(user.getEmail());
     }
 
     @Override
@@ -145,6 +152,19 @@ public class UserServiceImpl implements UserService {
         }
 
         return role;
+    }
+
+    private void reloadUserByEmail(String email) {
+        org.springframework.security.core.userdetails.User targetUser = sessionRegistry.getAllPrincipals().stream().map(u -> (org.springframework.security.core.userdetails.User) u).filter(u -> u.getUsername().equals(email)).findFirst().orElse(null);
+
+        if (targetUser != null) {
+            List<SessionInformation> currentSessions = sessionRegistry.getAllSessions(targetUser, false);
+
+            if (!currentSessions.isEmpty()) {
+                currentSessions.forEach(session -> { session.expireNow(); });
+            }
+        }
+
     }
 
 }

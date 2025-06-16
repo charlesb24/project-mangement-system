@@ -6,17 +6,22 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -38,7 +43,9 @@ public class SecurityConfig {
                 )
                 .logout((logout) -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll());
+                                .permitAll())
+                .sessionManagement((session) -> session.sessionAuthenticationStrategy(new RegisterSessionAuthenticationStrategy(sessionRegistry)).maximumSessions(2)
+                        .expiredUrl("/login?expired"));
 
         return http.build();
     }
