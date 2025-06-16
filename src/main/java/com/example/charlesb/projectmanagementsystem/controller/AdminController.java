@@ -129,6 +129,10 @@ public class AdminController {
             }
         }
 
+        if (userDTO.getContactMethod() != null) {
+            user.setContactMethod(userDTO.getContactMethod());
+        }
+
         userService.updateUser(user);
 
         return "redirect:/admin/users/list";
