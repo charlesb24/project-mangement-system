@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,12 +16,12 @@
             <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link" th:href="@{/admin/users/list}">Admin</a></li>
         </ul>
 
-        <div th:unless="${#authentication.isAuthenticated()}" class="d-flex">
+        <div sec:authorize="isAnonymous()" class="d-flex">
             <a class="btn btn-outline-light me-3" th:href="@{/login}">Login</a>
             <a class="btn btn-outline-light" th:href="@{/register}">Register</a>
         </div>
 
-        <div th:if="${#authentication.isAuthenticated()}" class="d-flex">
+        <div sec:authorize="isAuthenticated()" class="d-flex">
             <a class="btn btn-outline-light" th:href="@{/logout}">Logout</a>
         </div>
     </nav>
@@ -40,12 +41,12 @@
             <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link" th:href="@{/admin/users/list}">Admin</a></li>
         </ul>
 
-        <div th:unless="${#authentication.isAuthenticated()}" class="d-flex">
+        <div sec:authorize="!isAuthenticated()" class="d-flex">
             <a class="btn btn-outline-light me-3" th:href="@{/login}">Login</a>
             <a class="btn btn-outline-light" th:href="@{/register}">Register</a>
         </div>
 
-        <div th:if="${#authentication.isAuthenticated()}" class="d-flex">
+        <div sec:authorize="isAuthenticated()" class="d-flex">
             <a class="btn btn-outline-light" th:href="@{/logout}">Logout</a>
         </div>
     </nav>

@@ -28,7 +28,7 @@ footer ul {
     margin: 0.5rem;
 }
 
-#sign-in {
+.small-form {
     width: 100%;
     max-width: 420px;
     padding: 15px;
