@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -30,6 +31,13 @@ public class AdminController {
     @GetMapping("/users/list")
     public String listUsers(Model model) {
         List<UserDTO> users = userService.findAllUsers();
+
+        users.sort(new Comparator<UserDTO>() {
+            @Override
+            public int compare(UserDTO o1, UserDTO o2) {
+                return (int) (o1.getId() - o2.getId());
+            }
+        });
 
         model.addAttribute("users", users);
         model.addAttribute("links", HistoryHelper.getHistoryForAdminUserList());

@@ -112,6 +112,9 @@ public class UserServiceImpl implements UserService {
         userDTO.setContactMethod(user.getContactMethod());
         userDTO.setManagerId(user.getManagerId());
 
+        userDTO.setLocked(user.isLocked());
+        userDTO.setEnabled(user.isEnabled());
+
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
 
         userDTO.setRoles(roleNames);
@@ -138,6 +141,9 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDTO.getPhone());
         user.setContactMethod(userDTO.getContactMethod());
         user.setManagerId(userDTO.getManagerId());
+
+        user.setLocked(userDTO.isLocked());
+        user.setEnabled(userDTO.isEnabled());
 
         return user;
     }
