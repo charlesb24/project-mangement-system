@@ -50,7 +50,31 @@
               th:action="@{/admin/users/promote}" method="post">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <input type="hidden" name="role" value="OWNER" />
-            <input type="submit" value="Promote to Owner" />
+
+            <!-- Button to trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#promotionModal' + ${user.id}">
+                Promote to Owner
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" th:id="'promotionModal' + ${user.id}" tabindex="-1" th:aria-labelledby="'promotionModalLabel' + ${user.id}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" th:id="'promotionModalLabel' + ${user.id}" th:text="${'Promote ' + user.firstName + ' ' + user.lastName +' to Owner?'}">Promote User to Owner?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            This action will demote you from the owner role and make [[${user.firstName + ' ' + user.lastName}]] the new owner.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-primary" value="Confirm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </form>
 
         <form sec:authorize="hasRole('ROLE_OWNER')"
