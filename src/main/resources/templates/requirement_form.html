@@ -32,9 +32,9 @@
         <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">
         </div>
 
-        <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}, label='Cancel', type='danger')}"></a>
-
-        <div th:replace="~{../fragments/form_fields :: submit (label=${(requirement.id == 0) ? 'Create' : 'Edit'})}">
+        <div class="button-row spaced">
+            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}, label='Cancel', type='danger')}"></a>
+            <div th:replace="~{../fragments/form_fields :: submit (label=${(requirement.id == 0) ? 'Create' : 'Edit'})}"></div>
         </div>
 
     </form>

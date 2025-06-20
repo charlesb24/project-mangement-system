@@ -35,12 +35,12 @@
         </div>
 
 
-        <div th:if="${project.id == 0}">
+        <div class="button-row spaced" th:if="${project.id == 0}">
             <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects}, label='Cancel', type='danger')}"></a>
             <div th:replace="~{../fragments/form_fields :: submit (label='Create')}"></div>
         </div>
 
-        <div th:unless="${project.id == 0}">
+        <div class="button-row spaced" th:unless="${project.id == 0}">
             <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{id}(id=${project.id})}, label='Cancel', type='danger')}"></a>
             <div th:replace="~{../fragments/form_fields :: submit (label='Edit')}"></div>
         </div>

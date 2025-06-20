@@ -8,8 +8,6 @@ import java.util.List;
 
 public class HistoryHelper {
 
-    private static final String baseURL = "http://localhost:8080";
-
     public static List<Link> getHistoryForRequirement(Long taskId, Long projectId, LinkType linkType) {
         List<Link> history = getHistoryForTask(taskId, projectId, LinkType.VIEW);
 
@@ -62,7 +60,7 @@ public class HistoryHelper {
             case null, default -> pageTitle = "Project";
         }
 
-        Link project = new Link(baseURL + "/projects/" + projectId, pageTitle, true);
+        Link project = new Link("/projects/" + projectId, pageTitle, true);
 
         history.getLast().setCurrent(false);
         history.add(project);
@@ -73,8 +71,8 @@ public class HistoryHelper {
     public static List<Link> getHistoryForProjectList() {
         List<Link> history = new ArrayList<>();
 
-        Link home = new Link(baseURL + "/home", "Home", false);
-        Link projectList = new Link(baseURL + "/projects", "Projects", true);
+        Link home = new Link("/home", "Home", false);
+        Link projectList = new Link("/projects", "Projects", true);
 
         history.add(home);
         history.add(projectList);
@@ -94,7 +92,7 @@ public class HistoryHelper {
             case null, default -> pageTitle = "User";
         }
 
-        Link user = new Link(baseURL + "/admin/users/" + userId, pageTitle, true);
+        Link user = new Link("/admin/users/" + userId, pageTitle, true);
 
         history.getLast().setCurrent(false);
         history.add(user);
@@ -105,8 +103,8 @@ public class HistoryHelper {
     public static List<Link> getHistoryForAdminUserList() {
         List<Link> history = new ArrayList<>();
 
-        Link home = new Link(baseURL + "/home", "Home", false);
-        Link userList = new Link(baseURL + "/admin/users/list", "Users", true);
+        Link home = new Link("/home", "Home", false);
+        Link userList = new Link("/admin/users/list", "Users", true);
 
         history.add(home);
         history.add(userList);
