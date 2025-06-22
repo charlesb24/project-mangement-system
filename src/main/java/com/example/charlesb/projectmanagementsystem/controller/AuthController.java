@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -27,7 +28,7 @@ public class AuthController {
         if (userDetails == null) {
             return "login";
         } else {
-            return "redirect:/";
+            return "redirect:/dashboard";
         }
     }
 

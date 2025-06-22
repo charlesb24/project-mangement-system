@@ -12,11 +12,11 @@
 
 <main class="d-flex justify-content-center align-items-center flex-column my-auto">
 
-    <div th:if="${param.error}">
-        Invalid email and password.
+    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+        Invalid email and/or password.
     </div>
 
-    <div th:if="${param.logout}">
+    <div class="alert alert-info" role="alert" th:if="${param.logout}">
         You have been logged out.
     </div>
 

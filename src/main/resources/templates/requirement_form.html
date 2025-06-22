@@ -20,13 +20,13 @@
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" th:field="*{taskId}" />
 
-        <div th:replace="~{../fragments/form_fields :: labelledInput (id='title', field='title', placeholder='Title', label='Requirement Title', type='text', value='*{title}', classes='')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='title', field='title', placeholder='Title', label='Requirement Title', type='text', value='*{title}', classes='col-md-12')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Requirement Description', type='text', value='*{description}', classes='')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Requirement Description', type='text', value='*{description}', classes='col-md-12')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: statusAssignment (field='status', currentStatus='*{status}', classes='')}">
+        <div th:replace="~{../fragments/form_fields :: statusAssignment (field='status', currentStatus='*{status}', classes='col-md-12')}">
         </div>
 
         <div th:replace="~{../fragments/form_fields :: userAssignment (assignedToUserId=*{assignedToUserId}, assignableUsers=${assignableUsers}, assignedUser=${assignedUser})}">

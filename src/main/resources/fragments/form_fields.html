@@ -6,11 +6,13 @@
 </head>
 <body>
 
-<div th:class="'form-floating ' + ${classes}" th:fragment="labelledInput (id, field, placeholder, label, type, value, classes)">
-    <input class="form-control" th:id="${id}" th:type="${type}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
-    <label th:for="${id}" th:text="${label}"></label>
-    <p class="invalid-feedback" th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}">
-    </p>
+<div th:class="${classes}" th:fragment="labelledInput (id, field, placeholder, label, type, value, classes)">
+    <div class="form-floating">
+        <input class="form-control" th:id="${id}" th:type="${type}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
+        <label th:for="${id}" th:text="${label}"></label>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}">
+        </div>
+    </div>
 </div>
 
 <div th:fragment="submit (label)">
@@ -36,9 +38,8 @@
 <div th:fragment="userAssignment (assignedToUserId, assignableUsers, assignedUser)">
     <label class="form-label" for="assignedTo">Assigned To</label>
     <select class="form-select" id="assignedTo" th:field="*{assignedToUserId}">
-        <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user?.lastName + ', ' + user?.firstName}"></option>
+        <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user?.lastName + ', ' + user?.firstName}" th:selected="${assignedToUserId == user.id}"></option>
         <option th:if="*{assignedToUserId == 0}" th:value="${0}" selected>Unassigned</option>
-        <option th:if="*{assignedToUserId != 0}" th:value="${assignedUser?.id}" th:text="${assignedUser?.lastName + ', ' + assignedUser?.firstName}" selected></option>
     </select>
 </div>
 

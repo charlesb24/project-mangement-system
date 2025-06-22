@@ -19,19 +19,19 @@
 
     <input type="hidden" th:field="*{id}" />
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='firstName', field='firstName', placeholder='First Name', label='First Name', type='text', value='*{firstName}', classes='')}">
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='firstName', field='firstName', placeholder='First Name', label='First Name', type='text', value='*{firstName}', classes='col-md-12')}">
     </div>
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='middleName', field='middleName', placeholder='Middle Name', label='Middle Name', type='text', value='*{middleName}', classes='')}">
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='middleName', field='middleName', placeholder='Middle Name', label='Middle Name', type='text', value='*{middleName}', classes='col-md-12')}">
     </div>
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='lastName', field='lastName', placeholder='Last Name', label='Last Name', type='text', value='*{lastName}', classes='')}">
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='lastName', field='lastName', placeholder='Last Name', label='Last Name', type='text', value='*{lastName}', classes='col-md-12')}">
     </div>
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='email', field='email', placeholder='example@gmail.com', label='Email', type='email', value='*{email}', classes='')}">
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='email', field='email', placeholder='example@gmail.com', label='Email', type='email', value='*{email}', classes='col-md-12')}">
     </div>
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='phone', field='phone', placeholder='(000) 000-0000', label='Phone Number', type='text', value='*{phone}', classes='')}">
+    <div th:replace="~{../fragments/form_fields :: labelledInput (id='phone', field='phone', placeholder='(000) 000-0000', label='Phone Number', type='text', value='*{phone}', classes='col-md-12')}">
     </div>
 
     <div th:replace="~{../fragments/form_fields :: contactMethod (field='contactMethod')}">

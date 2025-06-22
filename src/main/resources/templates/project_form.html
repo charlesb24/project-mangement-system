@@ -19,10 +19,10 @@
 
         <input type="hidden" th:field="*{id}" />
 
-        <div th:replace="~{../fragments/form_fields :: labelledInput (id='name', field='name', placeholder='Name', label='Project Name', type='text', value='*{name}', classes='')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='name', field='name', placeholder='Name', label='Project Name', type='text', value='*{name}', classes='col-md-12')}">
         </div>
 
-        <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Project Description', type='text', value='*{description}', classes='')}">
+        <div th:replace="~{../fragments/form_fields :: labelledInput (id='description', field='description', placeholder='Description', label='Project Description', type='text', value='*{description}', classes='col-md-12')}">
         </div>
 
         <div th:replace="~{../fragments/form_fields :: priorityAssignment (field='priority', currentPriority='*{priority}', classes='col-sm-6')}">
