@@ -11,7 +11,7 @@
 <header th:replace="${links != null} ? ~{../fragments/headers :: breadcrumb-header (links=${links})} : ~{../fragments/headers :: no-breadcrumb-header}">
 </header>
 
-<main>
+<main class="col-md-6 m-auto">
     <div th:object="${task}">
         <h2>Task Details</h2>
         <h4 th:text="*{name}"></h4>
@@ -21,7 +21,7 @@
         <p>Assigned To: [[${task.assignedTo != null ? task.assignedTo.lastName + ', ' + task.assignedTo.firstName : 'Unassigned'}]]</p>
     </div>
 
-    <div class="list-group d-grid gap-2 border-0 col-md-6">
+    <div class="list-group d-grid gap-2 border-0">
         <h2>Requirements</h2>
         <div th:unless="${task.requirements.isEmpty()}">
             <th:block th:each="requirement : ${task.requirements}" th:insert="~{../fragments/objects :: requirement-list (requirement=${requirement}, projectId=${task.project.id}, taskId=${task.taskId})}" />

@@ -11,16 +11,18 @@
 <header th:replace="${links != null} ? ~{../fragments/headers :: breadcrumb-header (links=${links})} : ~{../fragments/headers :: no-breadcrumb-header}">
 </header>
 
-<main>
+<main class="col-md-6 m-auto">
 
-    <div class="list-group d-grid gap-2 border-0 col-md-6">
+    <div class="list-group d-grid gap-2 border-0">
         <h2>Projects</h2>
         <div th:unless="${projects.isEmpty()}">
             <th:block th:each="project : ${projects}" th:insert="~{../fragments/objects :: project-list (project=${project})}" />
         </div>
     </div>
 
-    <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/new}, label='New Project', type='primary')}"></a>
+    <div class="mt-4">
+        <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/new}, label='New Project', type='primary')}"></a>
+    </div>
 
 </main>
 

@@ -146,4 +146,11 @@ public class AdminController {
         return "redirect:/admin/users/list";
     }
 
+    @DeleteMapping("/users/{userId}/delete")
+    public String deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+
+        return "redirect:/admin/users/list";
+    }
+
 }
