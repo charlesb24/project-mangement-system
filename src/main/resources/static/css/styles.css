@@ -23,7 +23,6 @@ footer ul li {
 }
 
 footer ul li a {
-    color: gainsboro;
     text-decoration: none;
 }
 
@@ -57,6 +56,6 @@ footer ul {
     content: ', '
 }
 
-.role-display > span::after {
-
+use {
+    fill: var(--bs-tertiary-color);
 }
