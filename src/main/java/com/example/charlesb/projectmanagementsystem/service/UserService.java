@@ -14,6 +14,8 @@ public interface UserService {
 
     void deleteUser(Long id);
 
+    boolean phoneExists(String phone);
+
     User findUserById(Long id);
     User findUserByEmail(String email);
 

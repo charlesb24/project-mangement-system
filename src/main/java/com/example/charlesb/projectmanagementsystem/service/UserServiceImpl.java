@@ -67,6 +67,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean phoneExists(String phone) {
+        return userRepository.findByPhone(phone).isPresent();
+    }
+
+    @Override
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
@@ -143,12 +148,15 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDTO.getFirstName());
         user.setMiddleName(userDTO.getMiddleName());
         user.setLastName(userDTO.getLastName());
-        user.setPhone(userDTO.getPhone());
         user.setContactMethod(userDTO.getContactMethod());
         user.setManagerId(userDTO.getManagerId());
 
         user.setLocked(userDTO.isLocked());
         user.setEnabled(userDTO.isEnabled());
+
+        if (userDTO.getPhone().isEmpty()) {
+            user.setPhone(null);
+        }
 
         return user;
     }

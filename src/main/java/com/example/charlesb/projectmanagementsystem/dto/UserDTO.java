@@ -41,7 +41,6 @@ public class UserDTO {
     @NotEmpty
     @Size(min = 2)
     private String lastName;
-
     private String phone;
 
     private String contactMethod;

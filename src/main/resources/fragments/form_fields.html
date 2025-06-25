@@ -8,7 +8,7 @@
 
 <div th:class="${classes}" th:fragment="labelledInput (id, field, placeholder, label, type, value, classes)">
     <div class="form-floating">
-        <input class="form-control" th:id="${id}" th:type="${type}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" />
+        <input class="form-control" th:id="${id}" th:type="${type}" th:field="*{__${field}__}" th:placeholder="${placeholder}" th:value="${value}" th:errorclass="'is-invalid'" />
         <label th:for="${id}" th:text="${label}"></label>
         <div class="invalid-feedback" th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}">
         </div>

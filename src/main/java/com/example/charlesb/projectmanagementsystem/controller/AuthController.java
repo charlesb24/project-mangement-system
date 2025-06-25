@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
+
 @Controller
 public class AuthController {
 
@@ -49,6 +51,14 @@ public class AuthController {
     ) {
         User userExists = userService.findUserByEmail(userDTO.getEmail());
 
+        if (userDTO.getPhone() != null && !userDTO.getPhone().isEmpty()) {
+            boolean phoneExists = userService.phoneExists(userDTO.getPhone());
+
+            if (phoneExists) {
+                result.rejectValue("phone", "phone.exists", "An account with that phone number already exists");
+            }
+        }
+
         if (userExists != null && userExists.getEmail() != null && !userExists.getEmail().isEmpty()) {
             result.rejectValue("email", "email.exists", "An account with that email already exists");
         }
@@ -57,6 +67,8 @@ public class AuthController {
             model.addAttribute("user", userDTO);
             return "registration_form";
         }
+
+        userDTO.setEnabled(true);
 
         userService.saveUser(userDTO);
 
