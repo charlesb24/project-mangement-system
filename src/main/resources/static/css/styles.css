@@ -56,6 +56,18 @@ footer ul {
     content: ', '
 }
 
-use {
+.dropdown-toggle use {
     fill: var(--bs-tertiary-color);
+}
+
+.dropdown-toggle:hover use {
+    fill: white;
+}
+
+.dropdown-menu use {
+    fill: var(--bs-body-color);
+}
+
+.active.dropdown-item use {
+    fill: white;
 }

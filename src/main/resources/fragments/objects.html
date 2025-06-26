@@ -89,7 +89,7 @@
         </form>
 
         <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/toggle}, label=${user.enabled ? 'Disable' : 'Enable'}, type='primary')}" />
-        <a th:replace="~{../fragments/navigation :: action-button (link=@{/admin/users/{id}/edit(id=${user.id})}, label='Edit', type='primary')}"></a>
+        <a th:replace="~{../fragments/navigation :: action-button (link=@{/admin/users/{id}/edit(id=${user.id})}, label='Edit', type='primary ms-auto')}"></a>
 
         <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/{userId}/delete(userId=${user.id})}, label='Delete', type='danger')}" />
 
