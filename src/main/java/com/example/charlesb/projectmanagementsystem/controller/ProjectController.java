@@ -64,22 +64,13 @@ public class ProjectController {
     @GetMapping("/projects/{projectId}/edit")
     public String editProject(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, Model model) {
         Project foundProject = projectService.findById(projectId);
-        ProjectDTO projectDTO = new ProjectDTO();
-
 
         if (foundProject == null) {
             return "redirect:/projects/new";
         }
 
-        projectDTO.setId(foundProject.getId());
-        projectDTO.setName(foundProject.getName());
-        projectDTO.setDescription(foundProject.getDescription());
-        projectDTO.setStatus(ConversionHelper.statusToInt(foundProject.getStatus()));
-        projectDTO.setPriority(ConversionHelper.priorityToInt(foundProject.getPriority()));
-
-        model.addAttribute("project", projectDTO);
+        model.addAttribute("project", projectService.mapToDTO(foundProject));
         model.addAttribute("assignableUsers", userService.findAssignableUsers(userDetails));
-        model.addAttribute("assignedUser", userService.mapToDTO(foundProject.getAssignedTo()));
         model.addAttribute("links", HistoryHelper.getHistoryForProject(projectId, LinkType.EDIT));
 
         return "project_form";
@@ -87,28 +78,16 @@ public class ProjectController {
 
     @PostMapping("/projects/save")
     public String saveProject(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("project") ProjectDTO projectDTO) {
-        // find existing project or create new project
-        Project foundProject = projectService.findById(projectDTO.id);
-        User assignedTo = userService.findUserById(projectDTO.assignedToUserId);
+        Project project = projectService.mapToProject(projectDTO);
 
-        if (foundProject == null) {
-            foundProject = new Project();
-            User editor = userService.findUserByEmail(userDetails.getUsername());
-            foundProject.setCreatedBy(editor);
+        if (project.getCreatedBy() == null) {
+            User creator = userService.findUserByEmail(userDetails.getUsername());
+            project.setCreatedBy(creator);
         }
 
-        foundProject.setName(projectDTO.name);
-        foundProject.setDescription(projectDTO.description);
-        foundProject.setStatus(ConversionHelper.intToStatus(projectDTO.status));
-        foundProject.setPriority(ConversionHelper.intToPriority(projectDTO.priority));
+        projectService.save(project);
 
-        if (assignedTo != null) {
-            foundProject.setAssignedTo(assignedTo);
-        }
-
-        projectService.save(foundProject);
-
-        return "redirect:/projects";
+        return "redirect:/projects/" + project.getId();
     }
 
     @DeleteMapping("/projects/{projectId}/delete/")

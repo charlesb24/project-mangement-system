@@ -40,9 +40,8 @@
     <div>
       <label class="form-label" for="assignedTo">Assigned To</label>
       <select class="form-select" id="assignedTo" th:field="*{managerId}">
-        <option th:each="user : ${managers}" th:value="${user.id}" th:text="${user?.lastName + ', ' + user?.firstName}"></option>
-        <option th:if="*{managerId == 0}" th:value="${0}" selected>Unassigned</option>
-        <option th:if="*{managerId != 0}" th:value="${assignedUser?.id}" th:text="${assignedUser?.lastName + ', ' + assignedUser?.firstName}" selected></option>
+        <option th:value="${0}" selected>Unassigned</option>
+        <option th:each="assignableUser : ${managers}" th:value="${assignableUser.id}" th:text="${assignableUser?.lastName + ', ' + assignableUser?.firstName}" th:selected="${assignableUser.id == user.managerId}"></option>
       </select>
     </div>
 

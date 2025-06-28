@@ -35,11 +35,11 @@
     </select>
 </div>
 
-<div th:fragment="userAssignment (assignedToUserId, assignableUsers, assignedUser)">
+<div th:fragment="userAssignment (assignedToUserId, assignableUsers)">
     <label class="form-label" for="assignedTo">Assigned To</label>
     <select class="form-select" id="assignedTo" th:field="*{assignedToUserId}">
+        <option th:value="${0}" selected>Unassigned</option>
         <option th:each="user : ${assignableUsers}" th:value="${user.id}" th:text="${user?.lastName + ', ' + user?.firstName}" th:selected="${assignedToUserId == user.id}"></option>
-        <option th:if="*{assignedToUserId == 0}" th:value="${0}" selected>Unassigned</option>
     </select>
 </div>
 

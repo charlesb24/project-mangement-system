@@ -104,6 +104,10 @@ public class TaskServiceImpl implements TaskService {
             }
         }
 
+        if (taskDTO.getAssignedToUserId() == 0) {
+            task.setAssignedTo(null);
+        }
+
         task.setName(taskDTO.getName());
         task.setDescription(taskDTO.getDescription());
         task.setPriority(ConversionHelper.intToPriority(taskDTO.getPriority()));

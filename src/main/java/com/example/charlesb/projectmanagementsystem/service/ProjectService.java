@@ -1,5 +1,6 @@
 package com.example.charlesb.projectmanagementsystem.service;
 
+import com.example.charlesb.projectmanagementsystem.dto.ProjectDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
 import com.example.charlesb.projectmanagementsystem.entity.User;
 
@@ -17,5 +18,8 @@ public interface ProjectService {
     void save(Project project);
 
     void deleteById(long projectId);
+
+    Project mapToProject(ProjectDTO projectDTO);
+    ProjectDTO mapToDTO(Project project);
 
 }

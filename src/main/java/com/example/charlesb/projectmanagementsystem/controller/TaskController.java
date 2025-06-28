@@ -84,8 +84,7 @@ public class TaskController {
         Project savedProject = projectService.findById(projectId);
 
         if (savedProject == null) {
-            // TODO: add error message stating the project couldn't be found
-            return "redirect:/projects";
+            return "redirect:/projects?no_project_id";
         }
 
         if (savedTask != null) {

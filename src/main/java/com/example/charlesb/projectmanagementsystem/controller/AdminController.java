@@ -60,11 +60,6 @@ public class AdminController {
     public String editUser(@PathVariable Long userId, Model model) {
         User foundUser = userService.findUserById(userId);
 
-        if (foundUser.getManagerId() != null) {
-            User manager = userService.findUserById(foundUser.getManagerId());
-            model.addAttribute("assignedUser", userService.mapToDTO(manager));
-        }
-
         model.addAttribute("user", userService.mapToDTO(foundUser));
         model.addAttribute("managers", userService.findManagers());
         model.addAttribute("links", HistoryHelper.getHistoryForAdminUserEdit(userId, LinkType.EDIT));
