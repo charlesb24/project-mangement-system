@@ -20,6 +20,10 @@
         You have been logged out.
     </div>
 
+    <div class="alert alert-success" role="alert" th:if="${param.registered}">
+        You have successfully registered an account.
+    </div>
+
     <form class="small-form" th:action="@{/login}" method="post">
 
         <div class="text-center mb-4">

@@ -78,39 +78,22 @@ public class TaskController {
 
     @PostMapping("/save")
     public String saveTask(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long projectId, @ModelAttribute("task") TaskDTO taskDTO) {
-        Task task;
-
-        Task savedTask = taskService.findById(taskDTO.id);
         Project savedProject = projectService.findById(projectId);
 
         if (savedProject == null) {
             return "redirect:/projects?no_project_id";
         }
 
-        if (savedTask != null) {
-            task = savedTask;
-        } else {
+        Task task = taskService.mapToTask(taskDTO);
+
+        if (task.getCreatedBy() == null) {
             User creator = userService.findUserByEmail(userDetails.getUsername());
-
-            task = new Task();
             task.setCreatedBy(creator);
-            task.setProject(savedProject);
-        }
-
-        task.setName(taskDTO.name);
-        task.setDescription(taskDTO.description);
-        task.setPriority(ConversionHelper.intToPriority(taskDTO.priority));
-        task.setStatus(ConversionHelper.intToStatus(taskDTO.status));
-
-        User assignedTo = userService.findUserById(taskDTO.assignedToUserId);
-
-        if (assignedTo != null) {
-            task.setAssignedTo(assignedTo);
         }
 
         taskService.save(task);
 
-        return "redirect:/projects/" + projectId;
+        return "redirect:/projects/" + projectId + "/task/" + task.getTaskId();
     }
 
     @DeleteMapping("/{taskId}/delete")
@@ -172,9 +155,7 @@ public class TaskController {
         requirement.setDescription(requirementDTO.description);
         requirement.setStatus(ConversionHelper.intToStatus(requirementDTO.status));
 
-        if (assignedTo != null) {
-            requirement.setAssignedTo(assignedTo);
-        }
+        requirement.setAssignedTo(assignedTo);
 
         taskService.saveRequirement(requirement);
 
