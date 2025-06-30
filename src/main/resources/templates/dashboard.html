@@ -16,7 +16,7 @@
     <div class="d-flex gap-3 mx-auto justify-content-center align-items-start">
 
         <div class="col border-0 col-md-3">
-            <h2 class="mb-5">Assigned Projects</h2>
+            <h2 class="display-6 mb-4">Assigned Projects</h2>
             <div th:if="${inProgressProjects.isEmpty()}">No Assigned Projects</div>
             <div class="list-group" th:unless="${inProgressProjects.isEmpty()}">
                 <th:block th:each="project : ${inProgressProjects}" th:insert="~{../fragments/objects :: project-dash (project=${project})}">
@@ -25,7 +25,7 @@
         </div>
 
         <div class="col border-0 col-md-3">
-            <h2 class="mb-5">Assigned Tasks</h2>
+            <h2 class="display-6 mb-4">Assigned Tasks</h2>
             <div th:if="${inProgressTasks.isEmpty()}">No Assigned Tasks</div>
             <div class="list-group" th:unless="${inProgressTasks.isEmpty()}">
                 <th:block th:each="task : ${inProgressTasks}">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="col border-0 col-md-3">
-            <h2 class="mb-5">Assigned Requirements</h2>
+            <h2 class="display-6 mb-4">Assigned Requirements</h2>
             <div th:if="${inProgressRequirements.isEmpty()}">No Assigned Requirements</div>
             <div class="list-group" th:unless="${inProgressRequirements.isEmpty()}">
                 <th:block th:each="requirement : ${inProgressRequirements}">

@@ -8,20 +8,29 @@
 <body>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="project-dash (project)">
-    <h3>[[${project.name}]]</h3>
+    <div class="d-flex justify-content-between align-items-start">
+        <h3>[[${project.name}]]</h3>
+        <span th:class="'badge text-bg-' + ${project.priority.style}">
+            Priority: [[${project.priority.displayValue}]]
+        </span>
+    </div>
     <p>[[${project.description}]]</p>
-    <p>[[${project.priority.displayValue}]]</p>
     <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{id}(id=${project.id})}, label='View Details', type='primary')}"></a>
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="task-dash (task, projectName, projectId)">
-    <h5>
-        <a th:href="@{/projects/{projectId}(projectId=${projectId})}">[[${projectName}]]</a>
-    </h5>
+
+    <div class="d-flex justify-content-between align-items-start">
+        <h5><a th:href="@{/projects/{projectId}(projectId=${projectId})}">[[${projectName}]]</a></h5>
+        <span th:class="'badge text-bg-' + ${task.priority.style}">
+            Priority: [[${task.priority.displayValue}]]
+        </span>
+    </div>
+
     <h3>[[${task.name}]]</h3>
     <p>[[${task.description}]]</p>
-    <p>[[${task.priority.displayValue}]]</p>
     <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${task.taskId})}, label='View Details', type='primary')}"></a>
+
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="requirement-dash (requirement, projectName, projectId, taskName, taskId)">
@@ -47,7 +56,7 @@
     <div class="button-row">
 
         <form sec:authorize="hasRole('ROLE_OWNER')" th:if="${#lists.contains(user.roles, 'ROLE_ADMIN') and not #lists.contains(user.roles, 'ROLE_OWNER')}"
-              th:action="@{/admin/users/promote}"method="post">
+              th:action="@{/admin/users/promote}" method="post">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <input type="hidden" name="role" value="OWNER" />
 

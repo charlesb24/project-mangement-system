@@ -71,9 +71,11 @@ public class HistoryHelper {
     public static List<Link> getHistoryForProjectList() {
         List<Link> history = new ArrayList<>();
 
+        Link home = new Link("/", "Home", false);
         Link dashboard = new Link("/dashboard", "Dashboard", false);
         Link projectList = new Link("/projects", "Projects", true);
 
+        history.add(home);
         history.add(dashboard);
         history.add(projectList);
 
@@ -103,9 +105,11 @@ public class HistoryHelper {
     public static List<Link> getHistoryForAdminUserList() {
         List<Link> history = new ArrayList<>();
 
+        Link home = new Link("/", "Home", false);
         Link dashboard = new Link("/dashboard", "Dashboard", false);
         Link userList = new Link("/admin/users/list", "Users", true);
 
+        history.add(home);
         history.add(dashboard);
         history.add(userList);
 
