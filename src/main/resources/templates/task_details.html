@@ -12,27 +12,39 @@
 </header>
 
 <main class="col-md-6 m-auto">
-    <div th:object="${task}">
+    <div class="my-4" th:object="${task}">
+
         <h2>Task Details</h2>
-        <h4 th:text="*{name}"></h4>
+
+        <hr>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 th:text="*{name}"></h4>
+            <div>
+                <p th:class="'badge text-bg-' + *{priority.style}" th:text="'Priority: ' + *{priority.displayValue}"></p>
+                <p class="badge text-bg-info" th:text="'Status: ' + *{status.displayValue}"></p>
+            </div>
+        </div>
+
         <p th:text="*{description}"></p>
-        <p th:text="'Status: ' + *{status.displayValue}"></p>
-        <p th:text="'Priority: ' + *{priority.displayValue}"></p>
         <p>Assigned To: [[${task.assignedTo != null ? task.assignedTo.lastName + ', ' + task.assignedTo.firstName : 'Unassigned'}]]</p>
+
+        <div class="button-row">
+            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}, label='Add New Requirement', type='primary')}"></a>
+            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/edit(projectId=${task.project.id}, taskId=${task.taskId})}, label='Edit Task', type='primary')}"></a>
+
+            <th:block th:replace="~{../fragments/form_fields :: formButton (field='taskId', value=${taskId}, method='post', action=@{/projects/__${task.project.id}__/task/__${taskId}__/delete}, label='Delete Task', type='danger')}" />
+        </div>
+
     </div>
 
-    <div class="list-group d-grid gap-2 border-0">
+    <hr>
+
+    <div class="list-group d-grid gap-2 border-0 mb-4">
         <h2>Requirements</h2>
         <div th:unless="${task.requirements.isEmpty()}">
             <th:block th:each="requirement : ${task.requirements}" th:insert="~{../fragments/objects :: requirement-list (requirement=${requirement}, projectId=${task.project.id}, taskId=${task.taskId})}" />
         </div>
-    </div>
-
-    <div class="button-row">
-        <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}, label='Add New Requirement', type='primary')}"></a>
-        <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/edit(projectId=${task.project.id}, taskId=${task.taskId})}, label='Edit Task', type='primary')}"></a>
-
-        <th:block th:replace="~{../fragments/form_fields :: formButton (field='taskId', value=${taskId}, method='post', action=@{/projects/__${task.project.id}__/task/__${taskId}__/delete}, label='Delete Task', type='danger')}" />
     </div>
 
 </main>

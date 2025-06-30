@@ -106,20 +106,28 @@
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="project-list (project)">
-    <h3>[[${project.name}]]</h3>
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>[[${project.name}]]</h3>
+        <div>
+            <p th:class="'badge text-bg-' + ${project.priority.style}">Priority: [[${project.priority.displayValue}]]</p>
+            <p class="badge text-bg-info">Status: [[${project.status.displayValue}]]</p>
+        </div>
+    </div>
     <p>[[${project.description}]]</p>
-    <p>[[${project.priority.displayValue}]]</p>
-    <p>[[${project.status.displayValue}]]</p>
     <p>Created By: [[${project.createdBy.lastName + ', ' + project.createdBy.firstName}]]</p>
     <p th:text="'Assigned To: ' + ${project.assignedTo != null ? project.assignedTo.lastName + ', ' + project.assignedTo.firstName : 'Unassigned'}"></p>
     <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{id}(id=${project.id})}, label='View Details', type='primary')}"></a>
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="task-list (task, projectId)">
-    <h3>[[${task.name}]]</h3>
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>[[${task.name}]]</h3>
+        <div>
+            <p th:class="'badge text-bg-' + ${task.priority.style}">Priority: [[${task.priority.displayValue}]]</p>
+            <p class="badge text-bg-info">Status: [[${task.status.displayValue}]]</p>
+        </div>
+    </div>
     <p>[[${task.description}]]</p>
-    <p>[[${task.priority.displayValue}]]</p>
-    <p>[[${task.status.displayValue}]]</p>
     <p>Created By: [[${task.createdBy.lastName + ', ' + task.createdBy.firstName}]]</p>
     <p th:if="${task.assignedTo}">Assigned To: [[${task.assignedTo?.lastName + ', ' + task.assignedTo?.firstName}]]</p>
     <p th:unless="${task.assignedTo}">Assigned To: Unassigned</p>
@@ -127,9 +135,11 @@
 </div>
 
 <div class="list-group-item rounded-3 py-3" th:fragment="requirement-list (requirement, projectId, taskId)">
-    <h3>[[${requirement.title}]]</h3>
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>[[${requirement.title}]]</h3>
+        <p class="badge text-bg-info">Status: [[${requirement.status.displayValue}]]</p>
+    </div>
     <p>[[${requirement.description}]]</p>
-    <p>[[${requirement.status.displayValue}]]</p>
     <p>Created By: [[${requirement.createdBy.lastName + ', ' + requirement.createdBy.firstName}]]</p>
     <p th:if="${requirement.assignedTo}">Assigned To: [[${requirement.assignedTo?.lastName + ', ' + requirement.assignedTo?.firstName}]]</p>
     <p th:unless="${requirement.assignedTo}">Assigned To: Unassigned</p>
