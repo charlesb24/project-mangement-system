@@ -22,14 +22,14 @@ import java.util.List;
 @Table(name = "tasks")
 public class Task {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     private Long taskId;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "project_id")
     private Project project;
@@ -50,15 +50,16 @@ public class Task {
 
     @OneToMany(mappedBy = "task", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Requirement> requirements = new ArrayList<>();
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "assigned_to_id")
     private User assignedTo;

@@ -19,14 +19,14 @@ import java.time.Instant;
 @Table(name = "requirements")
 public class Requirement {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "step_id")
     private Long id;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "task_id")
     private Task task;
@@ -41,12 +41,12 @@ public class Requirement {
     @Column(name = "status")
     private Status status;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "assigned_to_id")
     private User assignedTo;

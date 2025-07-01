@@ -22,7 +22,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-    private static final long serialVersionUID = 3L;
+    private static final long serialVersionUID = 4L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,32 +75,38 @@ public class User {
 
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Project> createdProjects = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Task> createdTasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Requirement> createdRequirements = new ArrayList<>();
 
     @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Project> assignedProjects = new ArrayList<>();
 
     @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Task> assignedTasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Requirement> assignedRequirements = new ArrayList<>();
 
     @CreationTimestamp

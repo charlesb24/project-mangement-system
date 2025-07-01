@@ -50,9 +50,11 @@
     <p th:if="${user.phone}">[[${user.phone}]]</p>
     <p th:if="${user.contactMethod}">Preferred Contact Method: [[${#strings.capitalize(user.contactMethod)}]]</p>
     <p class="role-display">Roles: <span th:each="role : ${user.roles}" th:text="${#strings.capitalize(#strings.toLowerCase(#strings.substring(role, 5)))}">ROLE_NAME</span></p>
-    <a th:if="${user.managerId != null}" th:href="'#user' + ${manager.id}">
-        Manager: [[${manager.firstName + ' ' + manager.lastName}]]
-    </a>
+    <p>
+        <a th:if="${user.managerId != null}" th:href="'#user' + ${manager.id}">
+            Manager: [[${manager.firstName + ' ' + manager.lastName}]]
+        </a>
+    </p>
     <div class="button-row">
 
         <form sec:authorize="hasRole('ROLE_OWNER')" th:if="${#lists.contains(user.roles, 'ROLE_ADMIN') and not #lists.contains(user.roles, 'ROLE_OWNER')}"

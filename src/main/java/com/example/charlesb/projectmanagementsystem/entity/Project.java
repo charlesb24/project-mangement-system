@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name = "projects")
 public class Project {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,17 +43,18 @@ public class Project {
     @Column(name = "status")
     private Status status;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY,
             cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "assigned_to_id")
     private User assignedTo;

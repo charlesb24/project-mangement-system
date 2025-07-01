@@ -9,10 +9,6 @@ import java.util.List;
 
 public interface RequirementRepository extends JpaRepository<Requirement, Long> {
 
-    List<Requirement> findAllByCreatedBy(User user);
-
-    List<Requirement> findAllByAssignedTo(User user);
-
     List<Requirement> findAllByAssignedToAndStatus(User user, Status status);
 
 }

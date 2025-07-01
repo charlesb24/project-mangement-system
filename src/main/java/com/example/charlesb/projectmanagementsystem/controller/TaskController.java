@@ -89,6 +89,7 @@ public class TaskController {
         if (task.getCreatedBy() == null) {
             User creator = userService.findUserByEmail(userDetails.getUsername());
             task.setCreatedBy(creator);
+            task.setProject(savedProject);
         }
 
         taskService.save(task);
@@ -96,8 +97,8 @@ public class TaskController {
         return "redirect:/projects/" + projectId + "/task/" + task.getTaskId();
     }
 
-    @DeleteMapping("/{taskId}/delete")
-    public String deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
+    @PostMapping("/delete")
+    public String deleteTask(@PathVariable Long projectId, @RequestParam Long taskId) {
         taskService.deleteById(taskId);
 
         return "redirect:/projects/{projectId}";

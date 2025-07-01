@@ -1,6 +1,5 @@
 package com.example.charlesb.projectmanagementsystem.dao;
 
-import com.example.charlesb.projectmanagementsystem.entity.Role;
 import com.example.charlesb.projectmanagementsystem.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

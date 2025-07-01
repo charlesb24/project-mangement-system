@@ -1,16 +1,11 @@
 package com.example.charlesb.projectmanagementsystem.controller;
 
 import com.example.charlesb.projectmanagementsystem.dto.ProjectDTO;
-import com.example.charlesb.projectmanagementsystem.dto.TaskDTO;
-import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
-import com.example.charlesb.projectmanagementsystem.entity.Task;
 import com.example.charlesb.projectmanagementsystem.entity.User;
 import com.example.charlesb.projectmanagementsystem.enums.LinkType;
-import com.example.charlesb.projectmanagementsystem.helper.ConversionHelper;
 import com.example.charlesb.projectmanagementsystem.helper.HistoryHelper;
 import com.example.charlesb.projectmanagementsystem.service.ProjectService;
-import com.example.charlesb.projectmanagementsystem.service.TaskService;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -90,8 +85,8 @@ public class ProjectController {
         return "redirect:/projects/" + project.getId();
     }
 
-    @DeleteMapping("/projects/{projectId}/delete/")
-    public String deleteProject(@PathVariable Long projectId) {
+    @PostMapping("/projects/delete")
+    public String deleteProject(@RequestParam Long projectId) {
         projectService.deleteById(projectId);
 
         return "redirect:/projects";
