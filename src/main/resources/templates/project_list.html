@@ -17,11 +17,13 @@
         <h2>Projects</h2>
         <div th:unless="${projects.isEmpty()}">
             <th:block th:each="project : ${projects}" th:insert="~{../fragments/objects :: project-list (project=${project})}" />
+            <div class="list-group-item rounded-3 d-flex flex-column p-3">
+                <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/new}, label='New Project', type='primary')}"></a>
+            </div>
         </div>
-    </div>
-
-    <div class="mt-4">
-        <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/new}, label='New Project', type='primary')}"></a>
+        <div th:if="${projects.isEmpty()}" class="list-group-item rounded-3 d-flex flex-column p-3">
+            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/new}, label='New Project', type='primary')}"></a>
+        </div>
     </div>
 
 </main>

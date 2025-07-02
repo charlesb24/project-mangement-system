@@ -29,10 +29,8 @@
         <p th:text="*{description}"></p>
         <p>Assigned To: [[${task.assignedTo != null ? task.assignedTo.lastName + ', ' + task.assignedTo.firstName : 'Unassigned'}]]</p>
 
-        <div class="button-row">
-            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}, label='Add New Requirement', type='primary')}"></a>
+        <div class="button-row spaced">
             <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/edit(projectId=${task.project.id}, taskId=${task.taskId})}, label='Edit Task', type='primary')}"></a>
-
             <th:block th:replace="~{../fragments/form_fields :: formButton (field='taskId', value=${taskId}, method='post', action=@{/projects/__${task.project.id}__/task/delete}, label='Delete Task', type='danger')}" />
         </div>
 
@@ -40,10 +38,16 @@
 
     <hr>
 
-    <div class="list-group d-grid gap-2 border-0 mb-4">
-        <h2>Requirements</h2>
+    <h2>Requirements</h2>
+    <div class="list-group d-grid gap-2 border-0 my-4">
         <div th:unless="${task.requirements.isEmpty()}">
             <th:block th:each="requirement : ${task.requirements}" th:insert="~{../fragments/objects :: requirement-list (requirement=${requirement}, projectId=${task.project.id}, taskId=${task.taskId})}" />
+            <div class="list-group-item rounded-3 d-flex flex-column p-3">
+                <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}, label='Add New Requirement', type='primary')}"></a>
+            </div>
+        </div>
+        <div th:if="${task.requirements.isEmpty()}" class="list-group-item rounded-3 d-flex flex-column p-3">
+            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}/requirement/new(projectId=${task.project.id}, taskId=${task.taskId})}, label='Add New Requirement', type='primary')}"></a>
         </div>
     </div>
 

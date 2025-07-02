@@ -29,10 +29,8 @@
         <p th:text="*{description}"></p>
         <p>Assigned To: [[${project.assignedTo != null ? project.assignedTo.lastName + ', ' + project.assignedTo.firstName : 'Unassigned'}]]</p>
 
-        <div class="button-row">
-            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/new(projectId=${project.id})}, label='Add New Task', type='primary')}"></a>
+        <div class="button-row spaced">
             <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{id}/edit(id=${project.id})}, label='Edit Project', type='primary')}"></a>
-
             <th:block th:replace="~{../fragments/form_fields :: formButton (field='projectId', value=${project.id}, method='post', action=@{/projects/delete}, label='Delete Project', type='danger')}" />
         </div>
 
@@ -44,6 +42,12 @@
         <h2>Tasks</h2>
         <div th:unless="${project.tasks.isEmpty()}">
             <th:block th:each="task : ${project.tasks}" th:insert="~{../fragments/objects :: task-list (task=${task}, projectId=${project.id})}" />
+            <div class="list-group-item rounded-3 d-flex flex-column p-3">
+                <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/new(projectId=${project.id})}, label='Add New Task', type='primary')}"></a>
+            </div>
+        </div>
+        <div th:if="${project.tasks.isEmpty()}" class="list-group-item rounded-3 d-flex flex-column p-3">
+            <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/new(projectId=${project.id})}, label='Add New Task', type='primary')}"></a>
         </div>
     </div>
 </main>

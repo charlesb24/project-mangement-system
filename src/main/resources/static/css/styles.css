@@ -56,6 +56,10 @@ footer ul {
     content: ', '
 }
 
+.navbar-nav use, main use {
+    fill: var(--bs-emphasis-color);
+}
+
 .dropdown-toggle use {
     fill: var(--bs-tertiary-color);
 }

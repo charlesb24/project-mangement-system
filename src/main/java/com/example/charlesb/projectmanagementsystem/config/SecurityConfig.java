@@ -22,17 +22,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private SessionRegistry sessionRegistry;
-
+    private final SessionRegistry sessionRegistry;
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
     @Autowired
-    public SecurityConfig(SessionRegistry sessionRegistry) {
+    public SecurityConfig(SessionRegistry sessionRegistry, UserDetailsService userDetailsService) {
         this.sessionRegistry = sessionRegistry;
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
