@@ -23,7 +23,7 @@ public class Requirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "step_id")
+    @Column(name = "requirement_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
