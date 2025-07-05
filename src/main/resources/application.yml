@@ -4,6 +4,9 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:32768/postgres
     username: postgres
+  sql:
+    init:
+      mode: always
 
 #logging:
 #  level:
