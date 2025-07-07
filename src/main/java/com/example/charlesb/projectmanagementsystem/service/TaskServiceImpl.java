@@ -41,6 +41,16 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findAllAssignedToUser(User user) {
+        return taskRepository.findAllByAssignedTo(user);
+    }
+
+    @Override
+    public List<Task> findAllCreatedByUser(User user) {
+        return taskRepository.findAllByCreatedBy(user);
+    }
+
+    @Override
     public List<Task> findAllInProgressByUser(User user) {
         List<Task> tasks = taskRepository.findAllByAssignedToAndStatus(user, Status.IN_PROGRESS);
 
@@ -52,6 +62,16 @@ public class TaskServiceImpl implements TaskService {
         });
 
         return tasks;
+    }
+
+    @Override
+    public List<Requirement> findAllRequirementsCreatedByUser(User user) {
+        return requirementRepository.findAllByAssignedTo(user);
+    }
+
+    @Override
+    public List<Requirement> findAllRequirementsAssignedToUser(User user) {
+        return requirementRepository.findAllByCreatedBy(user);
     }
 
     @Override

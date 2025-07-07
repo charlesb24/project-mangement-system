@@ -11,8 +11,12 @@ public interface TaskService {
 
     List<Task> findAll();
     List<Task> findAllByProjectId(Long projectId);
+    List<Task> findAllAssignedToUser(User user);
+    List<Task> findAllCreatedByUser(User user);
     List<Task> findAllInProgressByUser(User user);
 
+    List<Requirement> findAllRequirementsAssignedToUser(User user);
+    List<Requirement> findAllRequirementsCreatedByUser(User user);
     List<Requirement> findAllRequirementsInProgressByUser(User user);
 
     Task findById(Long taskId);
