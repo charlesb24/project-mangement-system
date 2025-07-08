@@ -41,6 +41,7 @@ public class AdminController {
 
         model.addAttribute("users", users);
         model.addAttribute("links", HistoryHelper.getHistoryForAdminUserList());
+        model.addAttribute("adminView", true);
 
         return "user_list";
     }
@@ -62,7 +63,7 @@ public class AdminController {
 
         model.addAttribute("user", userService.mapToDTO(foundUser));
         model.addAttribute("managers", userService.findManagers());
-        model.addAttribute("links", HistoryHelper.getHistoryForAdminUserEdit(userId, LinkType.EDIT));
+        model.addAttribute("links", HistoryHelper.getHistoryForAdminUser(userId, LinkType.EDIT));
 
         return "user_form";
     }

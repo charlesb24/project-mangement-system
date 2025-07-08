@@ -82,7 +82,7 @@ public class HistoryHelper {
         return history;
     }
 
-    public static List<Link> getHistoryForAdminUserEdit(Long userId, LinkType linkType) {
+    public static List<Link> getHistoryForAdminUser(Long userId, LinkType linkType) {
         List<Link> history = getHistoryForAdminUserList();
 
         String pageTitle;
@@ -108,6 +108,31 @@ public class HistoryHelper {
         Link home = new Link("/", "Home", false);
         Link dashboard = new Link("/dashboard", "Dashboard", false);
         Link userList = new Link("/admin/users/list", "Users", true);
+
+        history.add(home);
+        history.add(dashboard);
+        history.add(userList);
+
+        return history;
+    }
+
+    public static List<Link> getHistoryForManagedUser(Long userId) {
+        List<Link> history = getHistoryForManagerList();
+
+        Link currentUser = new Link("/manager/user/" + userId, "User Details", true);
+
+        history.getLast().setCurrent(false);
+        history.add(currentUser);
+
+        return history;
+    }
+
+    public static List<Link> getHistoryForManagerList() {
+        List<Link> history = new ArrayList<>();
+
+        Link home = new Link("/", "Home", false);
+        Link dashboard = new Link("/dashboard", "Dashboard", false);
+        Link userList = new Link("/manager/users/list", "Users", true);
 
         history.add(home);
         history.add(dashboard);
