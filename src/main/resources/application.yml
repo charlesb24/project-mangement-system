@@ -8,6 +8,13 @@ spring:
     init:
       mode: always
 
+server:
+  error:
+    whitelabel:
+      enabled: false
+    include-exception: true
+    include-message: always
+
 #logging:
 #  level:
 #    root: debug
