@@ -127,6 +127,7 @@
         </div>
 
         <div sec:authorize="isAuthenticated()" class="d-flex me-2">
+            <a class="btn btn-outline-secondary fw-semibold text-body-secondary d-flex flex-column align-items-end me-2" th:href="@{/user}" th:if="${currentUser}">[[${currentUser.firstName + ' ' + currentUser.lastName}]]</a>
             <a class="btn btn-outline-secondary" th:href="@{/logout}">Logout</a>
         </div>
 
@@ -300,6 +301,7 @@
         </div>
 
         <div sec:authorize="isAuthenticated()" class="d-flex me-2">
+            <a class="btn btn-outline-secondary fw-semibold text-body-secondary d-flex flex-column align-items-end me-2" th:href="@{/user}" th:if="${currentUser}">[[${currentUser.firstName + ' ' + currentUser.lastName}]]</a>
             <a class="btn btn-outline-secondary" th:href="@{/logout}">Logout</a>
         </div>
 
