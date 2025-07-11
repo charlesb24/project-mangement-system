@@ -50,6 +50,10 @@ public class UserController {
         List<Requirement> assignedRequirements = taskService.findAllRequirementsAssignedToUser(user);
         List<Requirement> createdRequirements = taskService.findAllRequirementsCreatedByUser(user);
 
+        if (user.getManagerId() != null) {
+            model.addAttribute("manager", userService.findUserById(user.getManagerId()));
+        }
+
         model.addAttribute("user", user);
         model.addAttribute("assignedProjects", assignedProjects);
         model.addAttribute("createdProjects", createdProjects);
@@ -57,6 +61,7 @@ public class UserController {
         model.addAttribute("createdTasks", createdTasks);
         model.addAttribute("assignedRequirements", assignedRequirements);
         model.addAttribute("createdRequirements", createdRequirements);
+        model.addAttribute("userView", true);
 
         return "user_details";
     }

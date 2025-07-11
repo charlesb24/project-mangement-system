@@ -63,6 +63,7 @@ public class ManagerController {
         List<Requirement> createdRequirements = taskService.findAllRequirementsCreatedByUser(user);
 
         model.addAttribute("user", user);
+        model.addAttribute("manager", manager);
         model.addAttribute("assignedProjects", assignedProjects);
         model.addAttribute("createdProjects", createdProjects);
         model.addAttribute("assignedTasks", assignedTasks);

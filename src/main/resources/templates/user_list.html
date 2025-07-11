@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Users | Project Management System</title>
@@ -14,7 +14,8 @@
 <main class="my-5 pt-5">
 
     <div class="list-group d-grid gap-2 border-0 col-md-6 m-auto">
-        <h2>List of Registered Users</h2>
+        <h2 th:if="${adminView != null}">List of Registered Users</h2>
+        <h2 th:unless="${adminView != null}">List of Managed Users</h2>
         <div class="mb-5" th:if="${users.isEmpty()}">
             <p>No users found.</p>
         </div>
