@@ -44,11 +44,10 @@
     <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}, label='View Task Details', type='primary')}"></a>
 </div>
 
-<div class="list-group-item rounded-3 py-3" th:id="'user' + ${user.id}" th:fragment="user-list (user, manager)">
+<div class="list-group-item rounded-3 py-3" th:id="'user' + ${user.id}" th:fragment="user-list-admin (user, manager)">
     <h4>[[${user.firstName + ' ' + user.lastName}]]</h4>
-    <p>[[${user.email}]]</p>
-    <p th:if="${user.phone}">[[${user.phone}]]</p>
-    <p th:if="${user.contactMethod}">Preferred Contact Method: [[${#strings.capitalize(user.contactMethod)}]]</p>
+    <p>[[${user.email}]] <span th:if="${user.contactMethod == 'email'}" class="ms-1 badge text-bg-info">Preferred</span></p>
+    <p th:if="${user.phone}">[[${user.phone}]] <span th:if="${user.contactMethod == 'phone'}" class="ms-1 badge text-bg-info">Preferred</span></p>
     <p class="role-display">Roles: <span th:each="role : ${user.roles}" th:text="${#strings.capitalize(#strings.toLowerCase(#strings.substring(role, 5)))}">ROLE_NAME</span></p>
     <p th:if="${user.managerId != null}">
         <a th:href="'#user' + ${manager.id}">
@@ -104,6 +103,16 @@
 
         <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/{userId}/delete(userId=${user.id})}, label='Delete', type='danger')}" />
 
+    </div>
+</div>
+
+<div class="list-group-item rounded-3 py-3" th:id="'user' + ${user.id}" th:fragment="user-list-manager (user)">
+    <h4>[[${user.firstName + ' ' + user.lastName}]]</h4>
+    <p>[[${user.email}]] <span th:if="${user.contactMethod == 'email'}" class="ms-1 badge text-bg-info">Preferred</span></p>
+    <p th:if="${user.phone}">[[${user.phone}]] <span th:if="${user.contactMethod == 'phone'}" class="ms-1 badge text-bg-info">Preferred</span></p>
+    <p class="role-display">Roles: <span th:each="role : ${user.roles}" th:text="${#strings.capitalize(#strings.toLowerCase(#strings.substring(role, 5)))}">ROLE_NAME</span></p>
+    <div class="button-row">
+        <a th:replace="~{../fragments/navigation :: action-button (link=@{/manager/user/{id}(id=${user.id})}, label='View Details', type='primary')}"></a>
     </div>
 </div>
 

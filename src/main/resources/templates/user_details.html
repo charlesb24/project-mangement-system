@@ -14,15 +14,15 @@
 <main class="mx-auto my-5 pt-5">
     <div class="mx-5 col-10">
         <div class="col-12">
-            <h3>[[${user.firstName + ' ' + user.lastName}]]</h3>
-            <p>[[${user.email}]]</p>
-            <p>[[${user.phone}]]</p>
-            <p class="role-display">Roles: <span th:each="role : ${user.roles}" th:text="${#strings.capitalize(#strings.toLowerCase(#strings.substring(role, 5)))}">ROLE_NAME</span></p>
+            <h2>[[${user.firstName + ' ' + user.lastName}]]</h2>
+            <p>[[${user.email}]] <span th:if="${user.contactMethod == 'email'}" class="ms-1 badge text-bg-info">Preferred</span></p>
+            <p th:if="${user.phone}">[[${user.phone}]] <span th:if="${user.contactMethod == 'phone'}" class="ms-1 badge text-bg-info">Preferred</span></p>
+            <p class="role-display">Roles: <span th:each="role : ${user.roles}" th:text="${#strings.capitalize(#strings.toLowerCase(#strings.substring(role.name, 5)))}">ROLE_NAME</span></p>
             <p th:if="${manager}">
                 Manager: <span>[[${manager.firstName + ' ' + manager.lastName}]]</span>
             </p>
-            <div class="button-row spaced">
-                <a th:if="${userView}" th:replace="~{../fragments/navigation :: action-button (link=@{/user/edit}, label='Edit', type='primary')}"></a>
+            <div class="button-row spaced" th:if="${userView}">
+                <a th:replace="~{../fragments/navigation :: action-button (link=@{/user/edit}, label='Edit', type='primary')}"></a>
             </div>
         </div>
 
@@ -30,8 +30,8 @@
 
         <div class="d-flex gap-3 mx-auto justify-content-center align-items-start">
 
-            <div class="col border-0 col-md-3">
-                <h2 class="display-6 mb-4">Assigned Projects</h2>
+            <div class="col border-0 col-lg-4">
+                <h3 class="fw-light mb-4">Assigned Projects</h3>
                 <div th:if="${assignedProjects.isEmpty()}">No Assigned Projects</div>
                 <div class="list-group" th:unless="${assignedProjects.isEmpty()}">
                     <th:block th:each="project : ${assignedProjects}" th:insert="~{../fragments/objects :: project-dash (project=${project})}">
@@ -39,8 +39,8 @@
                 </div>
             </div>
 
-            <div class="col border-0 col-md-3">
-                <h2 class="display-6 mb-4">Assigned Tasks</h2>
+            <div class="col border-0 col-lg-4">
+                <h3 class="fw-light mb-4">Assigned Tasks</h3>
                 <div th:if="${assignedTasks.isEmpty()}">No Assigned Tasks</div>
                 <div class="list-group" th:unless="${assignedTasks.isEmpty()}">
                     <th:block th:each="task : ${assignedTasks}">
@@ -50,8 +50,8 @@
                 </div>
             </div>
 
-            <div class="col border-0 col-md-3">
-                <h2 class="display-6 mb-4">Assigned Requirements</h2>
+            <div class="col border-0 col-lg-4">
+                <h3 class="fw-light mb-4">Assigned Requirements</h3>
                 <div th:if="${assignedRequirements.isEmpty()}">No Assigned Requirements</div>
                 <div class="list-group" th:unless="${assignedRequirements.isEmpty()}">
                     <th:block th:each="requirement : ${assignedRequirements}">
@@ -67,8 +67,8 @@
 
         <div class="d-flex gap-3 mx-auto justify-content-center align-items-start">
 
-        <div class="col border-0 col-md-3">
-            <h2 class="display-6 mb-4">Created Projects</h2>
+        <div class="col border-0 col-lg-4">
+            <h3 class="fw-light mb-4">Created Projects</h3>
             <div th:if="${createdProjects.isEmpty()}">No Created Projects</div>
             <div class="list-group" th:unless="${createdProjects.isEmpty()}">
                 <th:block th:each="project : ${createdProjects}" th:insert="~{../fragments/objects :: project-dash (project=${project})}">
@@ -76,8 +76,8 @@
             </div>
         </div>
 
-        <div class="col border-0 col-md-3">
-            <h2 class="display-6 mb-4">Created Tasks</h2>
+        <div class="col border-0 col-lg-4">
+            <h3 class="fw-light mb-4">Created Tasks</h3>
             <div th:if="${createdTasks.isEmpty()}">No Created Tasks</div>
             <div class="list-group" th:unless="${createdTasks.isEmpty()}">
                 <th:block th:each="task : ${createdTasks}">
@@ -87,8 +87,8 @@
             </div>
         </div>
 
-        <div class="col border-0 col-md-3">
-            <h2 class="display-6 mb-4">Created Requirements</h2>
+        <div class="col border-0 col-lg-4">
+            <h3 class="fw-light mb-4">Created Requirements</h3>
             <div th:if="${createdRequirements.isEmpty()}">No Created Requirements</div>
             <div class="list-group" th:unless="${createdRequirements.isEmpty()}">
                 <th:block th:each="requirement : ${createdRequirements}">

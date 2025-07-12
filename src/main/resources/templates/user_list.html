@@ -21,7 +21,12 @@
         </div>
         <div class="mb-5" th:unless="${users.isEmpty()}">
             <th:block th:each="user : ${users}">
-                <th:block th:insert="~{../fragments/objects :: user-list (user=${user}, manager=${users.^[id==__${user.managerId}__]})}" />
+                <th:block th:if="${adminView != null}">
+                    <th:block th:insert="~{../fragments/objects :: user-list-admin (user=${user}, manager=${users.^[id==__${user.managerId}__]})}" />
+                </th:block>
+                <th:block th:unless="${adminView != null}">
+                    <th:block th:insert="~{../fragments/objects :: user-list-manager (user=${user})}" />
+                </th:block>
             </th:block>
         </div>
     </div>

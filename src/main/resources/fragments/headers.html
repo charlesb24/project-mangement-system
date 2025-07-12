@@ -118,6 +118,7 @@
             <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/}"><svg class="bi" width="28" height="28" aria-hidden="true"><use href="#logo"></use></svg></a></li>
             <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/dashboard}">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/projects}">Projects</a></li>
+            <li th:if="${#authorization.expr('hasRole(''ROLE_MANAGER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/manager/users/list}">Manager</a></li>
             <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/admin/users/list}">Admin</a></li>
         </ul>
 
@@ -292,6 +293,7 @@
             <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/}"><svg class="bi" width="28" height="28" aria-hidden="true"><use href="#logo"></use></svg></a></li>
             <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/dashboard}">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/projects}">Projects</a></li>
+            <li th:if="${#authorization.expr('hasRole(''ROLE_MANAGER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/manager/users/list}">Manager</a></li>
             <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/admin/users/list}">Admin</a></li>
         </ul>
 

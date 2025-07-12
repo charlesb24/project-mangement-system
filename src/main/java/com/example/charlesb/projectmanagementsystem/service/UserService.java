@@ -21,6 +21,7 @@ public interface UserService {
 
     List<UserDTO> findAllUsers();
     List<UserDTO> findManagers();
+    List<UserDTO> findManagedUsers(UserDetails userDetails);
     List<UserDTO> findAssignableUsers(UserDetails userDetails);
 
     User mapToUser(UserDTO userDTO);

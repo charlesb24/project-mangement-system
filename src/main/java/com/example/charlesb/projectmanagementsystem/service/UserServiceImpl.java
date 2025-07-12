@@ -96,6 +96,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDTO> findManagedUsers(UserDetails userDetails) {
+        User manager = userRepository.findByEmail(userDetails.getUsername());
+
+        return userRepository.findAllByManagerId(manager.getId()).stream().map(user -> mapToDTO(user)).toList();
+    }
+
+    @Override
     public List<UserDTO> findAssignableUsers(UserDetails userDetails) {
         User assigningUser = userRepository.findByEmail(userDetails.getUsername());
         List<User> assignableUsers = userRepository.findAllByManagerId(assigningUser.getId());

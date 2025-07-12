@@ -35,7 +35,6 @@ public class ManagerController {
 
     @GetMapping("/manager/users/list")
     public String showSubordinates(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        User currentUser = userService.findUserByEmail(userDetails.getUsername());
         List<UserDTO> users = userService.findAssignableUsers(userDetails);
 
         model.addAttribute("users", users);
