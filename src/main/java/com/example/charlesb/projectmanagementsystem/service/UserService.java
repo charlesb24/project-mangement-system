@@ -27,4 +27,6 @@ public interface UserService {
     User mapToUser(UserDTO userDTO);
     UserDTO mapToDTO(User user);
 
+    void reloadUserByEmail(String email);
+
 }

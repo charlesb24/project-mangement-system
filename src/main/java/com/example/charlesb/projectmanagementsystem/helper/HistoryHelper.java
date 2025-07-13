@@ -141,4 +141,18 @@ public class HistoryHelper {
         return history;
     }
 
+    public static List<Link> getHistoryForUserSelfEdit() {
+        List<Link> history = new ArrayList<>();
+
+        Link home = new Link("/", "Home", false);
+        Link userDetails = new Link("/user", "User Details", false);
+        Link userEdit = new Link("/user/edit", "Edit User", true);
+
+        history.add(home);
+        history.add(userDetails);
+        history.add(userEdit);
+
+        return history;
+    }
+
 }

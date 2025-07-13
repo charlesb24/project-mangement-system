@@ -13,9 +13,9 @@
 
 <main class="my-5 pt-5">
 
-    <div class="d-flex gap-3 mx-auto justify-content-center align-items-start">
+    <div class="row d-flex gap-3 mx-auto justify-content-center align-items-start">
 
-        <div class="col border-0 col-md-3">
+        <div class="border-0 col-xxl-3">
             <h2 class="display-6 mb-4">Assigned Projects</h2>
             <div th:if="${inProgressProjects.isEmpty()}">No Assigned Projects</div>
             <div class="list-group" th:unless="${inProgressProjects.isEmpty()}">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="col border-0 col-md-3">
+        <div class="border-0 col-xxl-3">
             <h2 class="display-6 mb-4">Assigned Tasks</h2>
             <div th:if="${inProgressTasks.isEmpty()}">No Assigned Tasks</div>
             <div class="list-group" th:unless="${inProgressTasks.isEmpty()}">
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="col border-0 col-md-3">
+        <div class="border-0 col-xxl-3">
             <h2 class="display-6 mb-4">Assigned Requirements</h2>
             <div th:if="${inProgressRequirements.isEmpty()}">No Assigned Requirements</div>
             <div class="list-group" th:unless="${inProgressRequirements.isEmpty()}">

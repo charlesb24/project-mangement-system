@@ -15,7 +15,7 @@
 
   <h1 class="h3 mb-3 fw-normal">Edit User</h1>
 
-  <form class="row g-3" method="POST" th:action="@{/admin/users/save}" th:object="${user}">
+  <form class="row g-3" method="POST" th:action="@{${selfEdit ? '/user/save' : '/admin/users/save'}}" th:object="${user}">
 
     <input type="hidden" th:field="*{id}" />
 
@@ -28,8 +28,10 @@
     <div th:replace="~{../fragments/form_fields :: labelledInput (id='lastName', field='lastName', placeholder='Last Name', label='Last Name', type='text', value='*{lastName}', classes='col-md-12')}">
     </div>
 
-    <div th:replace="~{../fragments/form_fields :: labelledInput (id='email', field='email', placeholder='example@gmail.com', label='Email', type='email', value='*{email}', classes='col-md-12')}">
-    </div>
+    <th:block th:unless="${selfEdit}">
+      <div th:replace="~{../fragments/form_fields :: labelledInput (id='email', field='email', placeholder='example@gmail.com', label='Email', type='email', value='*{email}', classes='col-md-12')}">
+      </div>
+    </th:block>
 
     <div th:replace="~{../fragments/form_fields :: labelledInput (id='phone', field='phone', placeholder='(000) 000-0000', label='Phone Number', type='text', value='*{phone}', classes='col-md-12')}">
     </div>
@@ -37,7 +39,7 @@
     <div th:replace="~{../fragments/form_fields :: contactMethod (field='contactMethod')}">
     </div>
 
-    <div>
+    <div th:unless="${selfEdit}">
       <label class="form-label" for="assignedTo">Assigned To</label>
       <select class="form-select" id="assignedTo" th:field="*{managerId}">
         <option th:value="${0}" selected>Unassigned</option>
@@ -46,7 +48,7 @@
     </div>
 
     <div class="button-row spaced">
-      <a th:replace="~{../fragments/navigation :: action-button (link=@{/admin/users/list}, label='Cancel', type='danger')}"></a>
+      <a th:replace="~{../fragments/navigation :: action-button (link=@{${selfEdit ? '/user' : '/admin/users/list'}}, label='Cancel', type='danger')}"></a>
       <div th:replace="~{../fragments/form_fields :: submit (label='Edit')}"></div>
     </div>
 

@@ -12,8 +12,8 @@
 </header>
 
 <main class="mx-auto my-5 pt-5">
-    <div class="mx-5 col-10">
-        <div class="col-12">
+    <div class="container-lg">
+        <div>
             <h2>[[${user.firstName + ' ' + user.lastName}]]</h2>
             <p>[[${user.email}]] <span th:if="${user.contactMethod == 'email'}" class="ms-1 badge text-bg-info">Preferred</span></p>
             <p th:if="${user.phone}">[[${user.phone}]] <span th:if="${user.contactMethod == 'phone'}" class="ms-1 badge text-bg-info">Preferred</span></p>
@@ -28,10 +28,10 @@
 
         <hr>
 
-        <div class="d-flex gap-3 mx-auto justify-content-center align-items-start">
+        <div class="row">
 
-            <div class="col border-0 col-lg-4">
-                <h3 class="fw-light mb-4">Assigned Projects</h3>
+            <div class="border-0 col-xxl-4">
+                <h3 class="fw-light my-4">Assigned Projects</h3>
                 <div th:if="${assignedProjects.isEmpty()}">No Assigned Projects</div>
                 <div class="list-group" th:unless="${assignedProjects.isEmpty()}">
                     <th:block th:each="project : ${assignedProjects}" th:insert="~{../fragments/objects :: project-dash (project=${project})}">
@@ -39,8 +39,8 @@
                 </div>
             </div>
 
-            <div class="col border-0 col-lg-4">
-                <h3 class="fw-light mb-4">Assigned Tasks</h3>
+            <div class="border-0 col-xxl-4">
+                <h3 class="fw-light my-4">Assigned Tasks</h3>
                 <div th:if="${assignedTasks.isEmpty()}">No Assigned Tasks</div>
                 <div class="list-group" th:unless="${assignedTasks.isEmpty()}">
                     <th:block th:each="task : ${assignedTasks}">
@@ -50,8 +50,8 @@
                 </div>
             </div>
 
-            <div class="col border-0 col-lg-4">
-                <h3 class="fw-light mb-4">Assigned Requirements</h3>
+            <div class="border-0 col-xxl-4">
+                <h3 class="fw-light my-4">Assigned Requirements</h3>
                 <div th:if="${assignedRequirements.isEmpty()}">No Assigned Requirements</div>
                 <div class="list-group" th:unless="${assignedRequirements.isEmpty()}">
                     <th:block th:each="requirement : ${assignedRequirements}">
@@ -65,40 +65,38 @@
 
         <hr>
 
-        <div class="d-flex gap-3 mx-auto justify-content-center align-items-start">
+        <div class="row">
+            <div class="border-0 col-xxl-4">
+                <h3 class="fw-light my-4">Created Projects</h3>
+                <div th:if="${createdProjects.isEmpty()}">No Created Projects</div>
+                <div class="list-group" th:unless="${createdProjects.isEmpty()}">
+                    <th:block th:each="project : ${createdProjects}" th:insert="~{../fragments/objects :: project-dash (project=${project})}">
+                    </th:block>
+                </div>
+            </div>
 
-        <div class="col border-0 col-lg-4">
-            <h3 class="fw-light mb-4">Created Projects</h3>
-            <div th:if="${createdProjects.isEmpty()}">No Created Projects</div>
-            <div class="list-group" th:unless="${createdProjects.isEmpty()}">
-                <th:block th:each="project : ${createdProjects}" th:insert="~{../fragments/objects :: project-dash (project=${project})}">
-                </th:block>
+            <div class="border-0 col-xxl-4">
+                <h3 class="fw-light my-4">Created Tasks</h3>
+                <div th:if="${createdTasks.isEmpty()}">No Created Tasks</div>
+                <div class="list-group" th:unless="${createdTasks.isEmpty()}">
+                    <th:block th:each="task : ${createdTasks}">
+                        <div th:replace="~{../fragments/objects :: task-dash (task=${task}, projectName=${task.project.name}, projectId=${task.project.id})}">
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="border-0 col-xxl-4">
+                <h3 class="fw-light my-4">Created Requirements</h3>
+                <div th:if="${createdRequirements.isEmpty()}">No Created Requirements</div>
+                <div class="list-group" th:unless="${createdRequirements.isEmpty()}">
+                    <th:block th:each="requirement : ${createdRequirements}">
+                        <div th:replace="~{../fragments/objects :: requirement-dash (requirement=${requirement}, projectName=${requirement.task.project.name}, projectId=${requirement.task.project.id}, taskName=${requirement.task.name}, taskId=${requirement.task.taskId})}">
+                        </div>
+                    </th:block>
+                </div>
             </div>
         </div>
-
-        <div class="col border-0 col-lg-4">
-            <h3 class="fw-light mb-4">Created Tasks</h3>
-            <div th:if="${createdTasks.isEmpty()}">No Created Tasks</div>
-            <div class="list-group" th:unless="${createdTasks.isEmpty()}">
-                <th:block th:each="task : ${createdTasks}">
-                    <div th:replace="~{../fragments/objects :: task-dash (task=${task}, projectName=${task.project.name}, projectId=${task.project.id})}">
-                    </div>
-                </th:block>
-            </div>
-        </div>
-
-        <div class="col border-0 col-lg-4">
-            <h3 class="fw-light mb-4">Created Requirements</h3>
-            <div th:if="${createdRequirements.isEmpty()}">No Created Requirements</div>
-            <div class="list-group" th:unless="${createdRequirements.isEmpty()}">
-                <th:block th:each="requirement : ${createdRequirements}">
-                    <div th:replace="~{../fragments/objects :: requirement-dash (requirement=${requirement}, projectName=${requirement.task.project.name}, projectId=${requirement.task.project.id}, taskName=${requirement.task.name}, taskId=${requirement.task.taskId})}">
-                    </div>
-                </th:block>
-            </div>
-        </div>
-
-    </div>
     </div>
 </main>
 

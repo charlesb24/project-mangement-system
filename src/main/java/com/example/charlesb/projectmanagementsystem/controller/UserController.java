@@ -1,9 +1,11 @@
 package com.example.charlesb.projectmanagementsystem.controller;
 
+import com.example.charlesb.projectmanagementsystem.dto.UserDTO;
 import com.example.charlesb.projectmanagementsystem.entity.Project;
 import com.example.charlesb.projectmanagementsystem.entity.Requirement;
 import com.example.charlesb.projectmanagementsystem.entity.Task;
 import com.example.charlesb.projectmanagementsystem.entity.User;
+import com.example.charlesb.projectmanagementsystem.helper.HistoryHelper;
 import com.example.charlesb.projectmanagementsystem.service.ProjectService;
 import com.example.charlesb.projectmanagementsystem.service.TaskService;
 import com.example.charlesb.projectmanagementsystem.service.UserService;
@@ -12,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -26,15 +30,6 @@ public class UserController {
         this.userService = userService;
         this.projectService = projectService;
         this.taskService = taskService;
-    }
-
-    @GetMapping("/user/edit")
-    public String editSelf(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        User user = userService.findUserByEmail(userDetails.getUsername());
-
-        model.addAttribute("user", user);
-
-        return "user_form";
     }
 
     @GetMapping("/user")
@@ -64,6 +59,43 @@ public class UserController {
         model.addAttribute("userView", true);
 
         return "user_details";
+    }
+
+    @GetMapping("/user/edit")
+    public String editSelf(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        User user = userService.findUserByEmail(userDetails.getUsername());
+
+        model.addAttribute("user", userService.mapToDTO(user));
+        model.addAttribute("links", HistoryHelper.getHistoryForUserSelfEdit());
+        model.addAttribute("selfEdit", true);
+
+        return "user_form";
+    }
+
+    @PostMapping("/user/save")
+    public String saveSelf(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("user") UserDTO userDTO) {
+        User user;
+        User foundUser = userService.findUserById(userDTO.getId());
+
+        if (foundUser == null) {
+            user = new User();
+        } else {
+            user = foundUser;
+        }
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setMiddleName(userDTO.getMiddleName());
+        user.setLastName(userDTO.getLastName());
+
+        user.setPhone(userDTO.getPhone());
+
+        if (userDTO.getContactMethod() != null) {
+            user.setContactMethod(userDTO.getContactMethod());
+        }
+
+        userService.updateUser(user);
+
+        return "redirect:/user";
     }
 
 }

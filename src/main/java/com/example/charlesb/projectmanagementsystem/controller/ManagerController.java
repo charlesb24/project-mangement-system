@@ -35,7 +35,7 @@ public class ManagerController {
 
     @GetMapping("/manager/users/list")
     public String showSubordinates(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        List<UserDTO> users = userService.findAssignableUsers(userDetails);
+        List<UserDTO> users = userService.findManagedUsers(userDetails);
 
         model.addAttribute("users", users);
         model.addAttribute("links", HistoryHelper.getHistoryForManagerList());

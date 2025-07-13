@@ -53,6 +53,7 @@ public class AdminController {
         user.setEnabled(!user.isEnabled());
 
         userService.updateUser(user);
+        userService.reloadUserByEmail(user.getEmail());
 
         return "redirect:/admin/users/list";
     }
@@ -64,6 +65,7 @@ public class AdminController {
         model.addAttribute("user", userService.mapToDTO(foundUser));
         model.addAttribute("managers", userService.findManagers());
         model.addAttribute("links", HistoryHelper.getHistoryForAdminUser(userId, LinkType.EDIT));
+        model.addAttribute("selfEdit", false);
 
         return "user_form";
     }
@@ -77,6 +79,7 @@ public class AdminController {
             promotingUser.removeRole(roleToAdd);
 
             userService.updateUser(promotingUser);
+            userService.reloadUserByEmail(promotingUser.getEmail());
         } else if (!promotingUser.hasRole("ROLE_OWNER") && (role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("owner"))) {
             return "redirect:/admin/users/list?error=auth";
         }
@@ -86,6 +89,7 @@ public class AdminController {
         userToBePromoted.addRole(roleToAdd);
 
         userService.updateUser(userToBePromoted);
+        userService.reloadUserByEmail(userToBePromoted.getEmail());
 
         return "redirect:/admin/users/list";
     }
@@ -104,6 +108,7 @@ public class AdminController {
         userToBeDemoted.removeRole(roleToRemove);
 
         userService.updateUser(userToBeDemoted);
+        userService.reloadUserByEmail(userToBeDemoted.getEmail());
 
         return "redirect:/admin/users/list";
     }

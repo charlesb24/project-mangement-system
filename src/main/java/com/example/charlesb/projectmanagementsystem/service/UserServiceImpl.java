@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(User user) {
         userRepository.save(user);
-        reloadUserByEmail(user.getEmail());
     }
 
     @Override
@@ -168,6 +167,20 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public void reloadUserByEmail(String email) {
+        org.springframework.security.core.userdetails.User targetUser = sessionRegistry.getAllPrincipals().stream().map(u -> (org.springframework.security.core.userdetails.User) u).filter(u -> u.getUsername().equals(email)).findFirst().orElse(null);
+
+        if (targetUser != null) {
+            List<SessionInformation> currentSessions = sessionRegistry.getAllSessions(targetUser, false);
+
+            if (!currentSessions.isEmpty()) {
+                currentSessions.forEach(session -> session.expireNow());
+            }
+        }
+
+    }
+
     private Role generateOrFindRole(String roleName) {
         Role role = roleRepository.findByName(roleName);
 
@@ -178,19 +191,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return role;
-    }
-
-    private void reloadUserByEmail(String email) {
-        org.springframework.security.core.userdetails.User targetUser = sessionRegistry.getAllPrincipals().stream().map(u -> (org.springframework.security.core.userdetails.User) u).filter(u -> u.getUsername().equals(email)).findFirst().orElse(null);
-
-        if (targetUser != null) {
-            List<SessionInformation> currentSessions = sessionRegistry.getAllSessions(targetUser, false);
-
-            if (!currentSessions.isEmpty()) {
-                currentSessions.forEach(session -> { session.expireNow(); });
-            }
-        }
-
     }
 
 }
