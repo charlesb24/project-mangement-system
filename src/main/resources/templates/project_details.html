@@ -11,7 +11,7 @@
 <header th:replace="${links != null} ? ~{../fragments/headers :: breadcrumb-header (links=${links})} : ~{../fragments/headers :: no-breadcrumb-header}">
 </header>
 
-<main class="col-md-6 m-auto my-5">
+<main class="col-md-6 m-auto my-5 px-4">
     <div class="my-4" th:object="${project}">
 
         <h2>Project Details</h2>

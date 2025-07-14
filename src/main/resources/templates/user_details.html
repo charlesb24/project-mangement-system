@@ -11,7 +11,7 @@
 <header th:replace="${links != null} ? ~{../fragments/headers :: breadcrumb-header (links=${links})} : ~{../fragments/headers :: no-breadcrumb-header}">
 </header>
 
-<main class="mx-auto my-5 pt-5">
+<main class="mx-auto my-5 pt-5 px-3">
     <div class="container-lg">
         <div>
             <h2>[[${user.firstName + ' ' + user.lastName}]]</h2>

@@ -44,7 +44,7 @@
     <a th:replace="~{../fragments/navigation :: action-button (link=@{/projects/{projectId}/task/{taskId}(projectId=${projectId}, taskId=${taskId})}, label='View Task Details', type='primary')}"></a>
 </div>
 
-<div class="list-group-item rounded-3 py-3" th:id="'user' + ${user.id}" th:fragment="user-list-admin (user, manager)">
+<div class="list-group-item py-3" th:id="'user' + ${user.id}" th:fragment="user-list-admin (user, manager)">
     <h4>[[${user.firstName + ' ' + user.lastName}]]</h4>
     <p>[[${user.email}]] <span th:if="${user.contactMethod == 'email'}" class="ms-1 badge text-bg-info">Preferred</span></p>
     <p th:if="${user.phone}">[[${user.phone}]] <span th:if="${user.contactMethod == 'phone'}" class="ms-1 badge text-bg-info">Preferred</span></p>
@@ -54,14 +54,14 @@
             Manager: [[${manager.firstName + ' ' + manager.lastName}]]
         </a>
     </p>
-    <div class="button-row">
+    <div class="button-row flex-column flex-lg-row align-items-start">
 
         <form sec:authorize="hasRole('ROLE_OWNER')" th:if="${#lists.contains(user.roles, 'ROLE_ADMIN') and not #lists.contains(user.roles, 'ROLE_OWNER')}"
               th:action="@{/admin/users/promote}" method="post">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <input type="hidden" name="role" value="OWNER" />
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#promotionModal' + ${user.id}">
+            <button type="button" class="btn btn-primary mb-2 mb-lg-0" data-bs-toggle="modal" th:data-bs-target="'#promotionModal' + ${user.id}">
                 Promote to Owner
             </button>
 
@@ -89,24 +89,24 @@
               th:action="@{/admin/users/{action}(action=${#lists.contains(user.roles, 'ROLE_ADMIN') ? 'demote' : 'promote'})}" method="post">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <input type="hidden" name="role" value="ADMIN" />
-            <input class="btn btn-primary" type="submit" th:value="${#lists.contains(user.roles, 'ROLE_ADMIN')} ? 'Demote from Admin' : 'Promote to Admin'" />
+            <input class="btn btn-primary mb-2 mb-lg-0" type="submit" th:value="${#lists.contains(user.roles, 'ROLE_ADMIN')} ? 'Demote from Admin' : 'Promote to Admin'" />
         </form>
 
         <form th:action="@{/admin/users/{action}(action=${#lists.contains(user.roles, 'ROLE_MANAGER') ? 'demote' : 'promote'})}" method="post">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <input type="hidden" name="role" value="MANAGER" />
-            <input class="btn btn-primary" type="submit" th:value="${#lists.contains(user.roles, 'ROLE_MANAGER')} ? 'Demote from Manager' : 'Promote to Manager'" />
+            <input class="btn btn-primary mb-2 mb-lg-0" type="submit" th:value="${#lists.contains(user.roles, 'ROLE_MANAGER')} ? 'Demote from Manager' : 'Promote to Manager'" />
         </form>
 
-        <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/toggle}, label=${user.enabled ? 'Disable' : 'Enable'}, type='primary')}" />
-        <a th:replace="~{../fragments/navigation :: action-button (link=@{/admin/users/{id}/edit(id=${user.id})}, label='Edit', type='primary ms-auto')}"></a>
+        <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/toggle}, label=${user.enabled ? 'Disable' : 'Enable'}, type='primary mb-2 mb-lg-0 me-auto')}" />
+        <a th:replace="~{../fragments/navigation :: action-button (link=@{/admin/users/{id}/edit(id=${user.id})}, label='Edit', type='primary mb-2 mb-lg-0')}"></a>
 
         <th:block th:replace="~{../fragments/form_fields :: formButton (field='userId', value=${user.id}, method='post', action=@{/admin/users/{userId}/delete(userId=${user.id})}, label='Delete', type='danger')}" />
 
     </div>
 </div>
 
-<div class="list-group-item rounded-3 py-3" th:id="'user' + ${user.id}" th:fragment="user-list-manager (user)">
+<div class="list-group-item py-3" th:id="'user' + ${user.id}" th:fragment="user-list-manager (user)">
     <h4>[[${user.firstName + ' ' + user.lastName}]]</h4>
     <p>[[${user.email}]] <span th:if="${user.contactMethod == 'email'}" class="ms-1 badge text-bg-info">Preferred</span></p>
     <p th:if="${user.phone}">[[${user.phone}]] <span th:if="${user.contactMethod == 'phone'}" class="ms-1 badge text-bg-info">Preferred</span></p>

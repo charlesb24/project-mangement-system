@@ -11,7 +11,7 @@
 <header th:replace="${links != null} ? ~{../fragments/headers :: breadcrumb-header (links=${links})} : ~{../fragments/headers :: no-breadcrumb-header}">
 </header>
 
-<main class="my-5 pt-5">
+<main class="my-5 pt-5 px-3">
 
     <div class="list-group d-grid gap-2 border-0 col-md-6 m-auto">
         <h2 th:if="${adminView != null}">List of Registered Users</h2>
@@ -19,7 +19,7 @@
         <div class="mb-5" th:if="${users.isEmpty()}">
             <p>No users found.</p>
         </div>
-        <div class="mb-5" th:unless="${users.isEmpty()}">
+        <div class="mb-5 list-group" th:unless="${users.isEmpty()}">
             <th:block th:each="user : ${users}">
                 <th:block th:if="${adminView != null}">
                     <th:block th:insert="~{../fragments/objects :: user-list-admin (user=${user}, manager=${users.^[id==__${user.managerId}__]})}" />

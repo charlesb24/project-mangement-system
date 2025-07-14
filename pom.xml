@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example.charlesb</groupId>
     <artifactId>project-management-system</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>project-management-system</name>
     <description>project-management-system</description>
     <url/>

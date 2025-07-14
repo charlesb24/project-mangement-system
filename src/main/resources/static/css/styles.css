@@ -56,7 +56,7 @@ footer ul {
     content: ', '
 }
 
-.navbar-nav use, main use {
+use {
     fill: var(--bs-emphasis-color);
 }
 

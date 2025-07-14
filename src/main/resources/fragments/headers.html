@@ -113,67 +113,88 @@
         })()
     </script>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-subtle pe-3 ps-2 border-bottom">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/}"><svg class="bi" width="28" height="28" aria-hidden="true"><use href="#logo"></use></svg></a></li>
-            <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/dashboard}">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/projects}">Projects</a></li>
-            <li th:if="${#authorization.expr('hasRole(''ROLE_MANAGER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/manager/users/list}">Manager</a></li>
-            <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/admin/users/list}">Admin</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-lg bg-dark-subtle pe-3 ps-2 border-bottom">
+        <div class="container-fluid">
 
-        <div sec:authorize="isAnonymous()" class="d-flex me-2">
-            <a class="btn btn-outline-secondary me-3" th:href="@{/login}">Login</a>
-            <a class="btn btn-outline-secondary" th:href="@{/register}">Register</a>
-        </div>
+            <a class="navbar-brand link-body-emphasis" th:href="@{/}"><svg class="bi" width="28" height="28" aria-hidden="true"><use href="#logo"></use></svg></a>
 
-        <div sec:authorize="isAuthenticated()" class="d-flex me-2">
-            <a class="btn btn-outline-secondary fw-semibold text-body-secondary d-flex flex-column align-items-end me-2" th:href="@{/user}" th:if="${currentUser}">[[${currentUser.firstName + ' ' + currentUser.lastName}]]</a>
-            <a class="btn btn-outline-secondary" th:href="@{/logout}">Logout</a>
-        </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="d-flex">
-            <div class="dropdown">
-                <button id="theme-dropdown" class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center py-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change theme (auto)">
-                    <svg id="theme-icon" class="bi me-1" width="20" height="20" aria-hidden="true"><use href="#circle-half"></use></svg>
-                    <span id="theme-text" class="d-none ms-2">Change theme</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="light" aria-pressed="false">
-                            <svg class="bi" width="16" height="16" aria-hidden="true">
-                                <use href="#sun-fill"></use>
-                            </svg>
-                            Light
-                            <svg id="light-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="light" aria-hidden="true">
-                                <use href="#check2"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="dark" aria-pressed="false">
-                            <svg class="bi" width="16" height="16" aria-hidden="true">
-                                <use href="#moon-stars-fill"></use>
-                            </svg>
-                            Dark
-                            <svg id="dark-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="dark" aria-hidden="true">
-                                <use href="#check2"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="auto" aria-pressed="false">
-                            <svg class="bi text-primary" width="16" height="16" aria-hidden="true">
-                                <use href="#circle-half"></use>
-                            </svg>
-                            Auto
-                            <svg id="auto-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="auto" aria-hidden="true">
-                                <use href="#check2"></use>
-                            </svg>
-                        </button>
-                    </li>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/dashboard}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/projects}">Projects</a></li>
+                    <li th:if="${#authorization.expr('hasRole(''ROLE_MANAGER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/manager/users/list}">Manager</a></li>
+                    <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/admin/users/list}">Admin</a></li>
                 </ul>
+
+                <th:block sec:authorize="!isAuthenticated()">
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block" th:href="@{/login}">Login</a>
+                    </div>
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block" th:href="@{/register}">Register</a>
+                    </div>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block fw-semibold text-body-secondary" th:href="@{/user}" th:if="${currentUser}">[[${currentUser.firstName + ' ' + currentUser.lastName}]]</a>
+                    </div>
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block flex-grow-0" th:href="@{/logout}">Logout</a>
+                    </div>
+                </th:block>
+
+                <div class="d-flex">
+                    <div class="dropdown">
+                        <button id="theme-dropdown" class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center mb-1 mb-lg-0 py-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change theme (auto)">
+                            <svg id="theme-icon" class="bi me-1" width="20" height="20" aria-hidden="true"><use href="#circle-half"></use></svg>
+                            <span id="theme-text" class="d-none ms-2">Change theme</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li>
+                                <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="light" aria-pressed="false">
+                                    <svg class="bi" width="16" height="16" aria-hidden="true">
+                                        <use href="#sun-fill"></use>
+                                    </svg>
+                                    Light
+                                    <svg id="light-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="light" aria-hidden="true">
+                                        <use href="#check2"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="dark" aria-pressed="false">
+                                    <svg class="bi" width="16" height="16" aria-hidden="true">
+                                        <use href="#moon-stars-fill"></use>
+                                    </svg>
+                                    Dark
+                                    <svg id="dark-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="dark" aria-hidden="true">
+                                        <use href="#check2"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="auto" aria-pressed="false">
+                                    <svg class="bi text-primary" width="16" height="16" aria-hidden="true">
+                                        <use href="#circle-half"></use>
+                                    </svg>
+                                    Auto
+                                    <svg id="auto-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="auto" aria-hidden="true">
+                                        <use href="#check2"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
+
         </div>
     </nav>
 
@@ -289,66 +310,87 @@
     </script>
 
     <nav class="navbar navbar-expand-lg bg-dark-subtle pe-3 ps-2 border-bottom">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/}"><svg class="bi" width="28" height="28" aria-hidden="true"><use href="#logo"></use></svg></a></li>
-            <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/dashboard}">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/projects}">Projects</a></li>
-            <li th:if="${#authorization.expr('hasRole(''ROLE_MANAGER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/manager/users/list}">Manager</a></li>
-            <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/admin/users/list}">Admin</a></li>
-        </ul>
+        <div class="container-fluid">
 
-        <div sec:authorize="!isAuthenticated()" class="d-flex me-2">
-            <a class="btn btn-outline-secondary me-2" th:href="@{/login}">Login</a>
-            <a class="btn btn-outline-secondary" th:href="@{/register}">Register</a>
-        </div>
+            <a class="navbar-brand link-body-emphasis" th:href="@{/}"><svg class="bi" width="28" height="28" aria-hidden="true"><use href="#logo"></use></svg></a>
 
-        <div sec:authorize="isAuthenticated()" class="d-flex me-2">
-            <a class="btn btn-outline-secondary fw-semibold text-body-secondary d-flex flex-column align-items-end me-2" th:href="@{/user}" th:if="${currentUser}">[[${currentUser.firstName + ' ' + currentUser.lastName}]]</a>
-            <a class="btn btn-outline-secondary" th:href="@{/logout}">Logout</a>
-        </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="d-flex">
-            <div class="dropdown">
-                <button id="theme-dropdown" class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center py-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change theme (auto)">
-                    <svg id="theme-icon" class="bi me-1" width="20" height="20" aria-hidden="true"><use href="#circle-half"></use></svg>
-                    <span id="theme-text" class="d-none ms-2">Change theme</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="light" aria-pressed="false">
-                            <svg class="bi" width="16" height="16" aria-hidden="true">
-                                <use href="#sun-fill"></use>
-                            </svg>
-                            Light
-                            <svg id="light-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="light" aria-hidden="true">
-                                <use href="#check2"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="dark" aria-pressed="false">
-                            <svg class="bi" width="16" height="16" aria-hidden="true">
-                                <use href="#moon-stars-fill"></use>
-                            </svg>
-                            Dark
-                            <svg id="dark-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="dark" aria-hidden="true">
-                                <use href="#check2"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="auto" aria-pressed="false">
-                            <svg class="bi text-primary" width="16" height="16" aria-hidden="true">
-                                <use href="#circle-half"></use>
-                            </svg>
-                            Auto
-                            <svg id="auto-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="auto" aria-hidden="true">
-                                <use href="#check2"></use>
-                            </svg>
-                        </button>
-                    </li>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/dashboard}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/projects}">Projects</a></li>
+                    <li th:if="${#authorization.expr('hasRole(''ROLE_MANAGER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/manager/users/list}">Manager</a></li>
+                    <li th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') or #authorization.expr('hasRole(''ROLE_OWNER'')')}" class="nav-item"><a class="nav-link link-body-emphasis" th:href="@{/admin/users/list}">Admin</a></li>
                 </ul>
+
+                <th:block sec:authorize="!isAuthenticated()">
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block" th:href="@{/login}">Login</a>
+                    </div>
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block" th:href="@{/register}">Register</a>
+                    </div>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block fw-semibold text-body-secondary" th:href="@{/user}" th:if="${currentUser}">[[${currentUser.firstName + ' ' + currentUser.lastName}]]</a>
+                    </div>
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <a class="btn btn-outline-secondary me-2 d-block flex-grow-0" th:href="@{/logout}">Logout</a>
+                    </div>
+                </th:block>
+
+                <div class="d-flex">
+                    <div class="dropdown">
+                        <button id="theme-dropdown" class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center py-2 mb-1 mb-lg-0" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change theme (auto)">
+                            <svg id="theme-icon" class="bi me-1" width="20" height="20" aria-hidden="true"><use href="#circle-half"></use></svg>
+                            <span id="theme-text" class="d-none ms-2">Change theme</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li>
+                                <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="light" aria-pressed="false">
+                                    <svg class="bi" width="16" height="16" aria-hidden="true">
+                                        <use href="#sun-fill"></use>
+                                    </svg>
+                                    Light
+                                    <svg id="light-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="light" aria-hidden="true">
+                                        <use href="#check2"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="dark" aria-pressed="false">
+                                    <svg class="bi" width="16" height="16" aria-hidden="true">
+                                        <use href="#moon-stars-fill"></use>
+                                    </svg>
+                                    Dark
+                                    <svg id="dark-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="dark" aria-hidden="true">
+                                        <use href="#check2"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item d-flex gap-2 align-items-center" type="button" data-bs-theme-value="auto" aria-pressed="false">
+                                    <svg class="bi text-primary" width="16" height="16" aria-hidden="true">
+                                        <use href="#circle-half"></use>
+                                    </svg>
+                                    Auto
+                                    <svg id="auto-check" class="bi ms-auto d-none" width="16" height="16" data-theme-check="auto" aria-hidden="true">
+                                        <use href="#check2"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
+
         </div>
     </nav>
 

@@ -107,7 +107,7 @@ public class HistoryHelper {
 
         Link home = new Link("/", "Home", false);
         Link dashboard = new Link("/dashboard", "Dashboard", false);
-        Link userList = new Link("/admin/users/list", "Users", true);
+        Link userList = new Link("/admin/users/list", "All Users", true);
 
         history.add(home);
         history.add(dashboard);
@@ -132,7 +132,7 @@ public class HistoryHelper {
 
         Link home = new Link("/", "Home", false);
         Link dashboard = new Link("/dashboard", "Dashboard", false);
-        Link userList = new Link("/manager/users/list", "Users", true);
+        Link userList = new Link("/manager/users/list", "Managed Users", true);
 
         history.add(home);
         history.add(dashboard);
