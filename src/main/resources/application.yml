@@ -14,7 +14,4 @@ server:
       enabled: false
     include-exception: true
     include-message: always
-
-#logging:
-#  level:
-#    root: debug
+  port: 80

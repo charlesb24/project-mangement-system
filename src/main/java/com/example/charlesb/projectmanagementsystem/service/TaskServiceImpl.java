@@ -101,11 +101,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteById(Long taskId) {
-        System.out.println("start killing " + taskId);
-
         taskRepository.deleteById(taskId);
-
-        System.out.println("finish killing " + taskId);
     }
 
     @Override
