@@ -2,8 +2,10 @@ spring:
   application:
     name: project-management-system
   datasource:
-    url: jdbc:postgresql://localhost:32768/postgres
-    username: postgres
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:32768/postgres}
+    username: ${JDBC_DATABASE_USERNAME:postgres}
+    password: ${JDBC_DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   sql:
     init:
       mode: always
@@ -14,4 +16,4 @@ server:
       enabled: false
     include-exception: true
     include-message: always
-  port: 80
+  port: ${PORT:80}
