@@ -10,6 +10,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void removeAll() {
+        userRepository.deleteAll();
+    }
+
+    @Override
+    @Transactional
     public void saveUser(UserDTO userDTO) {
         User user = mapToUser(userDTO);
 
@@ -43,11 +50,11 @@ public class UserServiceImpl implements UserService {
         if (user.getRoles().isEmpty()) {
             Role defaultRole = generateOrFindRole("ROLE_USER");
             user.setRoles(Set.of(defaultRole));
-        }
 
-        if (userRepository.findAll().isEmpty()) {
-            Role ownerRole = generateOrFindRole("ROLE_OWNER");
-            user.getRoles().add(ownerRole);
+            if (userRepository.findAll().isEmpty()) {
+                Role ownerRole = generateOrFindRole("ROLE_OWNER");
+                user.setRoles(Set.of(defaultRole, ownerRole));
+            }
         }
 
         userRepository.save(user);

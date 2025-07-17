@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface UserService {
 
+    void removeAll();
+
     void saveUser(UserDTO userDTO);
 
     void updateUser(User user);

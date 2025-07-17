@@ -44,18 +44,15 @@ public class Project {
     private Status status;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY,
-            cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST},
+            cascade={CascadeType.MERGE},
             orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.MERGE})
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.MERGE})
     @JoinColumn(name = "assigned_to_id")
     private User assignedTo;
 

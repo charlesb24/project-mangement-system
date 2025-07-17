@@ -27,6 +27,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public void removeAll() {
+        projectRepository.deleteAll();
+    }
+
+    @Override
     public List<Project> findAll() {
         return projectRepository.findAll();
     }

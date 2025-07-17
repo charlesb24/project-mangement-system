@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface TaskService {
 
+    void removeAll();
+
     List<Task> findAll();
     List<Task> findAllByProjectId(Long projectId);
     List<Task> findAllAssignedToUser(User user);

@@ -31,6 +31,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public void removeAll() {
+        requirementRepository.deleteAll();
+        taskRepository.deleteAll();
+    }
+
+    @Override
     public List<Task> findAll() {
         return taskRepository.findAll();
     }

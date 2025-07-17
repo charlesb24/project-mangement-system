@@ -26,8 +26,7 @@ public class Requirement {
     @Column(name = "requirement_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.MERGE})
     @JoinColumn(name = "task_id")
     private Task task;
 
@@ -41,13 +40,11 @@ public class Requirement {
     @Column(name = "status")
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.MERGE})
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.MERGE})
     @JoinColumn(name = "assigned_to_id")
     private User assignedTo;
 

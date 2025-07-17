@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProjectService {
 
+    void removeAll();
+
     List<Project> findAll();
     List<Project> findAllAssignedToUser(User user);
     List<Project> findAllCreatedByUser(User user);
