@@ -35,6 +35,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+                .requiresChannel(channel -> channel
+                        .anyRequest()
+                        .requiresSecure()
+                )
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN", "OWNER")
                         .requestMatchers("/manager/**").hasRole("MANAGER")
