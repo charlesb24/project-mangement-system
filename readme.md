@@ -23,3 +23,20 @@ System lets you break down big projects into manageable goals without losing sig
 1. Set up a postgres database and modify application.yml to use the correct environment variables (spring.datasource.url, spring.datasource.username, and spring.datasource.password) for your database connection
 2. Build the java JAR file by running `.\mvnw clean package`
 3. Move the newly created JAR to the desired location and run it using `java -jar path/to/project-management-system-1.0.0.jar`
+
+----
+
+## Demo
+
+To try a demo of this application, you can either run the `heroku-demo` branch of this application locally by following the setup above, or you can test a hosted version at [Heroku](https://project-management-system-d064356f14b3.herokuapp.com).
+
+Sample data and accounts are provided for easy testing in the demo branch, with one user for each role and several different projects, tasks, and requirements to be viewed.
+
+The password for all test accounts is `password` and the various emails to use when logging in are:
+
+- owner@example.com
+- admin@example.com
+- manager@example.com
+- user@example.com
+
+Any changes made to the live demo will be reset every 3 hours.
